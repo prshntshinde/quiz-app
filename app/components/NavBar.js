@@ -8,7 +8,7 @@ const NavBar = () => {
     console.log(currentPath)
 
     const links = [
-        { label: 'Dashboard', href: '/' },
+        { label: 'Homepage', href: '/' },
         { label: 'Quiz', href: '/quiz' }
     ]
 
