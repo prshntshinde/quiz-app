@@ -3,7 +3,8 @@ import Link from 'next/link'
 import React from 'react'
 import { usePathname } from 'next/navigation';
 import Image from 'next/image';
-//import logo from '.\\public\\cross_logo.png' 
+//import logo from '.\\public\\cross_logo.png';
+import {FaCross} from 'react-icons/fa';
 
 const NavBar = () => {
     const currentPath = usePathname();
@@ -15,7 +16,7 @@ const NavBar = () => {
 
     return (
         <nav className='flex space-x-6 border-b mb-5 px-5 h-14 items-center font-bold'>
-            <Link href="/">Logo</Link>
+            <Link href="/"><FaCross/></Link>
             <ul className='flex space-x-6'>
                 {links.map(link =>
                     <Link
