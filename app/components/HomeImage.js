@@ -7,8 +7,7 @@ const HomeImage = () => {
         <div>
             <Image
                 src={pic}
-                width={1200}
-                height={1080}
+                
                 alt="Church"
             />
         </div>
