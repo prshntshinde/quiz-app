@@ -15,3 +15,10 @@ export async function GET() {
     const quizzes = await Quiz.find();
     return NextResponse.json({ quizzes })
 }
+
+export async function DELETE(request) {
+    const id = request.nextUrl.searchParams.get("id");
+    await connectMongoDB();
+    await Quiz.findByIdAndDelete(id);
+    return NextResponse.json({message: "Quiz Deleted."}, {status: 200} );
+}
