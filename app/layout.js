@@ -6,7 +6,7 @@ import HomeImage from './components/HomeImage'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata = {
-  title: 'Homepage',
+  title: 'Home',
   description: 'This is a Quiz App',
 }
 
