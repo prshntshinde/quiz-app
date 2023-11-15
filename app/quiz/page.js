@@ -34,11 +34,11 @@ export default function Quiz() {
       <Question open={open} onClose={()=>setOpen(false)}>
         {/* <FaTrash size={56} className='mx-auto text-red-500'/> */}
         <div className='mt-4'>
-        <h1 className='font-bold text-8xl'>1. लीप इयर मध्ये एकूण किती दिवस असतात?</h1>
-        <h3 className='text-7xl'>A. 366</h3> 
-        <h3 className='text-7xl'>B. 365</h3>
-        <h3 className='text-7xl'>C. 360</h3>
-        <h3 className='text-7xl'>D. यांपैकी नाही</h3>
+        <h1 className='font-bold text-4xl'>1. लीप इयर मध्ये एकूण किती दिवस असतात? लीप इयर मध्ये एकूण किती दिवस असतात?</h1>
+        <h3 className='text-3xl'>A. 366</h3> 
+        <h3 className='text-3xl'>B. 365</h3>
+        <h3 className='text-3xl'>C. 360</h3>
+        <h3 className='text-3xl'>D. यांपैकी नाही</h3>
         </div>
         <div className='flex gap-4 mt-4'>
         <button
