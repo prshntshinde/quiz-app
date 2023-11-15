@@ -53,7 +53,7 @@ export default function Quiz() {
         </div>
       </Question>
       <QuizMain />
-      
+      {/*
       <h1>
         CountdownCircleTimer
         <br />
@@ -69,7 +69,7 @@ export default function Quiz() {
         >
           {renderTime}
         </CountdownCircleTimer>
-        </div>
+        </div>*/}
 
     </main>
   )
