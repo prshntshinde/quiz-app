@@ -1,10 +1,12 @@
-"use client"
+//"use client"
 import Image from 'next/image'
 import QuizList from '../components/QuizList'
 import QuizMain from '../components/QuizMain'
-import { CountdownCircleTimer } from "react-countdown-circle-timer";
 import Question from '../components/Question';
-import { useState } from 'react';
+import { fetchQuizzes } from '@/libs/data';
+import StartButton from '../components/StartButton';
+import Link from 'next/link';
+import { HiPencilAlt } from 'react-icons/hi';
 
 const renderTime = ({ remainingTime }) => {
   if (remainingTime === 0) {
@@ -20,39 +22,36 @@ const renderTime = ({ remainingTime }) => {
   );
 };
 
-export default function Quiz() {
-  const [open, setOpen] = useState(false);
+export default async function Quiz() {
+  //const [open, setOpen] = useState(false);
+  const quizzes = await fetchQuizzes();
+
+  console.log(quizzes)
+  
   
   return (
     <main>
       <p className='text-xl'>Quiz Page</p>
+       {/* QuizList1 Component */}
+       
+       {/**/}
       {/**/}
-      
-      <button className='bg-amber-400 border-spacing-2 p-2 rounded-6 font-bold' onClick={() => setOpen(true)}>
-        Question 1
-      </button>
-      <Question open={open} onClose={()=>setOpen(false)}>
-        {/* <FaTrash size={56} className='mx-auto text-red-500'/> */}
-        <div className='mt-4'>
-        <h1 className='font-bold text-4xl'>1. लीप इयर मध्ये एकूण किती दिवस असतात? लीप इयर मध्ये एकूण किती दिवस असतात?</h1>
-        <h3 className='text-3xl'>A. 366</h3> 
-        <h3 className='text-3xl'>B. 365</h3>
-        <h3 className='text-3xl'>C. 360</h3>
-        <h3 className='text-3xl'>D. यांपैकी नाही</h3>
+      {quizzes.map((quiz) => (
+        <div key={quiz._id} className='p-4 border border-slate-300 my-3 flex justify-between gap-5 items-start'>
+        <div>
+            <h2 className='font-bold text-2xl'>{quiz.title}</h2>
+            <div>{quiz.description}</div>
         </div>
-        <div className='flex gap-4 mt-4'>
-        <button
-          onClick={() => setOpen(false)} 
-          className='bg-red-500 font-bold rounded-lg p-2 text-gray-50 w-full'>
-          Cancel
-        </button>
-        <button 
-          className='bg-green-500 font-bold rounded-lg p-2 text-gray-50 w-full'>
-          Submit
-        </button>
+        <div className='flex gap-2'>
+            
+            <Link href={`/quiz/${quiz._id}`} className='text-zinc-950 text-lg font-bold'>
+                Start
+            </Link>
+            
         </div>
-      </Question>
-      <QuizMain />
+
+    </div>
+      ))}
       {/*
       <h1>
         CountdownCircleTimer

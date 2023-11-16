@@ -1,4 +1,3 @@
-import autoprefixer from "autoprefixer";
 import mongoose, { Schema } from "mongoose";
 
 const quizSchema = new Schema(
@@ -13,6 +12,5 @@ const quizSchema = new Schema(
     }
 );
 
-const Quiz = mongoose.models.Quiz || mongoose.model("Quiz", quizSchema);
+export const Quiz = mongoose.models.Quiz || mongoose.model("Quiz", quizSchema);
 
-export default Quiz;

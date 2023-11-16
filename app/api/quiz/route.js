@@ -11,14 +11,21 @@ export async function POST(request) {
 }
 
 export async function GET() {
-    await connectMongoDB();
-    const quizzes = await Quiz.find();
-    return NextResponse.json({ quizzes })
+    try {
+        await connectMongoDB();
+        const quizzes = await Quiz.find();
+        return NextResponse.json({ quizzes })
+
+    } catch (error) {
+        console.log(error);
+        throw new Error("Failed to fetch Quizzes")
+    }
+
 }
 
 export async function DELETE(request) {
     const id = request.nextUrl.searchParams.get("id");
     await connectMongoDB();
     await Quiz.findByIdAndDelete(id);
-    return NextResponse.json({message: "Quiz Deleted."}, {status: 200} );
+    return NextResponse.json({ message: "Quiz Deleted." }, { status: 200 });
 }
