@@ -19,13 +19,16 @@ const optionSchema = new Schema(
     }
 )
 
-const answerSchema = new Schema(
+const questionSchema = new Schema(
     {
         question: String,
-        options: [optionSchema],
+        options: {
+            type: [optionSchema],
+            required: true
+        },
         answer: Number,
         explanation: String,
-        quiz_id: String,
+        quiz_id: mongoose.Schema.ObjectId,
         question_id: Number,
         isUsed: Boolean,
     },
@@ -35,5 +38,5 @@ const answerSchema = new Schema(
 );
 
 export const Quiz = mongoose.models.Quiz || mongoose.model("Quiz", quizSchema);
-export const Answer = mongoose.models.Answer || mongoose.model("Answer", answerSchema);
+export const Question = mongoose.models.Question || mongoose.model("Question", questionSchema);
 
