@@ -1,13 +1,20 @@
-"use client"
+import Question1 from "@/app/components/Question1"
+import { fetchQuestions } from "@/libs/data"
 
-const page = () => {
-    
+export default async function AnswerPage() {
+
+  const question = await fetchQuestions();
+  console.log(question);
+
   return (
-    
-    <div>
-        <button className=" shadow-xl outline outline-offset-0 outline-1 hover:bg-blue-500 text-black font-semibold hover:text-white border-solid border-stone-50 py-2 px-4 hover:border-transparent " onClick={() => alert("Question Id is: OK")}>Question ID</button>
-    </div>
+    <main>
+      <div className="grid grid-cols-8 gap-2">
+      {question.map((q) => (
+        <div key={q._id} className="pb-3">
+          <Question1 question_id={q.question_id}/>
+        </div>
+      ))}
+      </div>
+    </main>
   )
 }
-
-export default page

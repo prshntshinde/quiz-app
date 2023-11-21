@@ -1,3 +1,5 @@
+"use client"
+
 import { VscClose } from "react-icons/vsc";
 import { CountdownCircleTimer } from "react-countdown-circle-timer";
 
@@ -49,6 +51,9 @@ return(
        </button>
         {children}
        </div>
+       <div>
+        <button className=" shadow-xl outline outline-offset-0 outline-1 hover:bg-blue-500 text-black font-semibold hover:text-white border-solid border-stone-50 py-2 px-4 hover:border-transparent " onClick={() => alert("Question Id is: OK")}>Question ID</button>
+    </div>
     </div>    
 )
 }

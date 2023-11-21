@@ -14,7 +14,7 @@ export async function POST(request) {
 export async function GET(request, { params }) {
     const { id } = params;
     await connectMongoDB();
-    const questions = await Question.findOne({ _id: id });
+    const questions = await Question.find({ quiz_id: id });
     return NextResponse.json({ questions }, { status: 200 });
 
 }
