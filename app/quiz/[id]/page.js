@@ -18,3 +18,9 @@ export default async function AnswerPage() {
     </main>
   )
 }
+
+export function generateMetadata({params}) {
+  return{
+    title: "Questions | Quiz"
+  }
+}

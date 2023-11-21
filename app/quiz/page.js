@@ -74,5 +74,10 @@ export default async function Quiz() {
   )
 }
 
+export function generateMetadata({params}) {
+  return{
+    title: "Quiz"
+  }
+}
 
 
