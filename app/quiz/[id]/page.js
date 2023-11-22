@@ -21,6 +21,6 @@ export default async function AnswerPage() {
 
 export function generateMetadata({params}) {
   return{
-    title: "Questions | Quiz"
+    title: "Questions | Quiz App"
   }
 }
