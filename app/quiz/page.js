@@ -20,6 +20,8 @@ export default async function Quiz() {
             <div>{quiz.description}</div>
           </div>
           <div className='flex gap-2'>
+            {/* Rules Component */}
+            <button>Rules</button>
             <Link href={`/quiz/${quiz._id}`} className='text-zinc-950 text-lg font-bold'>
               Start
             </Link>
