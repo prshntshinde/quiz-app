@@ -18,8 +18,9 @@ export const fetchQuestions = async () => {
     try {
         //const { id } = params;
         connectMongoDB();
-        const answers = await Question.find({quiz_id: "655319ad648c5735c92b553b"});
-        return answers;
+        const questions = await Question.find({quiz_id: "6553289a648c5735c92b5543"});
+        console.log(questions);
+        return questions;
     } catch (error) {
         console.log(error);
         throw new Error("Error while fetching answers");
