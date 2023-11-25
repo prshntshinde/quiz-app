@@ -1,6 +1,8 @@
 import { fetchQuizzes } from '@/libs/data';
 import Link from 'next/link';
 import RulesModal from '@/app/components/RulesModal';
+import Modal from '../components/Modal';
+
 
 
 export default async function Quiz() {
@@ -12,6 +14,8 @@ export default async function Quiz() {
   return (
     <main>
       <p className='text-4xl'>Quiz List</p>
+      {/*<Modal isVisible={true} /> */}
+
 
       {/* Quiz List*/}
       {quizzes.map((quiz) => (
@@ -20,7 +24,7 @@ export default async function Quiz() {
             <h2 className='font-bold text-2xl'>{quiz.title}</h2>
             <div>{quiz.description}</div>
           </div>
-          <div className='flex gap-2'>
+          <div className='flex gap-3'>
             {/* Rules Component */}
             <RulesModal />
             <Link href={`/quiz/${quiz._id}`} className='text-zinc-950 text-lg font-bold outline outline-offset-0 outline-1 hover:bg-blue-500 py-2 px-4 hover:text-white'>
