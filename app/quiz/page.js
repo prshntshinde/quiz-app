@@ -1,5 +1,6 @@
 import { fetchQuizzes } from '@/libs/data';
 import Link from 'next/link';
+import RulesModal from '@/app/components/RulesModal';
 
 
 export default async function Quiz() {
@@ -21,8 +22,8 @@ export default async function Quiz() {
           </div>
           <div className='flex gap-2'>
             {/* Rules Component */}
-            <button>Rules</button>
-            <Link href={`/quiz/${quiz._id}`} className='text-zinc-950 text-lg font-bold'>
+            <RulesModal />
+            <Link href={`/quiz/${quiz._id}`} className='text-zinc-950 text-lg font-bold outline outline-offset-0 outline-1 hover:bg-blue-500 py-2 px-4 hover:text-white'>
               Start
             </Link>
           </div>
