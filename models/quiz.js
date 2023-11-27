@@ -38,5 +38,5 @@ const questionSchema = new Schema(
 );
 
 export const Quiz = mongoose.models.Quiz || mongoose.model("Quiz", quizSchema);
-export const Question = mongoose.models.Question || mongoose.model("Question", questionSchema);
+export const Questions = mongoose.models.Questions || mongoose.model("Questions", questionSchema);
 

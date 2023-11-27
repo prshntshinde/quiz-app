@@ -1,4 +1,4 @@
-import { Question, Quiz } from "@/models/quiz";
+import { Questions, Quiz } from "@/models/quiz";
 import connectMongoDB from "./mongodb";
 
 export const fetchQuizzes = async () => {
@@ -18,7 +18,7 @@ export const fetchQuestions = async () => {
     try {
         //const { id } = params;
         connectMongoDB();
-        const questions = await Question.find({quiz_id: "6553289a648c5735c92b5543"});
+        const questions = await Questions.find({ quiz_id: "655319ad648c5735c92b553b" }).sort({ question_id: 1 });
         console.log(questions);
         return questions;
     } catch (error) {
