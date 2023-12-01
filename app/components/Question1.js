@@ -15,7 +15,7 @@ export default function Question1(props) {
                     <div>
                         <div className="flex justify-center text-4xl font-semibold"><CountdownTimer /></div>
 
-                        <div className="flex justify-center mt-3 outline outline-offset-0 outline-1 border-solid border-stone-50 py-2 px-4 mb-3 font-semibold"><p>{props.question}</p></div>
+                        <div className="flex justify-center mt-3 outline outline-offset-0 outline-1 border-solid border-stone-50 py-2 px-4 mb-3 font-semibold text-2xl"><p>{props.question}</p></div>
                         <div className="grid grid-cols-2 justify-center">
                             <div><button className="outline outline-offset-0 outline-1 border-solid border-stone-50 py-2 px-4 mb-3 font-semibold">{props.option1}</button></div>
                             <div><button className="outline outline-offset-0 outline-1 border-solid border-stone-50 py-2 px-4 mb-3 font-semibold">{props.option2}</button></div>
