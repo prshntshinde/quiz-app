@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Modal from "./Modal";
+import CountdownTimer from "./CountdownTimer";
 
 export default function Question1(props) {
     console.log(props);
@@ -12,16 +13,18 @@ export default function Question1(props) {
             <div>
                 <Modal isVisible={showModal} onClose={() => setShowModal(false)}>
                     <div>
-                        <p>{props.question_id}</p>
-                        <div><p>{props.question}</p></div>
-                        <ul>
-                            <li>{props.option1}</li>
-                            <li>{props.option2}</li>
-                            <li>{props.option3}</li>
-                            <li>{props.option4}</li>
-                        </ul>
-                        <div>
-                            <button className="bg-blue-500">Submit</button>
+                        <div className="flex justify-center text-4xl font-semibold"><CountdownTimer /></div>
+
+                        <div className="flex justify-center mt-3 outline outline-offset-0 outline-1 border-solid border-stone-50 py-2 px-4 mb-3 font-semibold"><p>{props.question}</p></div>
+                        <div className="grid grid-cols-2 justify-center">
+                            <div><button className="outline outline-offset-0 outline-1 border-solid border-stone-50 py-2 px-4 mb-3 font-semibold">{props.option1}</button></div>
+                            <div><button className="outline outline-offset-0 outline-1 border-solid border-stone-50 py-2 px-4 mb-3 font-semibold">{props.option2}</button></div>
+                            <div><button className="outline outline-offset-0 outline-1 border-solid border-stone-50 py-2 px-4 mb-3 font-semibold">{props.option3}</button></div>
+                            <div><button className="outline outline-offset-0 outline-1 border-solid border-stone-50 py-2 px-4 mb-3 font-semibold">{props.option4}</button></div>
+
+                        </div>
+                        <div className="flex justify-center outline outline-offset-0 outline-1 hover:bg-blue-500 border-solid border-stone-50 py-2 px-4 font-semibold">
+                            <button className="">Submit</button>
                         </div>
                     </div>
                 </Modal>

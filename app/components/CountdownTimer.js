@@ -1,33 +1,34 @@
-{/*const renderTime = ({ remainingTime }) => {
+const { CountdownCircleTimer } = require("react-countdown-circle-timer");
+
+{/**/ }
+
+const renderTime = ({ remainingTime }) => {
   if (remainingTime === 0) {
-    return <div className="timer">Too late...</div>;
+    return <div className="timer">Late</div>;
   }
 
   return (
     <div className="timer">
-      <div className="text">Remaining</div>
       <div className="value">{remainingTime}</div>
-      <div className="text">seconds</div>
     </div>
   );
-};*/}
+};
 
- //const [open, setOpen] = useState(false);
+const CountdownTimer = () => {
+  return (
+    <div>
+      <CountdownCircleTimer
+        isPlaying
+        duration={30}
+        colors={["#004777", "#F7B801", "#A30000", "#A30000"]}
+        colorsTime={[30, 20, 10, 0]}
+        onComplete={() => ({ shouldRepeat: true, delay: 10 })}
+        size={120}>
 
-{/*
-      <h1>
-        CountdownCircleTimer
-        <br />
-        React Component
-      </h1>
-      <div className="timer-wrapper">
-        <CountdownCircleTimer
-          isPlaying
-          duration={10}
-          colors={["#004777", "#F7B801", "#A30000", "#A30000"]}
-          colorsTime={[10, 6, 3, 0]}
-          onComplete={() => ({ shouldRepeat: true, delay: 1 })}
-        >
-          {renderTime}
-        </CountdownCircleTimer>
-        </div>*/}
+        {renderTime}
+      </CountdownCircleTimer>
+    </div>
+  )
+}
+
+export default CountdownTimer
