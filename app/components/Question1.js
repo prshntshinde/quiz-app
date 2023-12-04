@@ -104,7 +104,7 @@ export default function Question1(props) {
                         </div>
                         <div className="flex justify-center py-2 px-4 font-semibold mb-3 animate-bounce">
                             <p className={answerStatus === "Correct" ? "text-green-600" : "text-red-600"}>{answerStatus} </p>
-                            <p className="pl-1">{answerStatus === "Correct" ? <RxCheckCircled size={25} className="text-green-600" /> : <RxCrossCircled size={25} className="text-red-600" />}</p>
+                            <p className="pl-1">{answerStatus === "Correct" ? <RxCheckCircled size={25} className="text-green-600" /> : answerStatus === "Wrong" ? <RxCrossCircled size={25} className="text-red-600" /> : ""} </p>
                         </div>
                         <div className="flex justify-center outline outline-offset-0 outline-1 hover:bg-blue-500 border-solid border-stone-50 py-2 px-4 font-semibold mb-3">
                             <button onClick={checkAnswer} disabled={selectedAnswer === null}>Submit</button>
