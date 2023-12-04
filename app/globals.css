@@ -5,3 +5,13 @@
 body {
   padding: 1rem;
 }
+
+.correct {
+  background: #228B22;
+  border-color: #00d397;
+}
+
+.wrong {
+  background: #FF3131;
+  border-color: #FF3131;
+}
