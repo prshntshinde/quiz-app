@@ -20,19 +20,14 @@ const NavBar = () => {
             <Link href="/"><FaCross size={30} /></Link>
             <ul className='flex space-x-6'>
                 {links.map(link =>
-                    <div>
-                        {/* <div className={`${link.href === currentPath ? 'text-zinc-950' : 'text-zinc-500'} hover:text-zinc-900 transition-colors`}>
-                            {link.icon}
-
-                        </div> */}
 
 
-                        <Link
-                            key={link.href}
-                            className={`${link.href === currentPath ? 'text-zinc-950' : 'text-zinc-500'} hover:text-zinc-900 transition-colors`}
-                            href={link.href}>{link.label}</Link>
+                    <Link
+                        key={link.href}
+                        className={`${link.href === currentPath ? 'text-zinc-950' : 'text-zinc-500'} hover:text-zinc-900 transition-colors`}
+                        href={link.href}>{link.label}</Link>
 
-                    </div>)}
+                )}
             </ul>
         </nav>
     )
