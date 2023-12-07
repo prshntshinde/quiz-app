@@ -112,7 +112,7 @@ export default function Question1(props) {
                         <div className="flex justify-center outline outline-offset-0 outline-1 hover:bg-blue-500 border-solid border-stone-50 py-2 px-4 font-semibold mb-3">
                             <button onClick={checkAnswer} disabled={selectedAnswer === null}>Submit</button>
                         </div>
-                        <div className={showExplanation + " flex justify-center outline outline-offset-0 outline-3 outline-yellow-500 hover:bg-yellow-200 hover:outline-dashed border-solid border-stone-50 py-2 px-4 font-semibold"}>
+                        <div className={showExplanation + " flex justify-center outline outline-offset-0 outline-3 outline-yellow-500 bg-yellow-200 outline-dashed border-solid border-stone-50 py-2 px-4 font-semibold"}>
                             {props.explanation}
                         </div>
                     </div>
