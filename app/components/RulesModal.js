@@ -1,17 +1,13 @@
 "use client"
 
-import Link from "next/link";
 import { useState } from "react";
 import Modal from '@/app/components/Modal';
-
-
 
 export default function RulesModal(props) {
     console.log(props);
     const [showModal, setShowModal] = useState(false)
     return (
         <div>
-
             <button onClick={() => setShowModal(true)} className='text-zinc-950 text-lg font-bold outline outline-offset-0 outline-1 hover:bg-blue-500 py-2 px-4 hover:text-white'>
                 Rules
             </button>
@@ -63,13 +59,8 @@ export default function RulesModal(props) {
                         </p>
 
                     </div>
-
-
-
                 </Modal>
             </div>
-
         </div>
     )
-
 }
