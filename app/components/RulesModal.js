@@ -12,13 +12,6 @@ export default function RulesModal(props) {
     return (
         <div>
 
-            {/*<Link
-                href={"/quiz/?showDialog=y"}
-                className="outline outline-offset-0 outline-1 hover:bg-blue-500 text-black font-semibold hover:text-white border-solid border-stone-50 py-2 px-4 hover:border-transparent text-xl"
-            >
-                Rules
-            </Link>
-    */}
             <button onClick={() => setShowModal(true)} className='text-zinc-950 text-lg font-bold outline outline-offset-0 outline-1 hover:bg-blue-500 py-2 px-4 hover:text-white'>
                 Rules
             </button>
