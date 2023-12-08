@@ -90,18 +90,18 @@ export default function Question1(props) {
 
                             {/* Other implementation for answer logic*/}
                             <ul >
-                                <div><li onClick={() => { updateSelectedAnswer(0) }} className="outline outline-offset-0 outline-1 border-solid border-stone-50 py-2 px-4 mb-3 font-semibold hover:bg-blue-300">{props.option1}</li></div>
+                                <div><li onClick={() => { updateSelectedAnswer(0) }} className={selectedAnswer === 0 ? "bg-blue-300 outline outline-offset-0 outline-1 border-solid border-stone-50 py-2 px-4 mb-3 font-semibold " : "" + "outline outline-offset-0 outline-1 border-solid border-stone-50 py-2 px-4 mb-3 font-semibold "}>{props.option1}</li></div>
                             </ul>
 
 
                             <ul >
-                                <div><li onClick={() => { updateSelectedAnswer(1) }} className="outline outline-offset-0 outline-1 border-solid border-stone-50 py-2 px-4 mb-3 font-semibold hover:bg-blue-300">{props.option2}</li></div>
+                                <div><li onClick={() => { updateSelectedAnswer(1) }} className={selectedAnswer === 1 ? "bg-blue-300 outline outline-offset-0 outline-1 border-solid border-stone-50 py-2 px-4 mb-3 font-semibold " : "" + "outline outline-offset-0 outline-1 border-solid border-stone-50 py-2 px-4 mb-3 font-semibold "}>{props.option2}</li></div>
                             </ul>
                             <ul >
-                                <div><li onClick={() => { updateSelectedAnswer(2) }} className="outline outline-offset-0 outline-1 border-solid border-stone-50 py-2 px-4 mb-3 font-semibold hover:bg-blue-300">{props.option3}</li></div>
+                                <div><li onClick={() => { updateSelectedAnswer(2) }} className={selectedAnswer === 2 ? "bg-blue-300 outline outline-offset-0 outline-1 border-solid border-stone-50 py-2 px-4 mb-3 font-semibold " : "" + "outline outline-offset-0 outline-1 border-solid border-stone-50 py-2 px-4 mb-3 font-semibold "}>{props.option3}</li></div>
                             </ul>
                             <ul >
-                                <div><li onClick={() => { updateSelectedAnswer(3) }} className="outline outline-offset-0 outline-1 border-solid border-stone-50 py-2 px-4 mb-3 font-semibold hover:bg-blue-300">{props.option4}</li></div>
+                                <div><li onClick={() => { updateSelectedAnswer(3) }} className={selectedAnswer === 3 ? "bg-blue-300 outline outline-offset-0 outline-1 border-solid border-stone-50 py-2 px-4 mb-3 font-semibold " : "" + "outline outline-offset-0 outline-1 border-solid border-stone-50 py-2 px-4 mb-3 font-semibold "}>{props.option4}</li></div>
                             </ul>
 
                         </div>
@@ -109,7 +109,7 @@ export default function Question1(props) {
                             <p className={answerStatus === "Correct" ? "text-green-600" : "text-red-600"}>{answerStatus} </p>
                             <p className="pl-1">{answerStatus === "Correct" ? <RxCheckCircled size={25} className="text-green-600" /> : answerStatus === "Wrong" ? <RxCrossCircled size={25} className="text-red-600" /> : ""} </p>
                         </div>
-                        <div className="flex justify-center outline outline-offset-0 outline-1 hover:bg-blue-500 border-solid border-stone-50 py-2 px-4 font-semibold mb-3">
+                        <div className="flex justify-center outline outline-offset-0 outline-1 hover:bg-blue-600 border-solid border-stone-50 py-2 px-4 font-semibold mb-3">
                             <button onClick={checkAnswer} disabled={selectedAnswer === null}>Submit</button>
                         </div>
                         <div className={showExplanation + " flex justify-center outline outline-offset-0 outline-3 outline-yellow-500 bg-yellow-200 outline-dashed border-solid border-stone-50 py-2 px-4 font-semibold"}>
