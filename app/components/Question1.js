@@ -47,14 +47,16 @@ export default function Question1(props) {
         // setOption(ans);
         // console.log("option ", option)
         if (props.answer === selectedAnswer) {
-            // e.target.classList.add("correct");
+            var e = document.getElementById(selectedAnswer);
+            e.classList.add("correct");
             console.log("correct answer");
             // answerStatus = "Correct";
             setAnswerStatus("Correct");
             setShowExplanation("visible");
         }
         else {
-            // e.target.classList.add("wrong");
+            var e = document.getElementById(selectedAnswer);
+            e.classList.add("wrong");
             console.log("wrong answer");
             // answerStatus = "Wrong";
             setAnswerStatus("Wrong");
@@ -90,18 +92,18 @@ export default function Question1(props) {
 
                             {/* Other implementation for answer logic*/}
                             <ul >
-                                <div><li onClick={() => { updateSelectedAnswer(0) }} className={selectedAnswer === 0 ? "bg-blue-300 outline outline-offset-0 outline-1 border-solid border-stone-50 py-2 px-4 mb-3 font-semibold " : "" + "outline outline-offset-0 outline-1 border-solid border-stone-50 py-2 px-4 mb-3 font-semibold "}>{props.option1}</li></div>
+                                <div><li id="0" onClick={() => { updateSelectedAnswer(0) }} className={selectedAnswer === 0 ? "bg-blue-300 outline outline-offset-0 outline-1 border-solid border-stone-50 py-2 px-4 mb-3 font-semibold " : "" + "outline outline-offset-0 outline-1 border-solid border-stone-50 py-2 px-4 mb-3 font-semibold "}>{props.option1}</li></div>
                             </ul>
 
 
                             <ul >
-                                <div><li onClick={() => { updateSelectedAnswer(1) }} className={selectedAnswer === 1 ? "bg-blue-300 outline outline-offset-0 outline-1 border-solid border-stone-50 py-2 px-4 mb-3 font-semibold " : "" + "outline outline-offset-0 outline-1 border-solid border-stone-50 py-2 px-4 mb-3 font-semibold "}>{props.option2}</li></div>
+                                <div><li id="1" onClick={() => { updateSelectedAnswer(1) }} className={selectedAnswer === 1 ? "bg-blue-300 outline outline-offset-0 outline-1 border-solid border-stone-50 py-2 px-4 mb-3 font-semibold " : "" + "outline outline-offset-0 outline-1 border-solid border-stone-50 py-2 px-4 mb-3 font-semibold "}>{props.option2}</li></div>
                             </ul>
                             <ul >
-                                <div><li onClick={() => { updateSelectedAnswer(2) }} className={selectedAnswer === 2 ? "bg-blue-300 outline outline-offset-0 outline-1 border-solid border-stone-50 py-2 px-4 mb-3 font-semibold " : "" + "outline outline-offset-0 outline-1 border-solid border-stone-50 py-2 px-4 mb-3 font-semibold "}>{props.option3}</li></div>
+                                <div><li id="2" onClick={() => { updateSelectedAnswer(2) }} className={selectedAnswer === 2 ? "bg-blue-300 outline outline-offset-0 outline-1 border-solid border-stone-50 py-2 px-4 mb-3 font-semibold " : "" + "outline outline-offset-0 outline-1 border-solid border-stone-50 py-2 px-4 mb-3 font-semibold "}>{props.option3}</li></div>
                             </ul>
                             <ul >
-                                <div><li onClick={() => { updateSelectedAnswer(3) }} className={selectedAnswer === 3 ? "bg-blue-300 outline outline-offset-0 outline-1 border-solid border-stone-50 py-2 px-4 mb-3 font-semibold " : "" + "outline outline-offset-0 outline-1 border-solid border-stone-50 py-2 px-4 mb-3 font-semibold "}>{props.option4}</li></div>
+                                <div><li id="3" onClick={() => { updateSelectedAnswer(3) }} className={selectedAnswer === 3 ? "bg-blue-300 outline outline-offset-0 outline-1 border-solid border-stone-50 py-2 px-4 mb-3 font-semibold " : "" + "outline outline-offset-0 outline-1 border-solid border-stone-50 py-2 px-4 mb-3 font-semibold "}>{props.option4}</li></div>
                             </ul>
 
                         </div>

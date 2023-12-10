@@ -7,11 +7,19 @@ body {
 }
 
 .correct {
-  background: #228B22;
-  border-color: #00d397;
+  background: #32CD32;
+  border-color: #003425;
+  border-style: dashed;
+  border-width: 2px;
+  color: white;
+
 }
 
 .wrong {
   background: #FF3131;
-  border-color: #FF3131;
+  border-color: #660000;
+  border-style: dashed;
+  border-width: 2px;
+  color: white;
+  
 }
