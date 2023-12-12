@@ -1,13 +1,13 @@
-import { Inter } from 'next/font/google'
-import './globals.css'
-import NavBar from './components/NavBar'
+import { Inter } from "next/font/google";
+import "./globals.css";
+import NavBar from "./components/NavBar";
 
-const inter = Inter({ subsets: ['latin'] })
+const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
-  title: 'Home | Quiz App',
-  description: 'This is a Quiz App',
-}
+  title: "Home | Quiz App",
+  description: "This is a Quiz App",
+};
 
 export default function RootLayout({ children }) {
   return (
@@ -17,5 +17,5 @@ export default function RootLayout({ children }) {
         {children}
       </body>
     </html>
-  )
+  );
 }
