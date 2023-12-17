@@ -1,4 +1,3 @@
-import Question from "@/app/components/Question";
 import Question1 from "@/app/components/Question1";
 import { fetchQuestions } from "@/libs/data";
 
