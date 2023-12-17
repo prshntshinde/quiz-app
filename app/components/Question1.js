@@ -75,7 +75,7 @@ export default function Question1(props) {
   return (
     <div>
       <button
-        id={props.question_id}
+        // id={props.question_id}
         className="w-32 shadow-xl outline outline-offset-0 outline-1 hover:bg-blue-500 text-black font-semibold hover:text-white border-solid border-stone-50 py-2 px-4 hover:border-transparent text-6xl"
         onClick={() => setShowModal(true)}
       >
