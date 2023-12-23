@@ -6,6 +6,7 @@ import Image from "next/image";
 //import logo from '.\\public\\cross_logo.png';
 import { FaCross } from "react-icons/fa";
 import { FaBookBible, FaHouseChimney } from "react-icons/fa6";
+import logo from "../../public/HMC_LOGO.svg";
 
 const NavBar = () => {
   const currentPath = usePathname();
@@ -18,7 +19,8 @@ const NavBar = () => {
   return (
     <nav className="flex justify-start space-x-6 border-b mb-5 px-5 h-14 items-center font-bold">
       <Link href="/">
-        <FaCross size={30} />
+        {/* <FaCross size={30} /> */}
+        <Image src={logo} width={50} height={50} />
       </Link>
       <ul className="flex space-x-6">
         {links.map((link) => (
