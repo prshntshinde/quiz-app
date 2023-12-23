@@ -1,8 +1,9 @@
 import Question1 from "@/app/components/Question1";
 import { fetchQuestions } from "@/libs/data";
 
-export default async function AnswerPage() {
-  const question = await fetchQuestions();
+export default async function AnswerPage({ params }) {
+  const question = await fetchQuestions(params.id);
+  console.log(params);
   console.log(question);
 
   return (
