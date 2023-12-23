@@ -1,3 +1,4 @@
+"use client";
 import React from "react";
 import Image from "next/image";
 import pic from "../../public/wallpaper-2.png";
@@ -6,6 +7,7 @@ import pic4 from "../../public/wallpaper-4.png";
 import pic5 from "../../public/wallpaper-5.svg";
 import homepageVideo from "../../public/hmc_video1.webp";
 import homepageVideo2 from "../../public/hmc_video2.webp";
+import ReactPlayer from "react-player";
 
 const HomeImage = () => {
   return (
@@ -17,7 +19,7 @@ const HomeImage = () => {
         </video>
       </div> */}
       {/* <video src="../../public/hmc_video.mp4" autoPlay></video> */}
-      <Image
+      {/* <Image
         src={pic5}
         alt="Church"
         // sizes="(max-width: 768px) 100vw, (max-width: 1200px) 75vw, 33vw"
@@ -26,6 +28,23 @@ const HomeImage = () => {
           width: "100%",
           height: "800px",
         }}
+      /> */}
+      {/* <video
+        autoplay
+        loop
+        muted
+        style={{ width: "500px", height: "500px" }}
+        src="https://www.youtube.com/watch?v=RcEelCkSioI&ab_channel=PrashantShinde"
+      >
+        <source src="https://www.youtube.com/watch?v=RcEelCkSioI&ab_channel=PrashantShinde" />
+      </video> */}
+      <ReactPlayer
+        light={<img src="pic5" alt="Thumbnail" />}
+        url={
+          "https://www.youtube.com/watch?v=RcEelCkSioI&ab_channel=PrashantShinde"
+        }
+        width="1000px"
+        height="500px"
       />
     </div>
   );
