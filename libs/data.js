@@ -17,7 +17,7 @@ export const fetchQuestions = async () => {
     //const { id } = params;
     connectMongoDB();
     const questions = await Questions.find({
-      quiz_id: "657e92701ab7a0a02c8314fe",
+      quiz_id: "65531a4d648c5735c92b553d",
     }).sort({ question_id: 1 });
     console.log(questions);
     return questions;
