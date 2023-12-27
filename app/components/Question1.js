@@ -50,6 +50,7 @@ export default function Question1(props) {
       // answerStatus = "Correct";
       setAnswerStatus("Correct");
       setShowExplanation("visible");
+      //document.getElementById("clock-audio").pause();
       // document.getElementById("q-1").disabled = true;
     } else {
       var e = document.getElementById(selectedAnswer);
@@ -204,6 +205,9 @@ export default function Question1(props) {
               }
             >
               {props.explanation}
+              <audio autoPlay id="clock-audio" src="/clock.mp3">
+                Audio
+              </audio>
             </div>
           </div>
         </Modal>
