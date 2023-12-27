@@ -10,7 +10,7 @@ export default async function AnswerPage({ params }) {
     <main>
       <div className="grid grid-cols-8 gap-2">
         {question.map((q) => (
-          <div key={q._id} className="pb-3 ">
+          <div key={q._id} className="pb-3 " id={"q-" + q.question_id}>
             <Question1
               question_id={q.question_id}
               question={q.question}

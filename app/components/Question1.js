@@ -50,7 +50,7 @@ export default function Question1(props) {
       // answerStatus = "Correct";
       setAnswerStatus("Correct");
       setShowExplanation("visible");
-      //document.getElementById(1).disabled = true;
+      // document.getElementById("q-1").disabled = true;
     } else {
       var e = document.getElementById(selectedAnswer);
       e.classList.add("wrong");

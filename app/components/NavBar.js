@@ -20,7 +20,7 @@ const NavBar = () => {
     <nav className="flex justify-start space-x-6 border-b mb-5 px-5 h-14 items-center font-bold">
       <Link href="/">
         {/* <FaCross size={30} /> */}
-        <Image src={logo} width={50} height={50} />
+        <Image src={logo} width={50} height={50} alt="HMC Logo" />
       </Link>
       <ul className="flex space-x-6">
         {links.map((link) => (

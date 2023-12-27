@@ -40,9 +40,7 @@ const HomeImage = () => {
       </video> */}
       <ReactPlayer
         light={<img src="pic5" alt="Thumbnail" />}
-        url={
-          "https://www.youtube.com/watch?v=RcEelCkSioI&ab_channel=PrashantShinde"
-        }
+        url={"https://youtu.be/WSnTerUCG4o"}
         width="1000px"
         height="500px"
       />

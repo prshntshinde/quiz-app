@@ -1,6 +1,8 @@
 const { CountdownCircleTimer } = require("react-countdown-circle-timer");
 
-{/**/ }
+{
+  /**/
+}
 
 const renderTime = ({ remainingTime }) => {
   if (remainingTime === 0) {
@@ -19,16 +21,16 @@ const CountdownTimer = () => {
     <div>
       <CountdownCircleTimer
         isPlaying
-        duration={30}
+        duration={45}
         colors={["#004777", "#F7B801", "#A30000", "#A30000"]}
-        colorsTime={[30, 20, 10, 0]}
-        onComplete={() => ({ shouldRepeat: true, delay: 10 })}
-        size={120}>
-
+        colorsTime={[45, 30, 15, 0]}
+        onComplete={() => ({ shouldRepeat: false, delay: 10 })}
+        size={120}
+      >
         {renderTime}
       </CountdownCircleTimer>
     </div>
-  )
-}
+  );
+};
 
-export default CountdownTimer
+export default CountdownTimer;
