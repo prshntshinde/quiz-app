@@ -21,3 +21,11 @@ body {
   border-width: 2px;
   color: white;
 }
+
+.hide > div > button {
+  background: grey;
+  opacity: 0.05;
+  border-style: solid;
+  border-color: grey;
+  cursor: not-allowed;
+}

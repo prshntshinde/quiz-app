@@ -50,8 +50,10 @@ export default function Question1(props) {
       // answerStatus = "Correct";
       setAnswerStatus("Correct");
       setShowExplanation("visible");
-      //document.getElementById("clock-audio").pause();
-      // document.getElementById("q-1").disabled = true;
+      document.getElementById("clock-audio").pause();
+      document.getElementById("q-" + props.question_id).classList.add("hide");
+      //document.getElementById("q-" + props.question_id).style.display = "none";
+      // element1.target.classList.add("hide");
     } else {
       var e = document.getElementById(selectedAnswer);
       e.classList.add("wrong");
