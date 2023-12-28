@@ -115,6 +115,7 @@ export default function Question1(props) {
                           "outline outline-offset-0 outline-1 border-solid border-stone-50 py-2 px-4 mb-3 font-semibold "
                     }
                   >
+                    A. <span> </span>
                     {props.option1}
                   </li>
                 </div>
@@ -134,6 +135,7 @@ export default function Question1(props) {
                           "outline outline-offset-0 outline-1 border-solid border-stone-50 py-2 px-4 mb-3 font-semibold "
                     }
                   >
+                    B. <span> </span>
                     {props.option2}
                   </li>
                 </div>
@@ -152,6 +154,7 @@ export default function Question1(props) {
                           "outline outline-offset-0 outline-1 border-solid border-stone-50 py-2 px-4 mb-3 font-semibold "
                     }
                   >
+                    C. <span> </span>
                     {props.option3}
                   </li>
                 </div>
@@ -170,6 +173,7 @@ export default function Question1(props) {
                           "outline outline-offset-0 outline-1 border-solid border-stone-50 py-2 px-4 mb-3 font-semibold "
                     }
                   >
+                    D. <span> </span>
                     {props.option4}
                   </li>
                 </div>
