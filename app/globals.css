@@ -29,3 +29,10 @@ body {
   border-color: grey;
   cursor: not-allowed;
 }
+
+.fifty_fifty {
+  display: none;
+  /* background: grey;
+  opacity: 0.05;
+  cursor: not-allowed; */
+}

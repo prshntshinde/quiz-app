@@ -64,6 +64,28 @@ export default function Question1(props) {
     }
   };
 
+  const fifty_fifty = () => {
+    let listIndex = [0, 1, 2, 3]; // 4 values
+    console.log(listIndex);
+    listIndex.splice(props.answer, 1); // 3 values - correct answer removed
+    console.log(listIndex);
+    let randomNumber = Math.floor(Math.random() * listIndex.length);
+    //alert(listIndex[randomNumber]);
+    document
+      .getElementById(listIndex[randomNumber])
+      .classList.add("fifty_fifty");
+
+    console.log(listIndex);
+    listIndex.splice(randomNumber, 1);
+    console.log(listIndex);
+    let randomNumber1 = Math.floor(Math.random() * listIndex.length);
+    //alert(listIndex[randomNumber1]);
+    document
+      .getElementById(listIndex[randomNumber1])
+      .classList.add("fifty_fifty");
+    console.log(listIndex);
+  };
+
   // const ssetSelectedAnswer = (element, ans) => {
   //     console.log("props ans ", props.answer);
   //     console.log("ans ", ans);
@@ -89,6 +111,14 @@ export default function Question1(props) {
           <div>
             <div className="flex justify-center text-4xl font-semibold">
               <CountdownTimer />
+            </div>
+            <div className="flex justify-center">
+              <button
+                onClick={fifty_fifty}
+                className=" mt-3 outline outline-offset-0 outline-1 border-solid border-stone-50 font-semibold bg-yellow-200"
+              >
+                50:50
+              </button>
             </div>
 
             <div className="flex justify-center mt-3 outline outline-offset-0 outline-1 border-solid border-stone-50 py-2 px-4 mb-3 font-semibold text-2xl">
