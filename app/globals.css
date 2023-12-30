@@ -23,11 +23,12 @@ body {
 }
 
 .hide > div > button {
-  background: grey;
+  /* background: grey;
   opacity: 0.05;
   border-style: solid;
   border-color: grey;
-  cursor: not-allowed;
+  cursor: not-allowed; */
+  display: none;
 }
 
 .fifty_fifty {
