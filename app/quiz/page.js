@@ -6,7 +6,7 @@ import Modal from "../components/Modal";
 export default async function Quiz() {
   const quizzes = await fetchQuizzes();
 
-  console.log(quizzes);
+  // console.log(quizzes);
 
   return (
     <main>

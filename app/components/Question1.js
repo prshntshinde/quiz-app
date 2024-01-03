@@ -6,7 +6,7 @@ import CountdownTimer from "./CountdownTimer";
 import { RxCheckCircled, RxCrossCircled } from "react-icons/rx";
 
 export default function Question1(props) {
-  console.log(props);
+  // console.log(props);
   const [showModal, setShowModal] = useState(false);
   const [selectedAnswer, setSelectedAnswer] = useState(null);
   const [answerStatus, setAnswerStatus] = useState("");
@@ -26,16 +26,15 @@ export default function Question1(props) {
   const updateSelectedAnswer = (index) => {
     setSelectedAnswer(index);
     if (props.answer === index) {
-      console.log("correct answer");
-      console.log(index);
-      console.log("Selected Answer: ", selectedAnswer);
-
+      // console.log("correct answer");
+      // console.log(index);
+      // console.log("Selected Answer: ", selectedAnswer);
       // element.target.classList.add("correct")
     } else {
       // element.target.classList.add("wrong")
-      console.log("wrong answer");
-      console.log(index);
-      console.log("Selected Answer: ", selectedAnswer);
+      // console.log("wrong answer");
+      // console.log(index);
+      // console.log("Selected Answer: ", selectedAnswer);
     }
   };
 
@@ -46,7 +45,7 @@ export default function Question1(props) {
     if (props.answer === selectedAnswer) {
       var e = document.getElementById(selectedAnswer);
       e.classList.add("correct");
-      console.log("correct answer");
+      // console.log("correct answer");
       // answerStatus = "Correct";
       setAnswerStatus("Correct");
       setShowExplanation("visible");
@@ -57,7 +56,7 @@ export default function Question1(props) {
     } else {
       var e = document.getElementById(selectedAnswer);
       e.classList.add("wrong");
-      console.log("wrong answer");
+      // console.log("wrong answer");
       // answerStatus = "Wrong";
       setAnswerStatus("Wrong");
       setShowExplanation("visible");
@@ -66,24 +65,24 @@ export default function Question1(props) {
 
   const fifty_fifty = () => {
     let listIndex = [0, 1, 2, 3]; // 4 values
-    console.log(listIndex);
+    // console.log(listIndex);
     listIndex.splice(props.answer, 1); // 3 values - correct answer removed
-    console.log(listIndex);
+    // console.log(listIndex);
     let randomNumber = Math.floor(Math.random() * listIndex.length);
     //alert(listIndex[randomNumber]);
     document
       .getElementById(listIndex[randomNumber])
       .classList.add("fifty_fifty");
 
-    console.log(listIndex);
+    // console.log(listIndex);
     listIndex.splice(randomNumber, 1);
-    console.log(listIndex);
+    // console.log(listIndex);
     let randomNumber1 = Math.floor(Math.random() * listIndex.length);
     //alert(listIndex[randomNumber1]);
     document
       .getElementById(listIndex[randomNumber1])
       .classList.add("fifty_fifty");
-    console.log(listIndex);
+    // console.log(listIndex);
   };
 
   // const ssetSelectedAnswer = (element, ans) => {
