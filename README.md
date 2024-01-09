@@ -11,4 +11,7 @@
 - Open the console and change the directory to the quiz-app folder.
 - Type the below command to start the development server:
   - `npm run dev` 
-- Visit http://localhost:3000 to view your application. 
+- Visit http://localhost:3000 to view your application.
+
+# Repo Activity:
+![Alt](https://repobeats.axiom.co/api/embed/f90c8defedf41c9e4e17a3cd64cb8410c3a75d2e.svg "Repobeats analytics image")
