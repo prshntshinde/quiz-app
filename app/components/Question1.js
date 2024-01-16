@@ -120,7 +120,7 @@ export default function Question1(props) {
               </button>
             </div>
 
-            <div className="flex justify-center mt-3 outline outline-offset-0 outline-1 border-solid border-stone-50 py-2 px-4 mb-3 font-semibold text-2xl">
+            <div className="flex justify-center mt-3 outline outline-offset-0 outline-1 border-solid border-stone-50 py-2 px-4 mb-3 font-semibold text-3xl">
               <p>
                 {props.question_id}. {props.question}
               </p>
@@ -141,9 +141,9 @@ export default function Question1(props) {
                     }}
                     className={
                       selectedAnswer === 0
-                        ? "bg-blue-300 outline outline-offset-0 outline-1 border-solid border-stone-50 py-2 px-4 mb-3 font-semibold "
+                        ? "bg-blue-300 outline outline-offset-0 outline-1 border-solid border-stone-50 py-2 px-4 mb-3 font-semibold text-2xl"
                         : "" +
-                          "outline outline-offset-0 outline-1 border-solid border-stone-50 py-2 px-4 mb-3 font-semibold "
+                          "outline outline-offset-0 outline-1 border-solid border-stone-50 py-2 px-4 mb-3 font-semibold text-2xl"
                     }
                   >
                     A. <span> </span>
@@ -161,9 +161,9 @@ export default function Question1(props) {
                     }}
                     className={
                       selectedAnswer === 1
-                        ? "bg-blue-300 outline outline-offset-0 outline-1 border-solid border-stone-50 py-2 px-4 mb-3 font-semibold "
+                        ? "bg-blue-300 outline outline-offset-0 outline-1 border-solid border-stone-50 py-2 px-4 mb-3 font-semibold text-2xl"
                         : "" +
-                          "outline outline-offset-0 outline-1 border-solid border-stone-50 py-2 px-4 mb-3 font-semibold "
+                          "outline outline-offset-0 outline-1 border-solid border-stone-50 py-2 px-4 mb-3 font-semibold text-2xl"
                     }
                   >
                     B. <span> </span>
@@ -180,9 +180,9 @@ export default function Question1(props) {
                     }}
                     className={
                       selectedAnswer === 2
-                        ? "bg-blue-300 outline outline-offset-0 outline-1 border-solid border-stone-50 py-2 px-4 mb-3 font-semibold "
+                        ? "bg-blue-300 outline outline-offset-0 outline-1 border-solid border-stone-50 py-2 px-4 mb-3 font-semibold text-2xl"
                         : "" +
-                          "outline outline-offset-0 outline-1 border-solid border-stone-50 py-2 px-4 mb-3 font-semibold "
+                          "outline outline-offset-0 outline-1 border-solid border-stone-50 py-2 px-4 mb-3 font-semibold text-2xl"
                     }
                   >
                     C. <span> </span>
@@ -199,9 +199,9 @@ export default function Question1(props) {
                     }}
                     className={
                       selectedAnswer === 3
-                        ? "bg-blue-300 outline outline-offset-0 outline-1 border-solid border-stone-50 py-2 px-4 mb-3 font-semibold "
+                        ? "bg-blue-300 outline outline-offset-0 outline-1 border-solid border-stone-50 py-2 px-4 mb-3 font-semibold text-2xl"
                         : "" +
-                          "outline outline-offset-0 outline-1 border-solid border-stone-50 py-2 px-4 mb-3 font-semibold "
+                          "outline outline-offset-0 outline-1 border-solid border-stone-50 py-2 px-4 mb-3 font-semibold text-2xl"
                     }
                   >
                     D. <span> </span>
