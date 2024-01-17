@@ -1,6 +1,8 @@
 # Quiz App
 ### A web-based quiz application developed using ReactJS and MongoDB.
 
+[![CodeFactor](https://www.codefactor.io/repository/github/prshntshinde/quiz-app/badge/main)](https://www.codefactor.io/repository/github/prshntshinde/quiz-app/overview/main)
+
 ### Software used:
 1. NodeJS v18.18.2 - [Download Link](https://nodejs.org/download/release/v18.18.2/node-v18.18.2-x64.msi)
 2. NextJS - [NextJS](https://nextjs.org/)
@@ -13,5 +15,5 @@
   - `npm run dev` 
 - Visit http://localhost:3000 to view your application.
 
-# Repo Activity:
+### Repo Activity:
 ![Alt](https://repobeats.axiom.co/api/embed/f90c8defedf41c9e4e17a3cd64cb8410c3a75d2e.svg "Repobeats analytics image")
