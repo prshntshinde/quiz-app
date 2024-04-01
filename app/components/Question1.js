@@ -4,6 +4,8 @@ import { useEffect, useState } from "react";
 import Modal from "./Modal";
 import CountdownTimer from "./CountdownTimer";
 import { RxCheckCircled, RxCrossCircled } from "react-icons/rx";
+import { HiOutlineInformationCircle } from "react-icons/hi";
+import { TbMath1Divide2 } from "react-icons/tb";
 
 export default function Question1(props) {
   // console.log(props);
@@ -111,19 +113,31 @@ export default function Question1(props) {
             <div className="flex justify-center text-4xl font-semibold">
               <CountdownTimer />
             </div>
-            <div className="flex justify-center">
+            {/* <div className="flex justify-center">
               <button
                 onClick={fifty_fifty}
                 className=" mt-3 outline outline-offset-0 outline-1 border-solid border-stone-50 font-semibold bg-yellow-200"
               >
                 50:50
               </button>
-            </div>
+            </div> */}
 
-            <div className="flex justify-center mt-3 outline outline-offset-0 outline-1 border-solid border-stone-50 py-2 px-4 mb-3 font-semibold text-3xl">
+            {/* <div className="flex justify-center mt-3 outline outline-offset-0 outline-1 border-solid border-stone-50 py-2 px-4 mb-3 font-semibold text-3xl">
               <p>
                 {props.question_id}. {props.question}
               </p>
+            </div> */}
+
+            <div className="grid grid-cols-12 gap-1 text-3xl text-center py-2 mb-3 font-semibold">
+              <div className="bg-yellow-100 outline outline-offset-0 outline-1 rounded-l-lg">
+                {props.question_id}.
+              </div>
+              <div className="bg-green-100 col-span-11 outline outline-offset-0 outline-1 rounded-r-lg">
+                {props.question}
+              </div>
+              {/* <p>
+                {props.question_id}. {props.question}
+              </p> */}
             </div>
             <div className="grid grid-cols-2 justify-center gap-3">
               {/* <div><button className="outline outline-offset-0 outline-1 border-solid border-stone-50 py-2 px-4 mb-3 font-semibold hover:bg-blue-500">{props.option1}</button></div>
@@ -228,15 +242,49 @@ export default function Question1(props) {
                 )}{" "}
               </p>
             </div>
-            <div className="flex justify-center outline outline-offset-0 outline-1 hover:bg-blue-500 border-solid border-stone-50 py-2 px-4 font-semibold mb-3">
+
+            {/* Add new div for options panel contains all opitons like 50-50, double, submit and close. */}
+            <div className="flex justify-evenly">
+              <div>
+                <button class="bg-white hover:bg-gray-100 text-black font-semibold py-2 px-4 border border-gray-400 rounded shadow">
+                  {/* <HiOutlineInformationCircle /> Show Answers */}
+                  Show Answers
+                </button>
+              </div>
+              <div>
+                <button class="bg-white hover:bg-gray-100 text-black font-semibold py-2 px-4 border border-gray-400 rounded shadow">
+                  {/* <TbMath1Divide2 /> 50-50 */}
+                  50-50
+                </button>
+              </div>
+              <div>
+                <button class="bg-white hover:bg-gray-100 text-black font-semibold py-2 px-4 border border-gray-400 rounded shadow">
+                  {/* <TbMath1Divide2 /> 50-50 */}
+                  Submit
+                </button>
+              </div>
+              <div>
+                <button class="bg-white hover:bg-gray-100 text-black font-semibold py-2 px-4 border border-gray-400 rounded shadow">
+                  {/* <TbMath1Divide2 /> 50-50 */}
+                  Double
+                </button>
+              </div>
+              <div>
+                <button class="bg-white hover:bg-gray-100 text-black font-semibold py-2 px-4 border border-gray-400 rounded shadow">
+                  {/* <TbMath1Divide2 /> 50-50 */}
+                  Close
+                </button>
+              </div>
+            </div>
+            {/* <div className="flex justify-center outline outline-offset-0 outline-1 hover:bg-blue-500 border-solid border-stone-50 py-2 px-4 font-semibold mb-3">
               <button onClick={checkAnswer} disabled={selectedAnswer === null}>
                 Submit
               </button>
-            </div>
+            </div> */}
             <div
               className={
                 showExplanation +
-                " flex justify-center outline outline-offset-0 outline-3 outline-yellow-500 bg-yellow-200 outline-dashed border-solid border-stone-50 py-2 px-4 font-semibold"
+                " flex justify-center outline-offset-0 outline-3 outline-yellow-500 bg-yellow-200 outline-dashed border-solid border-stone-50 py-2 px-4 font-semibold"
               }
             >
               {props.explanation}
