@@ -110,9 +110,9 @@ export default function Question1(props) {
       <div>
         <Modal isVisible={showModal} onClose={() => setShowModal(false)}>
           <div>
-            <div className="flex justify-center text-4xl font-semibold">
+            {/* <div className="flex justify-center text-4xl font-semibold">
               <CountdownTimer />
-            </div>
+            </div> */}
             {/* <div className="flex justify-center">
               <button
                 onClick={fifty_fifty}
@@ -128,11 +128,9 @@ export default function Question1(props) {
               </p>
             </div> */}
 
-            <div className="grid grid-cols-12 gap-1 text-3xl text-center py-2 mb-3 font-semibold">
-              <div className="bg-yellow-100 outline outline-offset-0 outline-1 rounded-l-lg">
-                {props.question_id}.
-              </div>
-              <div className="bg-green-100 col-span-11 outline outline-offset-0 outline-1 rounded-r-lg">
+            <div className="grid grid-cols-12 gap-1 text-3xl text-center py-2 mb-3 font-semibold outline outline-offset-1 outline-2 outline-green-500 rounded shadow-2xl">
+              <div className="bg-yellow-0 m-auto">{props.question_id}.</div>
+              <div className="bg-green-0 col-span-11  m-auto">
                 {props.question}
               </div>
               {/* <p>
@@ -146,7 +144,7 @@ export default function Question1(props) {
                             <div><button className="outline outline-offset-0 outline-1 border-solid border-stone-50 py-2 px-4 mb-3 font-semibold hover:bg-blue-500">{props.option4}</button></div> */}
 
               {/* Other implementation for answer logic*/}
-              <ul>
+              {/* <ul>
                 <div>
                   <li
                     id="0"
@@ -164,9 +162,9 @@ export default function Question1(props) {
                     {props.option1}
                   </li>
                 </div>
-              </ul>
+              </ul> */}
 
-              <ul>
+              {/* <ul>
                 <div>
                   <li
                     id="1"
@@ -184,8 +182,8 @@ export default function Question1(props) {
                     {props.option2}
                   </li>
                 </div>
-              </ul>
-              <ul>
+              </ul> */}
+              {/* <ul>
                 <div>
                   <li
                     id="2"
@@ -203,8 +201,8 @@ export default function Question1(props) {
                     {props.option3}
                   </li>
                 </div>
-              </ul>
-              <ul>
+              </ul> */}
+              {/* <ul>
                 <div>
                   <li
                     id="3"
@@ -222,7 +220,7 @@ export default function Question1(props) {
                     {props.option4}
                   </li>
                 </div>
-              </ul>
+              </ul> */}
             </div>
             <div className="flex justify-center py-2 px-4 font-semibold mb-3 animate-bounce">
               <p
@@ -242,6 +240,35 @@ export default function Question1(props) {
                 )}{" "}
               </p>
             </div>
+
+            {/* Add Options grid */}
+            <div
+              id="answersGrid"
+              className="grid grid-cols-12 text-left gap-4 font-semibold text-3xl"
+            >
+              <div className="col-span-5 flex outline outline-1 outline-cyan-500 rounded place-items-center gap-1">
+                <div className="">&nbsp; A.</div>
+                <div className="">{props.option1}</div>
+              </div>
+
+              <div className="row-span-2 col-start-6">
+                <CountdownTimer />
+              </div>
+              <div className="col-start-8 col-span-5 flex outline outline-1 outline-cyan-500 rounded place-items-center gap-1">
+                <div className="">&nbsp; B.</div>
+                <div className="">{props.option2}</div>
+              </div>
+
+              <div className="col-span-5  flex outline outline-1 outline-cyan-500 rounded place-items-center gap-1">
+                <div className="">&nbsp; C.</div>
+                <div className="">{props.option3}</div>
+              </div>
+              <div className="col-start-8 col-span-5 flex outline outline-1 outline-cyan-500 rounded place-items-center gap-1">
+                <div className="">&nbsp; D.</div>
+                <div className="">{props.option4}</div>
+              </div>
+            </div>
+            <br></br>
 
             {/* Add new div for options panel contains all opitons like 50-50, double, submit and close. */}
             <div className="flex justify-evenly">
@@ -269,7 +296,7 @@ export default function Question1(props) {
                   Double
                 </button>
               </div>
-              <div>
+              <div className=" flex">
                 <button class="bg-white hover:bg-gray-100 text-black font-semibold py-2 px-4 border border-gray-400 rounded shadow">
                   {/* <TbMath1Divide2 /> 50-50 */}
                   Close
