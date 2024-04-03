@@ -4,8 +4,6 @@ import { useEffect, useState } from "react";
 import Modal from "./Modal";
 import CountdownTimer from "./CountdownTimer";
 import { RxCheckCircled, RxCrossCircled } from "react-icons/rx";
-import { HiOutlineInformationCircle } from "react-icons/hi";
-import { TbMath1Divide2 } from "react-icons/tb";
 
 export default function Question1(props) {
   // console.log(props);
@@ -246,7 +244,19 @@ export default function Question1(props) {
               id="answersGrid"
               className="grid grid-cols-12 text-left gap-4 font-semibold text-3xl"
             >
-              <div className="col-span-5 flex outline outline-1 outline-cyan-500 rounded place-items-center gap-1">
+              <div
+                id="0"
+                onClick={() => {
+                  updateSelectedAnswer(0);
+                }}
+                // className="col-span-5 flex outline outline-1 outline-cyan-500 rounded place-items-center gap-1"
+                className={
+                  selectedAnswer === 0
+                    ? "bg-blue-400 outline outline-offset-0 outline-1 border-solid border-stone-50 py-2 px-4 mb-3 font-semibold text-2xl col-span-5 flex rounded place-items-center gap-1"
+                    : "" +
+                      "outline outline-offset-0 outline-1 border-solid border-stone-50 py-2 px-4 mb-3 font-semibold text-2xl col-span-5 flex rounded place-items-center gap-1"
+                }
+              >
                 <div className="">&nbsp; A.</div>
                 <div className="">{props.option1}</div>
               </div>
@@ -254,16 +264,52 @@ export default function Question1(props) {
               <div className="row-span-2 col-start-6">
                 <CountdownTimer />
               </div>
-              <div className="col-start-8 col-span-5 flex outline outline-1 outline-cyan-500 rounded place-items-center gap-1">
+              <div
+                id="1"
+                onClick={() => {
+                  updateSelectedAnswer(1);
+                }}
+                // className="col-start-8 col-span-5 flex outline outline-1 outline-cyan-500 rounded place-items-center gap-1"
+                className={
+                  selectedAnswer === 1
+                    ? "bg-blue-400 outline outline-offset-0 outline-1 border-solid border-stone-50 py-2 px-4 mb-3 font-semibold text-2xl col-start-8 col-span-5 flex rounded place-items-center gap-1"
+                    : "" +
+                      "outline outline-offset-0 outline-1 border-solid border-stone-50 py-2 px-4 mb-3 font-semibold text-2xl col-start-8 col-span-5 flex rounded place-items-center gap-1"
+                }
+              >
                 <div className="">&nbsp; B.</div>
                 <div className="">{props.option2}</div>
               </div>
 
-              <div className="col-span-5  flex outline outline-1 outline-cyan-500 rounded place-items-center gap-1">
+              <div
+                id="2"
+                onClick={() => {
+                  updateSelectedAnswer(2);
+                }}
+                className={
+                  selectedAnswer === 2
+                    ? "bg-blue-400 outline outline-offset-0 outline-1 border-solid border-stone-50 py-2 px-4 mb-3 font-semibold text-2xl col-span-5 flex rounded place-items-center gap-1"
+                    : "" +
+                      "outline outline-offset-0 outline-1 border-solid border-stone-50 py-2 px-4 mb-3 font-semibold text-2xl col-span-5 flex rounded place-items-center gap-1"
+                }
+                // className="col-span-5  flex outline outline-1 outline-cyan-500 rounded place-items-center gap-1"
+              >
                 <div className="">&nbsp; C.</div>
                 <div className="">{props.option3}</div>
               </div>
-              <div className="col-start-8 col-span-5 flex outline outline-1 outline-cyan-500 rounded place-items-center gap-1">
+              <div
+                id="3"
+                onClick={() => {
+                  updateSelectedAnswer(3);
+                }}
+                className={
+                  selectedAnswer === 3
+                    ? "bg-blue-400 outline outline-offset-0 outline-1 border-solid border-stone-50 py-2 px-4 mb-3 font-semibold text-2xl col-start-8 col-span-5 flex rounded place-items-center gap-1"
+                    : "" +
+                      "outline outline-offset-0 outline-1 border-solid border-stone-50 py-2 px-4 mb-3 font-semibold text-2xl col-start-8 col-span-5 flex rounded place-items-center gap-1"
+                }
+                // className="col-start-8 col-span-5 flex outline outline-1 outline-cyan-500 rounded place-items-center gap-1"
+              >
                 <div className="">&nbsp; D.</div>
                 <div className="">{props.option4}</div>
               </div>
@@ -279,13 +325,20 @@ export default function Question1(props) {
                 </button>
               </div>
               <div>
-                <button class="text-purple-700 hover:text-white border border-purple-700 hover:bg-purple-800 focus:ring-4 focus:outline-none focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-purple-400 dark:text-purple-400 dark:hover:text-white dark:hover:bg-purple-500 dark:focus:ring-purple-900">
+                <button
+                  onClick={fifty_fifty}
+                  class="text-purple-700 hover:text-white border border-purple-700 hover:bg-purple-800 focus:ring-4 focus:outline-none focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-purple-400 dark:text-purple-400 dark:hover:text-white dark:hover:bg-purple-500 dark:focus:ring-purple-900"
+                >
                   {/* <TbMath1Divide2 /> 50-50 */}
                   50-50
                 </button>
               </div>
               <div>
-                <button class="text-blue-700 hover:text-white border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-500 dark:focus:ring-blue-800">
+                <button
+                  onClick={checkAnswer}
+                  disabled={selectedAnswer === null}
+                  class="text-blue-700 hover:text-white border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-500 dark:focus:ring-blue-800"
+                >
                   {/* <TbMath1Divide2 /> 50-50 */}
                   Submit
                 </button>
