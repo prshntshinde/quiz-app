@@ -7,6 +7,7 @@ import Image from "next/image";
 import { FaCross } from "react-icons/fa";
 import { FaBookBible, FaHouseChimney } from "react-icons/fa6";
 import logo from "../../public/HMC_LOGO.svg";
+import { twMerge } from "@/libs/utils";
 
 const NavBar = () => {
   const currentPath = usePathname();
@@ -34,9 +35,12 @@ const NavBar = () => {
         {links.map((link) => (
           <Link
             key={link.href}
-            className={`${
-              link.href === currentPath ? "text-zinc-950" : "text-zinc-500"
-            } hover:text-zinc-900 transition-colors`}
+            // className={`${
+            //   link.href === currentPath ? "text-zinc-950" : "text-zinc-500"
+            // } hover:text-zinc-900 transition-colors`}
+            className={twMerge("hover:bg-sky-100 hover:text-blue-600", {
+              "text-blue-600": link.href === currentPath,
+            })}
             href={link.href}
           >
             {link.label}
