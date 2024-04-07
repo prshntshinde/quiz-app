@@ -16,7 +16,7 @@ const ClockAudio = () => {
   return (
     <div>
       <button onClick={play}>Clock Audio</button>
-      <audio id="clock-audio" src="/clock.mp3">
+      <audio id="clock-audio" src="/clock-45s.mp3">
         Audio
       </audio>
     </div>
