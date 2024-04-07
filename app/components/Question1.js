@@ -251,12 +251,16 @@ export default function Question1(props) {
                   updateSelectedAnswer(0);
                 }}
                 // className="flex col-span-5 gap-1 rounded outline outline-1 outline-cyan-500 place-items-center"
-                className={
-                  selectedAnswer === 0
-                    ? "bg-blue-400 outline outline-offset-0 outline-1 border-solid border-stone-50 py-2 px-4 mb-3 font-semibold text-2xl col-span-5 flex rounded place-items-center gap-1"
-                    : "" +
-                      "outline outline-offset-0 outline-1 border-solid border-stone-50 py-2 px-4 mb-3 font-semibold text-2xl col-span-5 flex rounded place-items-center gap-1"
-                }
+                // className={
+                //   selectedAnswer === 0
+                //     ? "bg-blue-400 outline outline-offset-0 outline-1 border-solid border-stone-50 py-2 px-4 mb-3 font-semibold text-2xl col-span-5 flex rounded place-items-center gap-1"
+                //     : "" +
+                //       "outline outline-offset-0 outline-1 border-solid border-stone-50 py-2 px-4 mb-3 font-semibold text-2xl col-span-5 flex rounded place-items-center gap-1"
+                // }
+                className={twMerge(
+                  "outline outline-offset-0 outline-1 border-solid border-stone-50 py-2 px-4 mb-3 font-semibold text-2xl col-span-5 flex rounded place-items-center gap-1",
+                  { "bg-blue-400": selectedAnswer === 0 }
+                )}
               >
                 <div className="">&nbsp; A.</div>
                 <div className="">{props.option1}</div>
@@ -271,12 +275,16 @@ export default function Question1(props) {
                   updateSelectedAnswer(1);
                 }}
                 // className="flex col-span-5 col-start-8 gap-1 rounded outline outline-1 outline-cyan-500 place-items-center"
-                className={
-                  selectedAnswer === 1
-                    ? "bg-blue-400 outline outline-offset-0 outline-1 border-solid border-stone-50 py-2 px-4 mb-3 font-semibold text-2xl col-start-8 col-span-5 flex rounded place-items-center gap-1"
-                    : "" +
-                      "outline outline-offset-0 outline-1 border-solid border-stone-50 py-2 px-4 mb-3 font-semibold text-2xl col-start-8 col-span-5 flex rounded place-items-center gap-1"
-                }
+                // className={
+                //   selectedAnswer === 1
+                //     ? "bg-blue-400 outline outline-offset-0 outline-1 border-solid border-stone-50 py-2 px-4 mb-3 font-semibold text-2xl col-start-8 col-span-5 flex rounded place-items-center gap-1"
+                //     : "" +
+                //       "outline outline-offset-0 outline-1 border-solid border-stone-50 py-2 px-4 mb-3 font-semibold text-2xl col-start-8 col-span-5 flex rounded place-items-center gap-1"
+                // }
+                className={twMerge(
+                  "outline outline-offset-0 outline-1 border-solid border-stone-50 py-2 px-4 mb-3 font-semibold text-2xl col-start-8 col-span-5 flex rounded place-items-center gap-1",
+                  { "bg-blue-400": selectedAnswer === 1 }
+                )}
               >
                 <div className="">&nbsp; B.</div>
                 <div className="">{props.option2}</div>
@@ -287,12 +295,17 @@ export default function Question1(props) {
                 onClick={() => {
                   updateSelectedAnswer(2);
                 }}
-                className={
-                  selectedAnswer === 2
-                    ? "bg-blue-400 outline outline-offset-0 outline-1 border-solid border-stone-50 py-2 px-4 mb-3 font-semibold text-2xl col-span-5 flex rounded place-items-center gap-1"
-                    : "" +
-                      "outline outline-offset-0 outline-1 border-solid border-stone-50 py-2 px-4 mb-3 font-semibold text-2xl col-span-5 flex rounded place-items-center gap-1"
-                }
+                // className={
+                //   selectedAnswer === 2
+                //     ? "bg-blue-400 outline outline-offset-0 outline-1 border-solid border-stone-50 py-2 px-4 mb-3 font-semibold text-2xl col-span-5 flex rounded place-items-center gap-1"
+                //     : "" +
+                //       "outline outline-offset-0 outline-1 border-solid border-stone-50 py-2 px-4 mb-3 font-semibold text-2xl col-span-5 flex rounded place-items-center gap-1"
+                // }
+                className={twMerge(
+                  "outline outline-offset-0 outline-1 border-solid border-stone-50 py-2 px-4 mb-3 font-semibold text-2xl col-span-5 flex rounded place-items-center gap-1",
+                  { "bg-blue-400": selectedAnswer === 2 }
+                )}
+
                 // className="flex col-span-5 gap-1 rounded outline outline-1 outline-cyan-500 place-items-center"
               >
                 <div className="">&nbsp; C.</div>
@@ -303,12 +316,17 @@ export default function Question1(props) {
                 onClick={() => {
                   updateSelectedAnswer(3);
                 }}
-                className={
-                  selectedAnswer === 3
-                    ? "bg-blue-400 outline outline-offset-0 outline-1 border-solid border-stone-50 py-2 px-4 mb-3 font-semibold text-2xl col-start-8 col-span-5 flex rounded place-items-center gap-1"
-                    : "" +
-                      "outline outline-offset-0 outline-1 border-solid border-stone-50 py-2 px-4 mb-3 font-semibold text-2xl col-start-8 col-span-5 flex rounded place-items-center gap-1"
-                }
+                // className={
+                //   selectedAnswer === 3
+                //     ? "bg-blue-400 outline outline-offset-0 outline-1 border-solid border-stone-50 py-2 px-4 mb-3 font-semibold text-2xl col-start-8 col-span-5 flex rounded place-items-center gap-1"
+                //     : "" +
+                //       "outline outline-offset-0 outline-1 border-solid border-stone-50 py-2 px-4 mb-3 font-semibold text-2xl col-start-8 col-span-5 flex rounded place-items-center gap-1"
+                // }
+                className={twMerge(
+                  "outline outline-offset-0 outline-1 border-solid border-stone-50 py-2 px-4 mb-3 font-semibold text-2xl col-start-8 col-span-5 flex rounded place-items-center gap-1",
+                  { "bg-blue-400": selectedAnswer === 3 }
+                )}
+
                 // className="flex col-span-5 col-start-8 gap-1 rounded outline outline-1 outline-cyan-500 place-items-center"
               >
                 <div className="">&nbsp; D.</div>

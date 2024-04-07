@@ -32,8 +32,9 @@ body {
 }
 
 .fifty_fifty {
-  display: none;
+  /* display: none; */
   /* background: grey;
   opacity: 0.05;
   cursor: not-allowed; */
+  visibility: hidden;
 }
