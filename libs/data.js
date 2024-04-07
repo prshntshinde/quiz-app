@@ -21,7 +21,7 @@ export const fetchQuestions = async (id) => {
       quiz_id: id,
       isUsed: false,
     }).sort({ question_id: 1 });
-    console.log(questions);
+    // console.log(questions);
     return questions;
   } catch (error) {
     console.log(error);
