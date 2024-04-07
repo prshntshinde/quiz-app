@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import Modal from "./Modal";
 import CountdownTimer from "./CountdownTimer";
 import { RxCheckCircled, RxCrossCircled } from "react-icons/rx";
+import { twMerge } from "@/libs/utils";
 
 export default function Question1(props) {
   // console.log(props);
@@ -100,7 +101,7 @@ export default function Question1(props) {
     <div>
       <button
         // id={props.question_id}
-        className="w-32 shadow-xl outline outline-offset-0 outline-1 hover:bg-blue-500 text-black font-semibold hover:text-white border-solid border-stone-50 py-2 px-4 hover:border-transparent text-6xl"
+        className="w-32 px-4 py-2 text-6xl font-semibold text-black border-solid shadow-xl outline outline-offset-0 outline-1 hover:bg-blue-500 hover:text-white border-stone-50 hover:border-transparent"
         onClick={() => setShowModal(true)}
       >
         {props.question_id}
@@ -114,32 +115,32 @@ export default function Question1(props) {
             {/* <div className="flex justify-center">
               <button
                 onClick={fifty_fifty}
-                className=" mt-3 outline outline-offset-0 outline-1 border-solid border-stone-50 font-semibold bg-yellow-200"
+                className="mt-3 font-semibold bg-yellow-200 border-solid outline outline-offset-0 outline-1 border-stone-50"
               >
                 50:50
               </button>
             </div> */}
 
-            {/* <div className="flex justify-center mt-3 outline outline-offset-0 outline-1 border-solid border-stone-50 py-2 px-4 mb-3 font-semibold text-3xl">
+            {/* <div className="flex justify-center px-4 py-2 mt-3 mb-3 text-3xl font-semibold border-solid outline outline-offset-0 outline-1 border-stone-50">
               <p>
                 {props.question_id}. {props.question}
               </p>
             </div> */}
 
-            <div className="grid grid-cols-12 gap-1 text-3xl text-center py-2 mb-3 font-semibold outline outline-offset-1 outline-2 outline-green-500 rounded shadow-2xl">
-              <div className="bg-yellow-0 m-auto">{props.question_id}.</div>
-              <div className="bg-green-0 col-span-11  m-auto">
+            <div className="grid grid-cols-12 gap-1 py-2 mb-3 text-3xl font-semibold text-center rounded shadow-2xl outline outline-offset-1 outline-2 outline-green-500">
+              <div className="m-auto bg-yellow-0">{props.question_id}.</div>
+              <div className="col-span-11 m-auto bg-green-0">
                 {props.question}
               </div>
               {/* <p>
                 {props.question_id}. {props.question}
               </p> */}
             </div>
-            <div className="grid grid-cols-2 justify-center gap-3">
-              {/* <div><button className="outline outline-offset-0 outline-1 border-solid border-stone-50 py-2 px-4 mb-3 font-semibold hover:bg-blue-500">{props.option1}</button></div>
-                            <div><button className="outline outline-offset-0 outline-1 border-solid border-stone-50 py-2 px-4 mb-3 font-semibold hover:bg-blue-500">{props.option2}</button></div>
-                            <div><button className="outline outline-offset-0 outline-1 border-solid border-stone-50 py-2 px-4 mb-3 font-semibold hover:bg-blue-500">{props.option3}</button></div>
-                            <div><button className="outline outline-offset-0 outline-1 border-solid border-stone-50 py-2 px-4 mb-3 font-semibold hover:bg-blue-500">{props.option4}</button></div> */}
+            <div className="grid justify-center grid-cols-2 gap-3">
+              {/* <div><button className="px-4 py-2 mb-3 font-semibold border-solid outline outline-offset-0 outline-1 border-stone-50 hover:bg-blue-500">{props.option1}</button></div>
+                            <div><button className="px-4 py-2 mb-3 font-semibold border-solid outline outline-offset-0 outline-1 border-stone-50 hover:bg-blue-500">{props.option2}</button></div>
+                            <div><button className="px-4 py-2 mb-3 font-semibold border-solid outline outline-offset-0 outline-1 border-stone-50 hover:bg-blue-500">{props.option3}</button></div>
+                            <div><button className="px-4 py-2 mb-3 font-semibold border-solid outline outline-offset-0 outline-1 border-stone-50 hover:bg-blue-500">{props.option4}</button></div> */}
 
               {/* Other implementation for answer logic*/}
               {/* <ul>
@@ -220,7 +221,7 @@ export default function Question1(props) {
                 </div>
               </ul> */}
             </div>
-            <div className="flex justify-center py-2 px-4 font-semibold mb-3 animate-bounce">
+            <div className="flex justify-center px-4 py-2 mb-3 font-semibold animate-bounce">
               <p
                 className={
                   answerStatus === "Correct" ? "text-green-600" : "text-red-600"
@@ -242,14 +243,14 @@ export default function Question1(props) {
             {/* Add Options grid */}
             <div
               id="answersGrid"
-              className="grid grid-cols-12 text-left gap-4 font-semibold text-3xl"
+              className="grid grid-cols-12 gap-4 text-3xl font-semibold text-left"
             >
               <div
                 id="0"
                 onClick={() => {
                   updateSelectedAnswer(0);
                 }}
-                // className="col-span-5 flex outline outline-1 outline-cyan-500 rounded place-items-center gap-1"
+                // className="flex col-span-5 gap-1 rounded outline outline-1 outline-cyan-500 place-items-center"
                 className={
                   selectedAnswer === 0
                     ? "bg-blue-400 outline outline-offset-0 outline-1 border-solid border-stone-50 py-2 px-4 mb-3 font-semibold text-2xl col-span-5 flex rounded place-items-center gap-1"
@@ -261,7 +262,7 @@ export default function Question1(props) {
                 <div className="">{props.option1}</div>
               </div>
 
-              <div className="row-span-2 col-start-6">
+              <div className="col-start-6 row-span-2">
                 <CountdownTimer />
               </div>
               <div
@@ -269,7 +270,7 @@ export default function Question1(props) {
                 onClick={() => {
                   updateSelectedAnswer(1);
                 }}
-                // className="col-start-8 col-span-5 flex outline outline-1 outline-cyan-500 rounded place-items-center gap-1"
+                // className="flex col-span-5 col-start-8 gap-1 rounded outline outline-1 outline-cyan-500 place-items-center"
                 className={
                   selectedAnswer === 1
                     ? "bg-blue-400 outline outline-offset-0 outline-1 border-solid border-stone-50 py-2 px-4 mb-3 font-semibold text-2xl col-start-8 col-span-5 flex rounded place-items-center gap-1"
@@ -292,7 +293,7 @@ export default function Question1(props) {
                     : "" +
                       "outline outline-offset-0 outline-1 border-solid border-stone-50 py-2 px-4 mb-3 font-semibold text-2xl col-span-5 flex rounded place-items-center gap-1"
                 }
-                // className="col-span-5  flex outline outline-1 outline-cyan-500 rounded place-items-center gap-1"
+                // className="flex col-span-5 gap-1 rounded outline outline-1 outline-cyan-500 place-items-center"
               >
                 <div className="">&nbsp; C.</div>
                 <div className="">{props.option3}</div>
@@ -308,7 +309,7 @@ export default function Question1(props) {
                     : "" +
                       "outline outline-offset-0 outline-1 border-solid border-stone-50 py-2 px-4 mb-3 font-semibold text-2xl col-start-8 col-span-5 flex rounded place-items-center gap-1"
                 }
-                // className="col-start-8 col-span-5 flex outline outline-1 outline-cyan-500 rounded place-items-center gap-1"
+                // className="flex col-span-5 col-start-8 gap-1 rounded outline outline-1 outline-cyan-500 place-items-center"
               >
                 <div className="">&nbsp; D.</div>
                 <div className="">{props.option4}</div>
@@ -360,19 +361,24 @@ export default function Question1(props) {
                 </button>
               </div>
             </div>
-            {/* <div className="flex justify-center outline outline-offset-0 outline-1 hover:bg-blue-500 border-solid border-stone-50 py-2 px-4 font-semibold mb-3">
+            {/* <div className="flex justify-center px-4 py-2 mb-3 font-semibold border-solid outline outline-offset-0 outline-1 hover:bg-blue-500 border-stone-50">
               <button onClick={checkAnswer} disabled={selectedAnswer === null}>
                 Submit
               </button>
             </div> */}
+            <br></br>
             <div
-              className={
-                showExplanation +
-                " flex justify-center outline-offset-0 outline-3 outline-yellow-500 bg-yellow-200 outline-dashed border-solid border-stone-50 py-2 px-4 font-semibold"
-              }
+              // className={
+              //   showExplanation +
+              //   " flex justify-center outline-offset-0 outline-3 outline-yellow-500 bg-yellow-200 outline-dashed border-solid border-stone-50 py-2 px-4 font-semibold"
+              // }
+              className={twMerge("hidden ", {
+                "visible flex justify-center outline-offset-0 outline-3 outline-yellow-500 bg-yellow-200 outline-dashed border-solid border-stone-50 py-2 px-4 font-semibold rounded":
+                  showExplanation == "visible",
+              })}
             >
               {props.explanation}
-              <audio autoPlay id="clock-audio" src="/clock.mp3">
+              <audio autoPlay id="clock-audio" src="/clock-45s.mp3">
                 Audio
               </audio>
             </div>
