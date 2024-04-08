@@ -127,8 +127,8 @@ export default function Question1(props) {
               </p>
             </div> */}
 
-            <div className="grid grid-cols-12 gap-1 py-2 mb-3 text-3xl font-semibold text-center bg-black rounded shadow-2xl outline outline-offset-1 outline-2 outline-green-500">
-              <div className="m-auto text-yellow-600">{props.question_id}.</div>
+            <div className="grid grid-cols-12 gap-1 py-2 mb-3 text-3xl font-semibold text-center bg-black rounded shadow-2xl outline outline-offset-1 outline-2 outline-pink-600">
+              <div className="m-auto text-yellow-400">{props.question_id}.</div>
               <div className="col-span-11 m-auto text-yellow-400">
                 {props.question}
               </div>
@@ -258,7 +258,7 @@ export default function Question1(props) {
                 //       "outline outline-offset-0 outline-1 border-solid border-stone-50 py-2 px-4 mb-3 font-semibold text-2xl col-span-5 flex rounded place-items-center gap-1"
                 // }
                 className={twMerge(
-                  "outline outline-offset-0 outline-1 border-solid border-stone-50 py-2 px-4 mb-3 font-semibold text-2xl col-span-5 flex rounded place-items-center gap-1 bg-black text-white",
+                  "outline outline-offset-0 outline-1 border-solid border-stone-50 py-2 px-4 mb-3 font-semibold text-2xl col-span-5 flex rounded place-items-center gap-1 bg-black text-white transition duration-150 ease-in-out hover:scale-110",
                   { "bg-blue-400": selectedAnswer === 0 }
                 )}
               >
@@ -282,7 +282,7 @@ export default function Question1(props) {
                 //       "outline outline-offset-0 outline-1 border-solid border-stone-50 py-2 px-4 mb-3 font-semibold text-2xl col-start-8 col-span-5 flex rounded place-items-center gap-1"
                 // }
                 className={twMerge(
-                  "outline outline-offset-0 outline-1 border-solid border-stone-50 py-2 px-4 mb-3 font-semibold text-2xl col-start-8 col-span-5 flex rounded place-items-center gap-1 bg-black text-white",
+                  "outline outline-offset-0 outline-1 border-solid border-stone-50 py-2 px-4 mb-3 font-semibold text-2xl col-start-8 col-span-5 flex rounded place-items-center gap-1 bg-black text-white transition duration-150 ease-in-out hover:scale-110",
                   { "bg-blue-400": selectedAnswer === 1 }
                 )}
               >
@@ -302,7 +302,7 @@ export default function Question1(props) {
                 //       "outline outline-offset-0 outline-1 border-solid border-stone-50 py-2 px-4 mb-3 font-semibold text-2xl col-span-5 flex rounded place-items-center gap-1"
                 // }
                 className={twMerge(
-                  "outline outline-offset-0 outline-1 border-solid border-stone-50 py-2 px-4 mb-3 font-semibold text-2xl col-span-5 flex rounded place-items-center gap-1 bg-black text-white",
+                  "outline outline-offset-0 outline-1 border-solid border-stone-50 py-2 px-4 mb-3 font-semibold text-2xl col-span-5 flex rounded place-items-center gap-1 bg-black text-white transition duration-150 ease-in-out hover:scale-110",
                   { "bg-blue-400": selectedAnswer === 2 }
                 )}
 
@@ -323,8 +323,10 @@ export default function Question1(props) {
                 //       "outline outline-offset-0 outline-1 border-solid border-stone-50 py-2 px-4 mb-3 font-semibold text-2xl col-start-8 col-span-5 flex rounded place-items-center gap-1"
                 // }
                 className={twMerge(
-                  "outline outline-offset-0 outline-1 border-solid border-stone-50 py-2 px-4 mb-3 font-semibold text-2xl col-start-8 col-span-5 flex rounded place-items-center gap-1 bg-black text-white",
-                  { "bg-blue-400": selectedAnswer === 3 }
+                  "outline outline-offset-0 outline-1 border-solid border-stone-50 py-2 px-4 mb-3 font-semibold text-2xl col-start-8 col-span-5 flex rounded place-items-center gap-1 bg-black text-white transition duration-150 ease-in-out hover:scale-110",
+                  {
+                    "bg-blue-400": selectedAnswer === 3,
+                  }
                 )}
 
                 // className="flex col-span-5 col-start-8 gap-1 rounded outline outline-1 outline-cyan-500 place-items-center"
@@ -338,15 +340,15 @@ export default function Question1(props) {
             {/* Add new div for options panel contains all opitons like 50-50, double, submit and close. */}
             <div className="flex justify-evenly">
               <div>
-                <button className="text-yellow-300 hover:text-white border border-yellow-400 hover:bg-yellow-500 focus:ring-4 focus:outline-none focus:ring-yellow-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-yellow-300 dark:text-black dark:hover:text-white dark:hover:bg-yellow-400 dark:focus:ring-yellow-900">
+                <button className="focus:outline-none text-white bg-yellow-400 hover:bg-yellow-500 focus:ring-4 focus:ring-yellow-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:focus:ring-yellow-900 transition duration-150 ease-in-out hover:scale-110">
                   {/* <HiOutlineInformationCircle /> Show Answers */}
-                  Show Answers
+                  Show Options
                 </button>
               </div>
               <div>
                 <button
                   onClick={fifty_fifty}
-                  className="text-purple-700 hover:text-white border border-purple-700 hover:bg-purple-800 focus:ring-4 focus:outline-none focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-purple-400 dark:text-purple-400 dark:hover:text-white dark:hover:bg-purple-500 dark:focus:ring-purple-900"
+                  className="focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900 transition duration-150 ease-in-out hover:scale-110"
                 >
                   {/* <TbMath1Divide2 /> 50-50 */}
                   50-50
@@ -356,21 +358,21 @@ export default function Question1(props) {
                 <button
                   onClick={checkAnswer}
                   disabled={selectedAnswer === null}
-                  className="text-blue-700 hover:text-white border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-500 dark:focus:ring-blue-800"
+                  className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800 transition duration-150 ease-in-out hover:scale-110"
                 >
                   {/* <TbMath1Divide2 /> 50-50 */}
                   Submit
                 </button>
               </div>
               <div>
-                <button className="text-purple-700 hover:text-white border border-purple-700 hover:bg-purple-800 focus:ring-4 focus:outline-none focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-purple-400 dark:text-purple-400 dark:hover:text-white dark:hover:bg-purple-500 dark:focus:ring-purple-900">
+                <button className="focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900 transition duration-150 ease-in-out hover:scale-110">
                   {/* <TbMath1Divide2 /> 50-50 */}
                   Double
                 </button>
               </div>
               <div className="">
                 <button
-                  className="text-red-700 hover:text-white border border-red-700 hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center me-2 mb-2 dark:border-red-500 dark:text-red-500 dark:hover:text-white dark:hover:bg-red-600 dark:focus:ring-red-900"
+                  className="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900 transition duration-150 ease-in-out hover:scale-110"
                   onClick={() => setShowModal(false)}
                 >
                   Close
