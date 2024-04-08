@@ -61,6 +61,7 @@ export default function Question1(props) {
       // answerStatus = "Wrong";
       setAnswerStatus("Wrong");
       setShowExplanation("visible");
+      document.getElementById("clock-audio").pause();
     }
   };
 
