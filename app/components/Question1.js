@@ -128,7 +128,7 @@ export default function Question1(props) {
               </p>
             </div> */}
 
-            <div className="grid grid-cols-12 gap-1 py-2 mb-3 text-3xl font-semibold text-center bg-black rounded shadow-2xl outline outline-offset-1 outline-2 outline-pink-600">
+            <div className="grid grid-cols-12 gap-1 py-2 mb-3 text-4xl font-semibold text-center bg-black rounded shadow-2xl outline outline-offset-1 outline-2 outline-pink-600">
               <div className="m-auto text-yellow-400">{props.question_id}.</div>
               <div className="col-span-11 m-auto text-yellow-400">
                 {props.question}
@@ -259,7 +259,7 @@ export default function Question1(props) {
                 //       "outline outline-offset-0 outline-1 border-solid border-stone-50 py-2 px-4 mb-3 font-semibold text-2xl col-span-5 flex rounded place-items-center gap-1"
                 // }
                 className={twMerge(
-                  "outline outline-offset-0 outline-1 border-solid border-stone-50 py-2 px-4 mb-3 font-semibold text-2xl col-span-5 flex rounded place-items-center gap-1 bg-black text-white transition duration-150 ease-in-out hover:scale-110",
+                  "outline outline-offset-0 outline-1 border-solid border-stone-50 py-2 px-4 mb-3 font-semibold text-3xl col-span-5 flex rounded place-items-center gap-1 bg-black text-white transition duration-150 ease-in-out hover:scale-110",
                   { "bg-blue-400": selectedAnswer === 0 }
                 )}
               >
@@ -283,7 +283,7 @@ export default function Question1(props) {
                 //       "outline outline-offset-0 outline-1 border-solid border-stone-50 py-2 px-4 mb-3 font-semibold text-2xl col-start-8 col-span-5 flex rounded place-items-center gap-1"
                 // }
                 className={twMerge(
-                  "outline outline-offset-0 outline-1 border-solid border-stone-50 py-2 px-4 mb-3 font-semibold text-2xl col-start-8 col-span-5 flex rounded place-items-center gap-1 bg-black text-white transition duration-150 ease-in-out hover:scale-110",
+                  "outline outline-offset-0 outline-1 border-solid border-stone-50 py-2 px-4 mb-3 font-semibold text-3xl col-start-8 col-span-5 flex rounded place-items-center gap-1 bg-black text-white transition duration-150 ease-in-out hover:scale-110",
                   { "bg-blue-400": selectedAnswer === 1 }
                 )}
               >
@@ -303,7 +303,7 @@ export default function Question1(props) {
                 //       "outline outline-offset-0 outline-1 border-solid border-stone-50 py-2 px-4 mb-3 font-semibold text-2xl col-span-5 flex rounded place-items-center gap-1"
                 // }
                 className={twMerge(
-                  "outline outline-offset-0 outline-1 border-solid border-stone-50 py-2 px-4 mb-3 font-semibold text-2xl col-span-5 flex rounded place-items-center gap-1 bg-black text-white transition duration-150 ease-in-out hover:scale-110",
+                  "outline outline-offset-0 outline-1 border-solid border-stone-50 py-2 px-4 mb-3 font-semibold text-3xl col-span-5 flex rounded place-items-center gap-1 bg-black text-white transition duration-150 ease-in-out hover:scale-110",
                   { "bg-blue-400": selectedAnswer === 2 }
                 )}
 
@@ -324,7 +324,7 @@ export default function Question1(props) {
                 //       "outline outline-offset-0 outline-1 border-solid border-stone-50 py-2 px-4 mb-3 font-semibold text-2xl col-start-8 col-span-5 flex rounded place-items-center gap-1"
                 // }
                 className={twMerge(
-                  "outline outline-offset-0 outline-1 border-solid border-stone-50 py-2 px-4 mb-3 font-semibold text-2xl col-start-8 col-span-5 flex rounded place-items-center gap-1 bg-black text-white transition duration-150 ease-in-out hover:scale-110",
+                  "outline outline-offset-0 outline-1 border-solid border-stone-50 py-2 px-4 mb-3 font-semibold text-3xl col-start-8 col-span-5 flex rounded place-items-center gap-1 bg-black text-white transition duration-150 ease-in-out hover:scale-110",
                   {
                     "bg-blue-400": selectedAnswer === 3,
                   }

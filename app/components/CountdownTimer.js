@@ -25,7 +25,7 @@ const CountdownTimer = () => {
         colors={["#004777", "#F7B801", "#A30000", "#A30000"]}
         colorsTime={[45, 30, 15, 0]}
         onComplete={() => ({ shouldRepeat: false, delay: 10 })}
-        size={120}
+        size={130}
       >
         {renderTime}
       </CountdownCircleTimer>
