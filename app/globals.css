@@ -38,3 +38,7 @@ body {
   cursor: not-allowed; */
   visibility: hidden;
 }
+
+.show {
+  visibility: visible;
+}

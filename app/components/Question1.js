@@ -12,6 +12,7 @@ export default function Question1(props) {
   const [selectedAnswer, setSelectedAnswer] = useState(null);
   const [answerStatus, setAnswerStatus] = useState("");
   const [showExplanation, setShowExplanation] = useState("hidden");
+  const [showOptions, setShowOptions] = useState(false);
 
   // const onAnswerSelected = (answer, index) => {
   //     setSelectedAnswerIndex(index)
@@ -63,6 +64,17 @@ export default function Question1(props) {
       setShowExplanation("visible");
       document.getElementById("clock-audio").pause();
     }
+  };
+
+  const showOptionsButton = () => {
+    setShowOptions(true);
+    // document.getElementById(0).classList.add("fifty_fifty");
+    // document.getElementById(1).classList.add("fifty_fifty");
+    // document.getElementById(2).classList.add("fifty_fifty");
+    // document.getElementById(3).classList.add("fifty_fifty");
+    // document.getElementById("counter").classList.add("fifty_fifty");
+    // e.classList.add("correct");
+    // document.getElementById("q-" + props.question_id).classList.add("hide");
   };
 
   const fifty_fifty = () => {
@@ -244,7 +256,14 @@ export default function Question1(props) {
             {/* Add Options grid */}
             <div
               id="answersGrid"
-              className="grid grid-cols-12 gap-4 text-3xl font-semibold text-left"
+              // className="grid hidden grid-cols-12 gap-4 text-3xl font-semibold text-left"
+              className={twMerge(
+                "hidden grid-cols-12 gap-4 text-3xl font-semibold text-left",
+                {
+                  "grid grid-cols-12 gap-4 text-3xl font-semibold text-left":
+                    showOptions === true,
+                }
+              )}
             >
               <div
                 id="0"
@@ -267,7 +286,7 @@ export default function Question1(props) {
                 <div className="">{props.option1}</div>
               </div>
 
-              <div className="col-start-6 row-span-2">
+              <div id="counter" className="col-start-6 row-span-2">
                 <CountdownTimer />
               </div>
               <div
@@ -341,7 +360,10 @@ export default function Question1(props) {
             {/* Add new div for options panel contains all opitons like 50-50, double, submit and close. */}
             <div className="flex justify-evenly">
               <div>
-                <button className="focus:outline-none text-white bg-yellow-400 hover:bg-yellow-500 focus:ring-4 focus:ring-yellow-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:focus:ring-yellow-900 transition duration-150 ease-in-out hover:scale-110">
+                <button
+                  onClick={showOptionsButton}
+                  className="focus:outline-none text-white bg-yellow-400 hover:bg-yellow-500 focus:ring-4 focus:ring-yellow-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:focus:ring-yellow-900 transition duration-150 ease-in-out hover:scale-110"
+                >
                   {/* <HiOutlineInformationCircle /> Show Answers */}
                   Show Options
                 </button>
