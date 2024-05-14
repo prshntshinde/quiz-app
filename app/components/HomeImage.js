@@ -1,13 +1,8 @@
 "use client";
 import React from "react";
 import Image from "next/image";
-// import pic from "../../public/wallpaper-2.png";
-// import pic3 from "../../public/wallpaper-3.png";
+
 import pic4 from "../../public/wallpaper-4.png";
-// import pic5 from "../../public/wallpaper-5.svg";
-// import homepageVideo from "../../public/hmc_video1.webp";
-// import homepageVideo2 from "../../public/hmc_video2.webp";
-// import ReactPlayer from "react-player";
 
 const HomeImage = () => {
   return (
