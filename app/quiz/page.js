@@ -5,8 +5,6 @@ import RulesModal from "@/app/components/RulesModal";
 export default async function Quiz() {
   const quizzes = await fetchQuizzes();
 
-  // console.log(quizzes);
-
   return (
     <main>
       <p className="text-4xl">Quiz List</p>
