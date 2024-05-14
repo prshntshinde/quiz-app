@@ -1,11 +1,10 @@
 "use client";
 
 import React from "react";
-//import clockSound from "../../public/clock.mp3";
 
 const ClockAudio = () => {
   function play() {
-    var audio = document.getElementById("clock-audio");
+    const audio = document.getElementById("clock-audio");
     if (audio.paused) {
       audio.play();
     } else {
