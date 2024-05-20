@@ -15,9 +15,6 @@ export default function Question1(props) {
 
   const updateSelectedAnswer = (index) => {
     setSelectedAnswer(index);
-    if (props.answer === index) {
-    } else {
-    }
   };
 
   const checkAnswer = () => {
