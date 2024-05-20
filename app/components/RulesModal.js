@@ -4,7 +4,6 @@ import { useState } from "react";
 import Modal from "@/app/components/Modal";
 
 export default function RulesModal(props) {
-  // console.log(props);
   const [showModal, setShowModal] = useState(false);
   return (
     <div>
