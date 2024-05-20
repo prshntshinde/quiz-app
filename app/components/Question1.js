@@ -7,7 +7,6 @@ import { RxCheckCircled, RxCrossCircled } from "react-icons/rx";
 import { twMerge } from "@/libs/utils";
 
 export default function Question1(props) {
-  // console.log(props);
   const [showModal, setShowModal] = useState(false);
   const [selectedAnswer, setSelectedAnswer] = useState(null);
   const [answerStatus, setAnswerStatus] = useState("");
@@ -17,38 +16,23 @@ export default function Question1(props) {
   const updateSelectedAnswer = (index) => {
     setSelectedAnswer(index);
     if (props.answer === index) {
-      // console.log("correct answer");
-      // console.log(index);
-      // console.log("Selected Answer: ", selectedAnswer);
-      // element.target.classList.add("correct")
     } else {
-      // element.target.classList.add("wrong")
-      // console.log("wrong answer");
-      // console.log(index);
-      // console.log("Selected Answer: ", selectedAnswer);
     }
   };
 
   const checkAnswer = () => {
-    // console.log("event ", e, "answer ", ans)
-    // setOption(ans);
-    // console.log("option ", option)
     if (props.answer === selectedAnswer) {
       let e = document.getElementById(selectedAnswer);
       e.classList.add("correct");
-      // console.log("correct answer");
-      // answerStatus = "Correct";
+
       setAnswerStatus("Correct");
       setShowExplanation("visible");
       document.getElementById("clock-audio").pause();
       document.getElementById("q-" + props.question_id).classList.add("hide");
-      //document.getElementById("q-" + props.question_id).style.display = "none";
-      // element1.target.classList.add("hide");
     } else {
       let e = document.getElementById(selectedAnswer);
       e.classList.add("wrong");
-      // console.log("wrong answer");
-      // answerStatus = "Wrong";
+
       setAnswerStatus("Wrong");
       setShowExplanation("visible");
       document.getElementById("clock-audio").pause();
@@ -57,52 +41,31 @@ export default function Question1(props) {
 
   const showOptionsButton = () => {
     setShowOptions(true);
-    // document.getElementById(0).classList.add("fifty_fifty");
-    // document.getElementById(1).classList.add("fifty_fifty");
-    // document.getElementById(2).classList.add("fifty_fifty");
-    // document.getElementById(3).classList.add("fifty_fifty");
-    // document.getElementById("counter").classList.add("fifty_fifty");
-    // e.classList.add("correct");
-    // document.getElementById("q-" + props.question_id).classList.add("hide");
   };
 
   const fifty_fifty = () => {
     let listIndex = [0, 1, 2, 3]; // 4 values
-    // console.log(listIndex);
+
     listIndex.splice(props.answer, 1); // 3 values - correct answer removed
-    // console.log(listIndex);
+
     let randomNumber = Math.floor(Math.random() * listIndex.length);
-    //alert(listIndex[randomNumber]);
+
     document
       .getElementById(listIndex[randomNumber])
       .classList.add("fifty_fifty");
 
-    // console.log(listIndex);
     listIndex.splice(randomNumber, 1);
-    // console.log(listIndex);
+
     let randomNumber1 = Math.floor(Math.random() * listIndex.length);
-    //alert(listIndex[randomNumber1]);
+
     document
       .getElementById(listIndex[randomNumber1])
       .classList.add("fifty_fifty");
-    // console.log(listIndex);
   };
 
-  // const ssetSelectedAnswer = (element, ans) => {
-  //     console.log("props ans ", props.answer);
-  //     console.log("ans ", ans);
-  //     if (props.answer === ans) {
-  //         console.log("con true");
-  //         element.target.classList.add("correct")
-  //     }
-  //     else {
-  //         element.target.classList.add("wrong")
-  //     }
-  // }
   return (
     <div>
       <button
-        // id={props.question_id}
         className="w-32 px-4 py-2 text-6xl font-semibold text-black border-solid shadow-xl outline outline-offset-0 outline-1 hover:bg-blue-500 hover:text-white border-stone-50 hover:border-transparent"
         onClick={() => setShowModal(true)}
       >
@@ -111,124 +74,13 @@ export default function Question1(props) {
       <div>
         <Modal isVisible={showModal} onClose={() => setShowModal(false)}>
           <div>
-            {/* <div className="flex justify-center text-4xl font-semibold">
-              <CountdownTimer />
-            </div> */}
-            {/* <div className="flex justify-center">
-              <button
-                onClick={fifty_fifty}
-                className="mt-3 font-semibold bg-yellow-200 border-solid outline outline-offset-0 outline-1 border-stone-50"
-              >
-                50:50
-              </button>
-            </div> */}
-
-            {/* <div className="flex justify-center px-4 py-2 mt-3 mb-3 text-3xl font-semibold border-solid outline outline-offset-0 outline-1 border-stone-50">
-              <p>
-                {props.question_id}. {props.question}
-              </p>
-            </div> */}
-
-            {/* Button to test Clock - Can be reomved later */}
-            {/* <button onClick={() => setKey((prevKey) => prevKey + 1)}>
-              Stop Clock
-            </button> */}
-            {/* Sto Clock button */}
-
             <div className="grid grid-cols-12 gap-1 py-2 mb-3 text-4xl font-semibold text-center bg-black rounded shadow-2xl outline outline-offset-1 outline-2 outline-pink-600">
               <div className="m-auto text-yellow-400">{props.question_id}.</div>
               <div className="col-span-11 m-auto text-yellow-400">
                 {props.question}
               </div>
-              {/* <p>
-                {props.question_id}. {props.question}
-              </p> */}
             </div>
-            <div className="grid justify-center grid-cols-2 gap-3">
-              {/* <div><button className="px-4 py-2 mb-3 font-semibold border-solid outline outline-offset-0 outline-1 border-stone-50 hover:bg-blue-500">{props.option1}</button></div>
-                            <div><button className="px-4 py-2 mb-3 font-semibold border-solid outline outline-offset-0 outline-1 border-stone-50 hover:bg-blue-500">{props.option2}</button></div>
-                            <div><button className="px-4 py-2 mb-3 font-semibold border-solid outline outline-offset-0 outline-1 border-stone-50 hover:bg-blue-500">{props.option3}</button></div>
-                            <div><button className="px-4 py-2 mb-3 font-semibold border-solid outline outline-offset-0 outline-1 border-stone-50 hover:bg-blue-500">{props.option4}</button></div> */}
-
-              {/* Other implementation for answer logic*/}
-              {/* <ul>
-                <div>
-                  <li
-                    id="0"
-                    onClick={() => {
-                      updateSelectedAnswer(0);
-                    }}
-                    className={
-                      selectedAnswer === 0
-                        ? "bg-blue-300 outline outline-offset-0 outline-1 border-solid border-stone-50 py-2 px-4 mb-3 font-semibold text-2xl"
-                        : "" +
-                          "outline outline-offset-0 outline-1 border-solid border-stone-50 py-2 px-4 mb-3 font-semibold text-2xl"
-                    }
-                  >
-                    A. <span> </span>
-                    {props.option1}
-                  </li>
-                </div>
-              </ul> */}
-
-              {/* <ul>
-                <div>
-                  <li
-                    id="1"
-                    onClick={() => {
-                      updateSelectedAnswer(1);
-                    }}
-                    className={
-                      selectedAnswer === 1
-                        ? "bg-blue-300 outline outline-offset-0 outline-1 border-solid border-stone-50 py-2 px-4 mb-3 font-semibold text-2xl"
-                        : "" +
-                          "outline outline-offset-0 outline-1 border-solid border-stone-50 py-2 px-4 mb-3 font-semibold text-2xl"
-                    }
-                  >
-                    B. <span> </span>
-                    {props.option2}
-                  </li>
-                </div>
-              </ul> */}
-              {/* <ul>
-                <div>
-                  <li
-                    id="2"
-                    onClick={() => {
-                      updateSelectedAnswer(2);
-                    }}
-                    className={
-                      selectedAnswer === 2
-                        ? "bg-blue-300 outline outline-offset-0 outline-1 border-solid border-stone-50 py-2 px-4 mb-3 font-semibold text-2xl"
-                        : "" +
-                          "outline outline-offset-0 outline-1 border-solid border-stone-50 py-2 px-4 mb-3 font-semibold text-2xl"
-                    }
-                  >
-                    C. <span> </span>
-                    {props.option3}
-                  </li>
-                </div>
-              </ul> */}
-              {/* <ul>
-                <div>
-                  <li
-                    id="3"
-                    onClick={() => {
-                      updateSelectedAnswer(3);
-                    }}
-                    className={
-                      selectedAnswer === 3
-                        ? "bg-blue-300 outline outline-offset-0 outline-1 border-solid border-stone-50 py-2 px-4 mb-3 font-semibold text-2xl"
-                        : "" +
-                          "outline outline-offset-0 outline-1 border-solid border-stone-50 py-2 px-4 mb-3 font-semibold text-2xl"
-                    }
-                  >
-                    D. <span> </span>
-                    {props.option4}
-                  </li>
-                </div>
-              </ul> */}
-            </div>
+            <div className="grid justify-center grid-cols-2 gap-3"></div>
             <div className="flex justify-center px-4 py-2 mb-3 font-semibold animate-bounce">
               <p
                 className={
@@ -265,13 +117,6 @@ export default function Question1(props) {
                 onClick={() => {
                   updateSelectedAnswer(0);
                 }}
-                // className="flex col-span-5 gap-1 rounded outline outline-1 outline-cyan-500 place-items-center"
-                // className={
-                //   selectedAnswer === 0
-                //     ? "bg-blue-400 outline outline-offset-0 outline-1 border-solid border-stone-50 py-2 px-4 mb-3 font-semibold text-2xl col-span-5 flex rounded place-items-center gap-1"
-                //     : "" +
-                //       "outline outline-offset-0 outline-1 border-solid border-stone-50 py-2 px-4 mb-3 font-semibold text-2xl col-span-5 flex rounded place-items-center gap-1"
-                // }
                 className={twMerge(
                   "outline outline-offset-0 outline-1 border-solid border-stone-50 py-2 px-4 mb-3 font-semibold text-3xl col-span-5 flex rounded place-items-center gap-1 bg-black text-white transition duration-150 ease-in-out hover:scale-110",
                   { "bg-blue-400": selectedAnswer === 0 }
@@ -289,13 +134,6 @@ export default function Question1(props) {
                 onClick={() => {
                   updateSelectedAnswer(1);
                 }}
-                // className="flex col-span-5 col-start-8 gap-1 rounded outline outline-1 outline-cyan-500 place-items-center"
-                // className={
-                //   selectedAnswer === 1
-                //     ? "bg-blue-400 outline outline-offset-0 outline-1 border-solid border-stone-50 py-2 px-4 mb-3 font-semibold text-2xl col-start-8 col-span-5 flex rounded place-items-center gap-1"
-                //     : "" +
-                //       "outline outline-offset-0 outline-1 border-solid border-stone-50 py-2 px-4 mb-3 font-semibold text-2xl col-start-8 col-span-5 flex rounded place-items-center gap-1"
-                // }
                 className={twMerge(
                   "outline outline-offset-0 outline-1 border-solid border-stone-50 py-2 px-4 mb-3 font-semibold text-3xl col-start-8 col-span-5 flex rounded place-items-center gap-1 bg-black text-white transition duration-150 ease-in-out hover:scale-110",
                   { "bg-blue-400": selectedAnswer === 1 }
@@ -310,18 +148,10 @@ export default function Question1(props) {
                 onClick={() => {
                   updateSelectedAnswer(2);
                 }}
-                // className={
-                //   selectedAnswer === 2
-                //     ? "bg-blue-400 outline outline-offset-0 outline-1 border-solid border-stone-50 py-2 px-4 mb-3 font-semibold text-2xl col-span-5 flex rounded place-items-center gap-1"
-                //     : "" +
-                //       "outline outline-offset-0 outline-1 border-solid border-stone-50 py-2 px-4 mb-3 font-semibold text-2xl col-span-5 flex rounded place-items-center gap-1"
-                // }
                 className={twMerge(
                   "outline outline-offset-0 outline-1 border-solid border-stone-50 py-2 px-4 mb-3 font-semibold text-3xl col-span-5 flex rounded place-items-center gap-1 bg-black text-white transition duration-150 ease-in-out hover:scale-110",
                   { "bg-blue-400": selectedAnswer === 2 }
                 )}
-
-                // className="flex col-span-5 gap-1 rounded outline outline-1 outline-cyan-500 place-items-center"
               >
                 <div className="">&nbsp; C.</div>
                 <div className="">{props.option3}</div>
@@ -331,20 +161,12 @@ export default function Question1(props) {
                 onClick={() => {
                   updateSelectedAnswer(3);
                 }}
-                // className={
-                //   selectedAnswer === 3
-                //     ? "bg-blue-400 outline outline-offset-0 outline-1 border-solid border-stone-50 py-2 px-4 mb-3 font-semibold text-2xl col-start-8 col-span-5 flex rounded place-items-center gap-1"
-                //     : "" +
-                //       "outline outline-offset-0 outline-1 border-solid border-stone-50 py-2 px-4 mb-3 font-semibold text-2xl col-start-8 col-span-5 flex rounded place-items-center gap-1"
-                // }
                 className={twMerge(
                   "outline outline-offset-0 outline-1 border-solid border-stone-50 py-2 px-4 mb-3 font-semibold text-3xl col-start-8 col-span-5 flex rounded place-items-center gap-1 bg-black text-white transition duration-150 ease-in-out hover:scale-110",
                   {
                     "bg-blue-400": selectedAnswer === 3,
                   }
                 )}
-
-                // className="flex col-span-5 col-start-8 gap-1 rounded outline outline-1 outline-cyan-500 place-items-center"
               >
                 <div className="">&nbsp; D.</div>
                 <div className="">{props.option4}</div>
@@ -399,19 +221,11 @@ export default function Question1(props) {
                 </button>
               </div>
             </div>
-            {/* <div className="flex justify-center px-4 py-2 mb-3 font-semibold border-solid outline outline-offset-0 outline-1 hover:bg-blue-500 border-stone-50">
-              <button onClick={checkAnswer} disabled={selectedAnswer === null}>
-                Submit
-              </button>
-            </div> */}
+
             <br></br>
             <div
-              // className={
-              //   showExplanation +
-              //   " flex justify-center outline-offset-0 outline-3 outline-yellow-500 bg-yellow-200 outline-dashed border-solid border-stone-50 py-2 px-4 font-semibold"
-              // }
               className={twMerge("hidden ", {
-                "visible flex justify-center outline-offset-0 outline-3 outline-yellow-500 bg-yellow-200 outline-dashed border-solid border-stone-50 py-2 px-4 font-semibold rounded":
+                "visible flex justify-center outline-offset-0 outline-3 outline-yellow-500 bg-yellow-200 outline-dashed border-solid border-stone-50 py-2 px-4 text-2xl italic font-semibold rounded":
                   showExplanation == "visible",
               })}
             >
