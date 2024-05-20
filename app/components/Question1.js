@@ -1,12 +1,10 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import Modal from "./Modal";
 import CountdownTimer from "./CountdownTimer";
 import { RxCheckCircled, RxCrossCircled } from "react-icons/rx";
 import { twMerge } from "@/libs/utils";
-
-// import { useCountdown } from "react-countdown-circle-timer";
 
 export default function Question1(props) {
   // console.log(props);
@@ -15,23 +13,6 @@ export default function Question1(props) {
   const [answerStatus, setAnswerStatus] = useState("");
   const [showExplanation, setShowExplanation] = useState("hidden");
   const [showOptions, setShowOptions] = useState(false);
-  // const [key, setKey] = useState(0);
-
-  // function HandleTimer(props) {
-  //   // alert("Timer");
-  //   useCountdown({ isPlaying: false });
-  // }
-
-  // const onAnswerSelected = (answer, index) => {
-  //     setSelectedAnswerIndex(index)
-
-  // }
-
-  // useEffect(() => {
-  //     console.log("use effect called");
-  // }, [selectedAnswer])
-
-  // var answerStatus = "R";
 
   const updateSelectedAnswer = (index) => {
     setSelectedAnswer(index);
