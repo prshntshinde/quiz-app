@@ -6,6 +6,8 @@ import CountdownTimer from "./CountdownTimer";
 import { RxCheckCircled, RxCrossCircled } from "react-icons/rx";
 import { twMerge } from "@/libs/utils";
 
+// import { useCountdown } from "react-countdown-circle-timer";
+
 export default function Question1(props) {
   // console.log(props);
   const [showModal, setShowModal] = useState(false);
@@ -13,6 +15,12 @@ export default function Question1(props) {
   const [answerStatus, setAnswerStatus] = useState("");
   const [showExplanation, setShowExplanation] = useState("hidden");
   const [showOptions, setShowOptions] = useState(false);
+  // const [key, setKey] = useState(0);
+
+  // function HandleTimer(props) {
+  //   // alert("Timer");
+  //   useCountdown({ isPlaying: false });
+  // }
 
   // const onAnswerSelected = (answer, index) => {
   //     setSelectedAnswerIndex(index)
@@ -45,7 +53,7 @@ export default function Question1(props) {
     // setOption(ans);
     // console.log("option ", option)
     if (props.answer === selectedAnswer) {
-      var e = document.getElementById(selectedAnswer);
+      let e = document.getElementById(selectedAnswer);
       e.classList.add("correct");
       // console.log("correct answer");
       // answerStatus = "Correct";
@@ -56,7 +64,7 @@ export default function Question1(props) {
       //document.getElementById("q-" + props.question_id).style.display = "none";
       // element1.target.classList.add("hide");
     } else {
-      var e = document.getElementById(selectedAnswer);
+      let e = document.getElementById(selectedAnswer);
       e.classList.add("wrong");
       // console.log("wrong answer");
       // answerStatus = "Wrong";
@@ -139,6 +147,12 @@ export default function Question1(props) {
                 {props.question_id}. {props.question}
               </p>
             </div> */}
+
+            {/* Button to test Clock - Can be reomved later */}
+            {/* <button onClick={() => setKey((prevKey) => prevKey + 1)}>
+              Stop Clock
+            </button> */}
+            {/* Sto Clock button */}
 
             <div className="grid grid-cols-12 gap-1 py-2 mb-3 text-4xl font-semibold text-center bg-black rounded shadow-2xl outline outline-offset-1 outline-2 outline-pink-600">
               <div className="m-auto text-yellow-400">{props.question_id}.</div>
