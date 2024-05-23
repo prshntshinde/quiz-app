@@ -2,9 +2,9 @@
 
 import { useState } from "react";
 import Modal from "./Modal";
-import CountdownTimer from "./CountdownTimer";
 import { RxCheckCircled, RxCrossCircled } from "react-icons/rx";
 import { twMerge } from "@/libs/utils";
+import { CountdownCircleTimer } from "react-countdown-circle-timer";
 
 export default function Question1(props) {
   const [showModal, setShowModal] = useState(false);
@@ -12,7 +12,27 @@ export default function Question1(props) {
   const [answerStatus, setAnswerStatus] = useState("");
   const [showExplanation, setShowExplanation] = useState("hidden");
   const [showOptions, setShowOptions] = useState(false);
+  const [isPlaying, setIsPlaying] = useState(false);
 
+  const renderTime = ({ remainingTime }) => {
+    if (remainingTime === 0) {
+      return <div className="timer">Late</div>;
+    }
+
+    return (
+      <div className="timer">
+        <div className="value">{remainingTime}</div>
+      </div>
+    );
+  };
+
+  function stopTimer(params) {
+    if (isPlaying) {
+      setIsPlaying(false);
+    } else {
+      setIsPlaying(true);
+    }
+  }
   const updateSelectedAnswer = (index) => {
     setSelectedAnswer(index);
   };
@@ -26,6 +46,7 @@ export default function Question1(props) {
       setShowExplanation("visible");
       document.getElementById("clock-audio").pause();
       document.getElementById("q-" + props.question_id).classList.add("hide");
+      setIsPlaying(false);
     } else {
       let e = document.getElementById(selectedAnswer);
       e.classList.add("wrong");
@@ -33,11 +54,14 @@ export default function Question1(props) {
       setAnswerStatus("Wrong");
       setShowExplanation("visible");
       document.getElementById("clock-audio").pause();
+      setIsPlaying(false);
     }
   };
 
   const showOptionsButton = () => {
     setShowOptions(true);
+    stopTimer();
+    document.getElementById("clock-audio").play();
   };
 
   const fifty_fifty = () => {
@@ -100,7 +124,6 @@ export default function Question1(props) {
             {/* Add Options grid */}
             <div
               id="answersGrid"
-              // className="grid hidden grid-cols-12 gap-4 text-3xl font-semibold text-left"
               className={twMerge(
                 "hidden grid-cols-12 gap-4 text-3xl font-semibold text-left",
                 {
@@ -125,7 +148,21 @@ export default function Question1(props) {
               </div>
 
               <div id="counter" className="col-start-6 row-span-2">
-                <CountdownTimer />
+                <div>
+                  <CountdownCircleTimer
+                    isPlaying={isPlaying}
+                    strokeWidth={15}
+                    duration={45}
+                    colors={["#004777", "#F7B801", "#A30000", "#A30000"]}
+                    colorsTime={[45, 30, 15, 0]}
+                    onComplete={() => ({ shouldRepeat: false, delay: 10 })}
+                    size={130}
+                  >
+                    {renderTime}
+                  </CountdownCircleTimer>
+                </div>
+
+                {/* <CountdownTimer /> */}
               </div>
               <div
                 id="1"
@@ -150,9 +187,7 @@ export default function Question1(props) {
                 className={twMerge(
                   "outline outline-offset-0 outline-1 border-solid border-stone-50 py-2 px-4 mb-3 font-semibold text-3xl col-span-5 flex rounded place-items-center gap-1 bg-black text-white transition duration-150 ease-in-out hover:scale-110",
                   { "bg-blue-400": selectedAnswer === 2 }
-                )}
-                role="button"
-              >
+                )}>
                 <div className="">&nbsp; C.</div>
                 <div className="">{props.option3}</div>
               </div>
@@ -166,9 +201,7 @@ export default function Question1(props) {
                   {
                     "bg-blue-400": selectedAnswer === 3,
                   }
-                )}
-                role="button"
-              >
+                )}>
                 <div className="">&nbsp; D.</div>
                 <div className="">{props.option4}</div>
               </div>
@@ -226,12 +259,12 @@ export default function Question1(props) {
             <br></br>
             <div
               className={twMerge("hidden ", {
-                "visible flex justify-center outline-offset-0 outline-3 outline-yellow-500 bg-yellow-200 outline-dashed border-solid border-stone-50 py-2 px-4 text-2xl italic font-semibold rounded":
+                "visible flex justify-center outline-offset-0 outline-3 outline-yellow-500 bg-yellow-200 outline-dashed border-solid border-stone-50 py-2 px-4 text-2xl font-semibold rounded":
                   showExplanation == "visible",
               })}
             >
               {props.explanation}
-              <audio autoPlay id="clock-audio" src="/clock-45s.mp3">
+              <audio id="clock-audio" src="/clock-45s.mp3">
                 Audio
               </audio>
             </div>
