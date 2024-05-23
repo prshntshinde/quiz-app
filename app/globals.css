@@ -23,19 +23,10 @@ body {
 }
 
 .hide > div > button {
-  /* background: grey;
-  opacity: 0.05;
-  border-style: solid;
-  border-color: grey;
-  cursor: not-allowed; */
   display: none;
 }
 
 .fifty_fifty {
-  /* display: none; */
-  /* background: grey;
-  opacity: 0.05;
-  cursor: not-allowed; */
   visibility: hidden;
 }
 

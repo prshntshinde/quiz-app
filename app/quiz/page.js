@@ -1,12 +1,9 @@
 import { fetchQuizzes } from "@/libs/data";
 import Link from "next/link";
 import RulesModal from "@/app/components/RulesModal";
-import Modal from "../components/Modal";
 
 export default async function Quiz() {
   const quizzes = await fetchQuizzes();
-
-  // console.log(quizzes);
 
   return (
     <main>

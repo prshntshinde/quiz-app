@@ -14,14 +14,13 @@ export const fetchQuizzes = async () => {
 
 export const fetchQuestions = async (id) => {
   try {
-    //const { id } = params;
     console.log(id);
     connectMongoDB();
     const questions = await Questions.find({
       quiz_id: id,
       isUsed: false,
     }).sort({ question_id: 1 });
-    // console.log(questions);
+
     return questions;
   } catch (error) {
     console.log(error);

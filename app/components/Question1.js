@@ -7,7 +7,6 @@ import { twMerge } from "@/libs/utils";
 import { CountdownCircleTimer } from "react-countdown-circle-timer";
 
 export default function Question1(props) {
-  // console.log(props);
   const [showModal, setShowModal] = useState(false);
   const [selectedAnswer, setSelectedAnswer] = useState(null);
   const [answerStatus, setAnswerStatus] = useState("");
@@ -34,14 +33,13 @@ export default function Question1(props) {
       setIsPlaying(true);
     }
   }
-
   const updateSelectedAnswer = (index) => {
     setSelectedAnswer(index);
   };
 
   const checkAnswer = () => {
     if (props.answer === selectedAnswer) {
-      var e = document.getElementById(selectedAnswer);
+      let e = document.getElementById(selectedAnswer);
       e.classList.add("correct");
 
       setAnswerStatus("Correct");
@@ -50,7 +48,7 @@ export default function Question1(props) {
       document.getElementById("q-" + props.question_id).classList.add("hide");
       setIsPlaying(false);
     } else {
-      var e = document.getElementById(selectedAnswer);
+      let e = document.getElementById(selectedAnswer);
       e.classList.add("wrong");
 
       setAnswerStatus("Wrong");
@@ -143,6 +141,7 @@ export default function Question1(props) {
                   "outline outline-offset-0 outline-1 border-solid border-stone-50 py-2 px-4 mb-3 font-semibold text-3xl col-span-5 flex rounded place-items-center gap-1 bg-black text-white transition duration-150 ease-in-out hover:scale-110",
                   { "bg-blue-400": selectedAnswer === 0 }
                 )}
+                role="button"
               >
                 <div className="">&nbsp; A.</div>
                 <div className="">{props.option1}</div>
@@ -174,6 +173,7 @@ export default function Question1(props) {
                   "outline outline-offset-0 outline-1 border-solid border-stone-50 py-2 px-4 mb-3 font-semibold text-3xl col-start-8 col-span-5 flex rounded place-items-center gap-1 bg-black text-white transition duration-150 ease-in-out hover:scale-110",
                   { "bg-blue-400": selectedAnswer === 1 }
                 )}
+                role="button"
               >
                 <div className="">&nbsp; B.</div>
                 <div className="">{props.option2}</div>
@@ -187,8 +187,7 @@ export default function Question1(props) {
                 className={twMerge(
                   "outline outline-offset-0 outline-1 border-solid border-stone-50 py-2 px-4 mb-3 font-semibold text-3xl col-span-5 flex rounded place-items-center gap-1 bg-black text-white transition duration-150 ease-in-out hover:scale-110",
                   { "bg-blue-400": selectedAnswer === 2 }
-                )}
-              >
+                )}>
                 <div className="">&nbsp; C.</div>
                 <div className="">{props.option3}</div>
               </div>
@@ -202,8 +201,7 @@ export default function Question1(props) {
                   {
                     "bg-blue-400": selectedAnswer === 3,
                   }
-                )}
-              >
+                )}>
                 <div className="">&nbsp; D.</div>
                 <div className="">{props.option4}</div>
               </div>

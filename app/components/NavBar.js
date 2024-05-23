@@ -3,8 +3,6 @@ import Link from "next/link";
 import React from "react";
 import { usePathname } from "next/navigation";
 import Image from "next/image";
-//import logo from '.\\public\\cross_logo.png';
-import { FaCross } from "react-icons/fa";
 import { FaBookBible, FaHouseChimney } from "react-icons/fa6";
 import logo from "../../public/HMC_LOGO.svg";
 import { twMerge } from "@/libs/utils";

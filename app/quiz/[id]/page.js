@@ -3,8 +3,6 @@ import { fetchQuestions } from "@/libs/data";
 
 export default async function AnswerPage({ params }) {
   const question = await fetchQuestions(params.id);
-  // console.log(params);
-  // console.log(question);
 
   return (
     <main>

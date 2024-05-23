@@ -1,9 +1,5 @@
 const { CountdownCircleTimer } = require("react-countdown-circle-timer");
 
-{
-  /**/
-}
-
 const renderTime = ({ remainingTime }) => {
   if (remainingTime === 0) {
     return <div className="timer">Late</div>;
