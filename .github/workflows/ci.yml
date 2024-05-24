@@ -12,16 +12,16 @@ on:
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
-env:
-  MONGODB_URI: ${{ env.MONGODB_URI }}
-  run: |
-    echo "MONGODB_URI: ${MONGODB_URI}"
-
 jobs:
   # Build job
   build:
     runs-on: ubuntu-latest
     steps:
+      - name: Fetch Secrets
+        env:
+          MONGODB_URI: ${{ secrets.MONGODB_URI }}
+        run: |
+          echo "MONGODB_URI: ${MONGODB_URI}"
       - name: Checkout
         uses: actions/checkout@v4
       - name: Detect package manager
