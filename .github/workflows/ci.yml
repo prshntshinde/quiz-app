@@ -13,7 +13,7 @@ on:
   workflow_dispatch:
 
 env:
-  MONGODB_URI: ${{ secrets.MONGODB_URI }}
+  MONGODB_URI: ${{ env.MONGODB_URI }}
   run: |
     echo "MONGODB_URI: ${MONGODB_URI}"
 
