@@ -12,6 +12,11 @@ on:
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
+env:
+  MONGODB_URI: ${{ secrets.MONGODB_URI }}
+  run: |
+    echo "MONGODB_URI: ${MONGODB_URI}"
+
 jobs:
   # Build job
   build:
