@@ -12,6 +12,9 @@ on:
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
+env:
+  MONGODB_URI: ${{ github.env.secrets.MONGODB_URI }}
+
 jobs:
   # Build job
   build:
@@ -19,7 +22,7 @@ jobs:
     steps:
       - name: Fetch Secrets
         env:
-          MONGODB_URI: ${{ env.MONGODB_URI }}
+          MONGODB_URI: ${{ github.env.secrets.MONGODB_URI }}
         run: |
           echo "MONGODB_URI: ${MONGODB_URI}"
       - name: Checkout
