@@ -187,7 +187,8 @@ export default function Question1(props) {
                 className={twMerge(
                   "outline outline-offset-0 outline-1 border-solid border-stone-50 py-2 px-4 mb-3 font-semibold text-3xl col-span-5 flex rounded place-items-center gap-1 bg-black text-white transition duration-150 ease-in-out hover:scale-110",
                   { "bg-blue-400": selectedAnswer === 2 }
-                )}>
+                )}
+              >
                 <div className="">&nbsp; C.</div>
                 <div className="">{props.option3}</div>
               </div>
@@ -201,7 +202,8 @@ export default function Question1(props) {
                   {
                     "bg-blue-400": selectedAnswer === 3,
                   }
-                )}>
+                )}
+              >
                 <div className="">&nbsp; D.</div>
                 <div className="">{props.option4}</div>
               </div>
