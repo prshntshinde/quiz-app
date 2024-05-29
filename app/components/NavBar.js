@@ -13,6 +13,7 @@ const NavBar = () => {
   const links = [
     { label: "Home", href: "/", icon: <FaHouseChimney size={20} /> },
     { label: "Quiz", href: "/quiz", icon: <FaBookBible size={20} /> },
+    { label: "Admin", href: "/admin", icon: <FaBookBible size={20} /> },
   ];
 
   return (

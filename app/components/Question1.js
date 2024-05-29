@@ -111,13 +111,12 @@ export default function Question1(props) {
                 {answerStatus}{" "}
               </p>
               <p className="pl-1">
-                {answerStatus === "Correct" ? (
+                {answerStatus === "Correct" && (
                   <RxCheckCircled size={25} className="text-green-600" />
-                ) : answerStatus === "Wrong" ? (
+                )}
+                {answerStatus === "Wrong" && (
                   <RxCrossCircled size={25} className="text-red-600" />
-                ) : (
-                  ""
-                )}{" "}
+                )}
               </p>
             </div>
 
