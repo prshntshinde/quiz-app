@@ -1,15 +1,11 @@
-import Link from 'next/link'
-import React from 'react'
-import { VscDebugStart } from 'react-icons/vsc'
+import React from "react";
 
 const StartButton = () => {
-    return (
-        <div>
-            <button className='text-green-400 font-bold text-lg'>
-                Start
-            </button>
-        </div>
-    )
-}
+  return (
+    <div>
+      <button className="text-lg font-bold text-green-400">Start</button>
+    </div>
+  );
+};
 
-export default StartButton
+export default StartButton;
