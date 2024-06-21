@@ -6,6 +6,8 @@
 
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=prshntshinde_quiz-app&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=prshntshinde_quiz-app)
 
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
 ### Software used:
 
 1. NodeJS v18.18.2 - [Download Link](https://nodejs.org/download/release/v18.18.2/node-v18.18.2-x64.msi)
