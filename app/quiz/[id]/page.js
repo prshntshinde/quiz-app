@@ -1,5 +1,10 @@
 import Question1 from "@/app/components/Question1";
 import { fetchQuestions } from "@/libs/data";
+import PropTypes from "prop-types";
+
+AnswerPage.propTypes = {
+  params: PropTypes.object,
+};
 
 export default async function AnswerPage({ params }) {
   const question = await fetchQuestions(params.id);
