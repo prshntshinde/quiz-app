@@ -1,6 +1,7 @@
 import { Inter } from "next/font/google";
 import "./globals.css";
 import NavBar from "./components/NavBar";
+import PropTypes from "prop-types";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -9,6 +10,9 @@ export const metadata = {
   description: "This is a Quiz App",
 };
 
+RootLayout.propTypes = {
+  children: PropTypes.node.isRequired,
+};
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
