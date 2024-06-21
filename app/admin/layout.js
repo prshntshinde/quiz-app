@@ -1,4 +1,9 @@
 import SideMenu from "../components/SideMenu";
+import PropTypes from "prop-types";
+
+AdminLayout.propTypes = {
+  children: PropTypes.node,
+};
 
 export default function AdminLayout({ children }) {
   return (
