@@ -1,6 +1,13 @@
 "use client";
 
 import React from "react";
+import PropTypes from "prop-types";
+
+Modal.propTypes = {
+  children: PropTypes.node,
+  isVisible: PropTypes.bool,
+  onClose: PropTypes.func,
+};
 
 export default function Modal(props) {
   // console.log(props)
