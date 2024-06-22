@@ -8,6 +8,10 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fprshntshinde%2Fquiz-app.svg?type=shield&issueType=license)](https://app.fossa.com/projects/git%2Bgithub.com%2Fprshntshinde%2Fquiz-app?ref=badge_shield&issueType=license)
+
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fprshntshinde%2Fquiz-app.svg?type=shield&issueType=security)](https://app.fossa.com/projects/git%2Bgithub.com%2Fprshntshinde%2Fquiz-app?ref=badge_shield&issueType=security)
+
 ### Software used:
 
 1. NodeJS v18.18.2 - [Download Link](https://nodejs.org/download/release/v18.18.2/node-v18.18.2-x64.msi)
