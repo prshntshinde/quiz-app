@@ -3,6 +3,7 @@
 ### A web-based quiz application developed using ReactJS and MongoDB.
 
 [![CodeFactor](https://www.codefactor.io/repository/github/prshntshinde/quiz-app/badge/main)](https://www.codefactor.io/repository/github/prshntshinde/quiz-app/overview/main)
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fprshntshinde%2Fquiz-app.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2Fprshntshinde%2Fquiz-app?ref=badge_shield)
 
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=prshntshinde_quiz-app&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=prshntshinde_quiz-app)
 
@@ -25,3 +26,7 @@
 ### Repo Activity:
 
 ![Alt](https://repobeats.axiom.co/api/embed/f90c8defedf41c9e4e17a3cd64cb8410c3a75d2e.svg "Repobeats analytics image")
+
+
+## License
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fprshntshinde%2Fquiz-app.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2Fprshntshinde%2Fquiz-app?ref=badge_large)
