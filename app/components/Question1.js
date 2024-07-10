@@ -174,7 +174,7 @@ export default function Question1(props) {
                   { "bg-blue-400": selectedAnswer === 1 }
                 )}
                 role="button"
-                tabIndex={1}
+                tabIndex={0}
               >
                 <div className="">&nbsp; B.</div>
                 <div className="">{props.option2}</div>
@@ -190,7 +190,7 @@ export default function Question1(props) {
                   { "bg-blue-400": selectedAnswer === 2 }
                 )}
                 role="button"
-                tabIndex={2}
+                tabIndex={0}
               >
                 <div className="">&nbsp; C.</div>
                 <div className="">{props.option3}</div>
@@ -207,7 +207,7 @@ export default function Question1(props) {
                   }
                 )}
                 role="button"
-                tabIndex={3}
+                tabIndex={0}
               >
                 <div className="">&nbsp; D.</div>
                 <div className="">{props.option4}</div>
