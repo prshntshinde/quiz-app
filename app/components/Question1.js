@@ -141,6 +141,7 @@ export default function Question1(props) {
                   { "bg-blue-400": selectedAnswer === 0 }
                 )}
                 role="button"
+                tabIndex={0}
               >
                 <div className="">&nbsp; A.</div>
                 <div className="">{props.option1}</div>
@@ -173,6 +174,7 @@ export default function Question1(props) {
                   { "bg-blue-400": selectedAnswer === 1 }
                 )}
                 role="button"
+                tabIndex={1}
               >
                 <div className="">&nbsp; B.</div>
                 <div className="">{props.option2}</div>
@@ -187,6 +189,8 @@ export default function Question1(props) {
                   "outline outline-offset-0 outline-1 border-solid border-stone-50 py-2 px-4 mb-3 font-semibold text-3xl col-span-5 flex rounded place-items-center gap-1 bg-black text-white transition duration-150 ease-in-out hover:scale-110",
                   { "bg-blue-400": selectedAnswer === 2 }
                 )}
+                role="button"
+                tabIndex={2}
               >
                 <div className="">&nbsp; C.</div>
                 <div className="">{props.option3}</div>
@@ -202,6 +206,8 @@ export default function Question1(props) {
                     "bg-blue-400": selectedAnswer === 3,
                   }
                 )}
+                role="button"
+                tabIndex={3}
               >
                 <div className="">&nbsp; D.</div>
                 <div className="">{props.option4}</div>
@@ -214,7 +220,7 @@ export default function Question1(props) {
               <div>
                 <button
                   onClick={showOptionsButton}
-                  className="focus:outline-none text-white bg-yellow-400 hover:bg-yellow-500 focus:ring-4 focus:ring-yellow-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:focus:ring-yellow-900 transition duration-150 ease-in-out hover:scale-110"
+                  className="focus:outline-none text-black bg-yellow-400 hover:bg-yellow-500 focus:ring-4 focus:ring-yellow-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:focus:ring-yellow-900 transition duration-150 ease-in-out hover:scale-110"
                 >
                   {/* <HiOutlineInformationCircle /> Show Answers */}
                   Show Options
