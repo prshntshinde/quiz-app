@@ -1,5 +1,11 @@
+import QuestionForm from "@/app/components/forms/QuestionForm";
+
 export default function Questions() {
-  return <div>Questions</div>;
+  return (
+    <div>
+      <QuestionForm />
+    </div>
+  );
 }
 
 export function generateMetadata({ params }) {
