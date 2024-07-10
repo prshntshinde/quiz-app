@@ -5,8 +5,29 @@ import Modal from "./Modal";
 import { RxCheckCircled, RxCrossCircled } from "react-icons/rx";
 import { twMerge } from "@/libs/utils";
 import { CountdownCircleTimer } from "react-countdown-circle-timer";
+import propTypes from "prop-types";
 
-export default function Question1(props) {
+Question.propTypes = {
+  question_id: propTypes.number,
+  question: propTypes.string,
+  option1: propTypes.string,
+  option2: propTypes.string,
+  option3: propTypes.string,
+  option4: propTypes.string,
+  answer: propTypes.number,
+  explanation: propTypes.string,
+};
+
+export default function Question({
+  question_id,
+  question,
+  option1,
+  option2,
+  option3,
+  option4,
+  answer,
+  explanation,
+}) {
   const [showModal, setShowModal] = useState(false);
   const [selectedAnswer, setSelectedAnswer] = useState(null);
   const [answerStatus, setAnswerStatus] = useState("");
@@ -38,14 +59,14 @@ export default function Question1(props) {
   };
 
   const checkAnswer = () => {
-    if (props.answer === selectedAnswer) {
+    if (answer === selectedAnswer) {
       let e = document.getElementById(selectedAnswer);
       e.classList.add("correct");
 
       setAnswerStatus("Correct");
       setShowExplanation("visible");
       document.getElementById("clock-audio").pause();
-      document.getElementById("q-" + props.question_id).classList.add("hide");
+      document.getElementById("q-" + question_id).classList.add("hide");
       setIsPlaying(false);
     } else {
       let e = document.getElementById(selectedAnswer);
@@ -67,7 +88,7 @@ export default function Question1(props) {
   const fifty_fifty = () => {
     let listIndex = [0, 1, 2, 3]; // 4 values
 
-    listIndex.splice(props.answer, 1); // 3 values - correct answer removed
+    listIndex.splice(answer, 1); // 3 values - correct answer removed
 
     let randomNumber = Math.floor(Math.random() * listIndex.length);
 
@@ -90,15 +111,15 @@ export default function Question1(props) {
         className="w-32 px-4 py-2 text-6xl font-semibold text-black border-solid shadow-xl outline outline-offset-0 outline-1 hover:bg-blue-500 hover:text-white border-stone-50 hover:border-transparent"
         onClick={() => setShowModal(true)}
       >
-        {props.question_id}
+        {question_id}
       </button>
       <div>
         <Modal isVisible={showModal} onClose={() => setShowModal(false)}>
           <div>
             <div className="grid grid-cols-12 gap-1 py-2 mb-3 text-4xl font-semibold text-center bg-black rounded shadow-2xl outline outline-offset-1 outline-2 outline-pink-600">
-              <div className="m-auto text-yellow-400">{props.question_id}.</div>
+              <div className="m-auto text-yellow-400">{question_id}.</div>
               <div className="col-span-11 m-auto text-yellow-400">
-                {props.question}
+                {question}
               </div>
             </div>
             <div className="grid justify-center grid-cols-2 gap-3"></div>
@@ -144,7 +165,7 @@ export default function Question1(props) {
                 tabIndex={0}
               >
                 <div className="">&nbsp; A.</div>
-                <div className="">{props.option1}</div>
+                <div className="">{option1}</div>
               </div>
 
               <div id="counter" className="col-start-6 row-span-2">
@@ -177,7 +198,7 @@ export default function Question1(props) {
                 tabIndex={0}
               >
                 <div className="">&nbsp; B.</div>
-                <div className="">{props.option2}</div>
+                <div className="">{option2}</div>
               </div>
 
               <div
@@ -193,7 +214,7 @@ export default function Question1(props) {
                 tabIndex={0}
               >
                 <div className="">&nbsp; C.</div>
-                <div className="">{props.option3}</div>
+                <div className="">{option3}</div>
               </div>
               <div
                 id="3"
@@ -210,7 +231,7 @@ export default function Question1(props) {
                 tabIndex={0}
               >
                 <div className="">&nbsp; D.</div>
-                <div className="">{props.option4}</div>
+                <div className="">{option4}</div>
               </div>
             </div>
             <br></br>
@@ -270,7 +291,7 @@ export default function Question1(props) {
                   showExplanation == "visible",
               })}
             >
-              {props.explanation}
+              {explanation}
               <audio id="clock-audio" src="/clock-45s.mp3">
                 Audio
               </audio>
