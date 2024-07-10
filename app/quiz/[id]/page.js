@@ -1,4 +1,4 @@
-import Question1 from "@/app/components/Question1";
+import Question from "@/app/components/Question";
 import { fetchQuestions } from "@/libs/data";
 import PropTypes from "prop-types";
 
@@ -14,7 +14,7 @@ export default async function AnswerPage({ params }) {
       <div className="grid gap-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-8 xl:grid-cols-8 2xl:grid-cols-8">
         {question.map((q) => (
           <div key={q._id} className="pb-3" id={"q-" + q.question_id}>
-            <Question1
+            <Question
               question_id={q.question_id}
               question={q.question}
               option1={q.options[0][0]}
