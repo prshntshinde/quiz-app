@@ -15,7 +15,9 @@ export async function GET() {
 
 export async function POST(request) {
   try {
-    const { title, description, isComplete, isActive } = await request.json();
+    const { title, description } = await request.json();
+    const isComplete = false;
+    const isActive = true;
     await connectMongoDB();
     await Quiz.create({ title, description, isComplete, isActive });
     return NextResponse.json({ message: "Quiz Created" }, { status: 201 });
