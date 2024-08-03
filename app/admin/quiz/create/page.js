@@ -17,16 +17,19 @@ export default function CreateQuiz() {
     }
 
     try {
-      const res = await fetch("http://localhost:3000/api/v1/quiz", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          title,
-          description,
-        }),
-      });
+      const res = await fetch(
+        `${process.env.NEXT_PUBLIC_SITE_BASE_URL}/api/v1/quiz`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            title,
+            description,
+          }),
+        }
+      );
 
       if (res.ok) {
         router.push("/admin/quiz");

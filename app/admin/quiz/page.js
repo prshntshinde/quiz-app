@@ -1,9 +1,12 @@
 import Link from "next/link";
 
 async function getQuizzes() {
-  const res = await fetch("http://localhost:3000/api/v1/quiz", {
-    cache: "no-store",
-  });
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_SITE_BASE_URL}/api/v1/quiz`,
+    {
+      cache: "no-store",
+    }
+  );
   if (!res.ok) {
     throw new Error("Failed to fetch data");
   }
