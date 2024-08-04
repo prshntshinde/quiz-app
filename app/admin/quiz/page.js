@@ -1,6 +1,7 @@
 import Link from "next/link";
 
 async function getQuizzes() {
+  console.log(process.env.NEXT_PUBLIC_SITE_BASE_URL);
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_SITE_BASE_URL}/api/v1/quiz`,
     {
