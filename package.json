@@ -9,10 +9,11 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "aws4": "^1.13.0",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.1",
     "lucide-react": "^0.407.0",
-    "mongoose": "^8.0.0",
+    "mongoose": "^8.5.2",
     "next": "14.1.1",
     "prop-types": "^15.8.1",
     "react": "^18",
