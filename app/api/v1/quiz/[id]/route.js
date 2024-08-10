@@ -3,10 +3,9 @@ import connectMongoDB from "@/libs/mongodb";
 import { Quiz } from "@/models/quiz";
 import { NextRequest } from "next/server";
 
-export async function GET(request) {
+export async function GET(request, { params }) {
   try {
-    const id = request.url.split("quiz/")[1];
-    console.log(id);
+    const id = params.id;
     await connectMongoDB();
     const quiz = await Quiz.findOne({ _id: id });
     return NextResponse.json({ quiz }, { status: 200 });
@@ -16,10 +15,9 @@ export async function GET(request) {
   }
 }
 
-export async function PUT(request) {
+export async function PUT(request, { params }) {
   try {
-    const id = request.url.split("quiz/")[1];
-    console.log(id);
+    const id = params.id;
     const {
       newTitle: title,
       newDescription: description,
@@ -40,9 +38,9 @@ export async function PUT(request) {
   }
 }
 
-export async function DELETE(request) {
+export async function DELETE(request, { params }) {
   try {
-    const id = request.url.split("quiz/")[1];
+    const id = params.id;
     await connectMongoDB();
     await Quiz.findByIdAndDelete(id);
     return NextResponse.json({ message: "Quiz Deleted." }, { status: 200 });

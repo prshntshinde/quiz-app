@@ -1,22 +1,8 @@
 import Link from "next/link";
-
-async function getQuizzes() {
-  console.log(process.env.NEXT_PUBLIC_SITE_BASE_URL);
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_SITE_BASE_URL}/api/v1/quiz`,
-    {
-      cache: "no-store",
-    }
-  );
-  if (!res.ok) {
-    throw new Error("Failed to fetch data");
-  }
-  return res.json();
-}
+import { getAllQuizzes } from "@/lib/quizzes";
 
 export default async function Quiz() {
-  let quizzes = {};
-  quizzes = await getQuizzes();
+  const data = await getAllQuizzes();
 
   return (
     <div>
@@ -38,7 +24,7 @@ export default async function Quiz() {
               </tr>
             </thead>
             <tbody className="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
-              {quizzes.quizzes.map((quiz) => (
+              {data.map((quiz) => (
                 <tr key={quiz._id} className="text-gray-700 dark:text-gray-400">
                   <td className="px-4 py-3">
                     <div className="flex items-center text-sm">
