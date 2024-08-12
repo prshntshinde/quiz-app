@@ -3,15 +3,18 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { createQuiz } from "@/lib/actions/quiz";
+import FormSubmitButton from "@/app/components/forms/FormSubmitButton";
 
 export default function CreateQuiz() {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const router = useRouter();
+  const [isLoading, setIsLoading] = useState(false);
 
   return (
     <form
       action={async (formData) => {
+        setIsLoading(true);
         await createQuiz(formData);
         setTitle("");
         setDescription("");
@@ -27,6 +30,7 @@ export default function CreateQuiz() {
         className="p-2 border border-slate-500"
         onChange={(e) => setTitle(e.target.value)}
         value={title}
+        required
       />
       <input
         type="text"
@@ -36,9 +40,10 @@ export default function CreateQuiz() {
         onChange={(e) => setDescription(e.target.value)}
         value={description}
       />
-      <button type="submit" className="p-2 bg-blue-500 w-fit">
+      {/* <button type="submit" className="p-2 bg-blue-500 w-fit">
         Create Quiz
-      </button>
+      </button> */}
+      <FormSubmitButton value="Create Quiz" isLoading={isLoading} />
     </form>
   );
 }
