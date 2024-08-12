@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { getAllQuizzes } from "@/lib/quizzes";
+import { deleteQuiz } from "@/lib/actions/quiz";
 
 export default async function Quiz() {
   const data = await getAllQuizzes();
@@ -38,7 +39,15 @@ export default async function Quiz() {
                     <div className="flex items-center space-x-4 text-sm">
                       <Link href={`/edit/${quiz._id}`}>Edit</Link>
                       <Link href={`/view/${quiz._id}`}>Preview</Link>
-                      <Link href={`/delete/${quiz._id}`}>Delete</Link>
+                      <form action={deleteQuiz}>
+                        <input type="hidden" name="id" value={`${quiz._id}`} />
+                        <button
+                          type="submit"
+                          className="text-sm font-semibold text-red-500 hover:text-red-400"
+                        >
+                          Delete
+                        </button>
+                      </form>
                     </div>
                   </td>
                 </tr>
