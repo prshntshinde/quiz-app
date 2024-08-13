@@ -1,7 +1,6 @@
 import { NextResponse } from "next/server";
 import connectMongoDB from "@/libs/mongodb";
 import { Quiz } from "@/models/quiz";
-import { NextRequest } from "next/server";
 
 export async function GET(request, { params }) {
   try {

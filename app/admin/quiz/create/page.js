@@ -40,9 +40,6 @@ export default function CreateQuiz() {
         onChange={(e) => setDescription(e.target.value)}
         value={description}
       />
-      {/* <button type="submit" className="p-2 bg-blue-500 w-fit">
-        Create Quiz
-      </button> */}
       <FormSubmitButton value="Create Quiz" isLoading={isLoading} />
     </form>
   );
