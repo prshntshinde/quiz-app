@@ -34,9 +34,6 @@ const NavBar = () => {
         {links.map((link) => (
           <Link
             key={link.href}
-            // className={`${
-            //   link.href === currentPath ? "text-zinc-950" : "text-zinc-500"
-            // } hover:text-zinc-900 transition-colors`}
             className={twMerge(
               "hover:bg-sky-100 hover:text-blue-600 transition ease-in-out delay-50 hover:-translate-y-1 hover:scale-110 hover:duration-300",
               {
