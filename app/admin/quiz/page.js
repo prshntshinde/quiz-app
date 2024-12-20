@@ -14,6 +14,7 @@ export default async function Quiz() {
         Add Quiz
       </Link>
       <br></br>
+      <br></br>
       <div className="w-full overflow-hidden rounded-lg shadow-xs">
         <div className="w-full overflow-x-auto">
           <table className="w-full whitespace-no-wrap">
