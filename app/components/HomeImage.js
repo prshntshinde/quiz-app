@@ -6,7 +6,7 @@ import pic4 from "../../public/wallpaper-4.png";
 
 const HomeImage = () => {
   return (
-    <div id="">
+    <div>
       <Image
         alt="Church Picture"
         src={pic4}
