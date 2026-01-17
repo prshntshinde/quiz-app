@@ -10,9 +10,6 @@ export const metadata = {
   description: "This is a Quiz App",
 };
 
-RootLayout.propTypes = {
-  children: PropTypes.node.isRequired,
-};
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
@@ -23,3 +20,7 @@ export default function RootLayout({ children }) {
     </html>
   );
 }
+
+RootLayout.propTypes = {
+  children: PropTypes.node.isRequired,
+};
