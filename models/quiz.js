@@ -19,6 +19,7 @@ const quizSchema = new Schema(
   },
   {
     timestamps: true,
+    minimize: false,
   }
 );
 

@@ -2,6 +2,7 @@
 
 import { useTransition } from "react";
 import { deleteQuiz } from "@/lib/actions/quiz";
+import PropTypes from "prop-types";
 
 export default function DeleteQuizButton({ id, title }) {
     const [isPending, startTransition] = useTransition();
@@ -36,3 +37,8 @@ export default function DeleteQuizButton({ id, title }) {
         </button>
     );
 }
+
+DeleteQuizButton.propTypes = {
+    id: PropTypes.string.isRequired,
+    title: PropTypes.string.isRequired,
+};
