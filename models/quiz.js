@@ -8,6 +8,7 @@ const quizSchema = new Schema(
     description: String,
     isComplete: Boolean,
     isActive: Boolean,
+    deletedAt: { type: Date, default: null },
     history: [
       {
         title: String,
@@ -46,6 +47,8 @@ const questionSchema = new Schema(
   }
 );
 
+console.log("Registering Quiz model...");
 export const Quiz = mongoose.models?.Quiz || mongoose.model("Quiz", quizSchema);
+console.log("Quiz model registered with fields:", Object.keys(Quiz.schema.paths));
 export const Questions =
   mongoose.models?.Questions || mongoose.model("Questions", questionSchema);
