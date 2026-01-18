@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { getAllQuizzes } from "@/lib/quizzes";
-import { deleteQuiz } from "@/lib/actions/quiz";
+import DeleteQuizButton from "./DeleteQuizButton";
 
 export const dynamic = "force-dynamic";
 
@@ -41,15 +41,7 @@ export default async function Quiz() {
                     <div className="flex items-center space-x-4 text-sm">
                       <Link href={`/admin/quiz/edit/${quiz._id}`}>Edit</Link>
                       <Link href={`/view/${quiz._id}`}>Preview</Link>
-                      <form action={deleteQuiz}>
-                        <input type="hidden" name="id" value={`${quiz._id}`} />
-                        <button
-                          type="submit"
-                          className="text-sm font-semibold text-red-500 hover:text-red-400"
-                        >
-                          Delete
-                        </button>
-                      </form>
+                      <DeleteQuizButton id={String(quiz._id)} title={quiz.title} />
                     </div>
                   </td>
                 </tr>

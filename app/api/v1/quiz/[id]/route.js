@@ -10,9 +10,11 @@ export async function GET(request, { params }) {
       return NextResponse.json({ message: "Invalid ID" }, { status: 400 });
     }
     await connectMongoDB();
-    const quiz = await Quiz.findById(id);
+    const query = { _id: id, $or: [{ deletedAt: null }, { deletedAt: { $exists: false } }] };
+    const quiz = await Quiz.findOne(query);
+    console.log(`API GET(${id}) result:`, quiz ? "Found" : "Not Found");
     if (!quiz) {
-      return NextResponse.json({ message: "Quiz not found" }, { status: 404 });
+      return NextResponse.json({ message: "Quiz not found or deleted" }, { status: 404 });
     }
     return NextResponse.json(quiz, { status: 200 });
   } catch (error) {
