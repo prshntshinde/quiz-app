@@ -1,5 +1,10 @@
 import Link from "next/link";
 
+/**
+ * Render a vertical sidebar menu for admin navigation.
+ *
+ * @returns {JSX.Element} The sidebar React element containing navigation links for Dashboard, Quiz, and Questions.
+ */
 export default function SideMenu() {
   const links = [
     { label: "Dashboard", href: "/admin/dashboard" },

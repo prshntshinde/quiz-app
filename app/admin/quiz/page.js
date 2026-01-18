@@ -4,6 +4,16 @@ import { deleteQuiz } from "@/lib/actions/quiz";
 
 export const dynamic = "force-dynamic";
 
+/**
+ * Render the admin page that lists all quizzes and provides controls to add, edit, preview, and delete quizzes.
+ *
+ * Fetches quiz data and returns a React element containing a table of quizzes with actions:
+ * - "Add Quiz" link
+ * - per-quiz "Edit" and "Preview" links
+ * - per-quiz "Delete" form action
+ *
+ * @returns {JSX.Element} A React element with the admin quiz list and action controls.
+ */
 export default async function Quiz() {
   const data = await getAllQuizzes();
 
