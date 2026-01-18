@@ -2,6 +2,8 @@ import Link from "next/link";
 import { getAllQuizzes } from "@/lib/quizzes";
 import { deleteQuiz } from "@/lib/actions/quiz";
 
+export const dynamic = "force-dynamic";
+
 export default async function Quiz() {
   const data = await getAllQuizzes();
 

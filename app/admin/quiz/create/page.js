@@ -19,6 +19,7 @@ export default function CreateQuiz() {
         setTitle("");
         setDescription("");
         alert("Quiz created successfully");
+        router.refresh();
         router.push("/admin/quiz");
       }}
       className="flex flex-col gap-4"
