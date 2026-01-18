@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { updateQuiz } from "@/lib/actions/quiz";
 import FormSubmitButton from "@/app/components/forms/FormSubmitButton";
+import PropTypes from "prop-types";
 
 export default function EditQuizForm({ quiz }) {
     const [title, setTitle] = useState(quiz.title || "");
@@ -92,3 +93,18 @@ export default function EditQuizForm({ quiz }) {
         </div>
     );
 }
+
+EditQuizForm.propTypes = {
+    quiz: PropTypes.shape({
+        _id: PropTypes.string.isRequired,
+        title: PropTypes.string,
+        description: PropTypes.string,
+        history: PropTypes.arrayOf(
+            PropTypes.shape({
+                title: PropTypes.string,
+                description: PropTypes.string,
+                updatedAt: PropTypes.string,
+            })
+        ),
+    }).isRequired,
+};
