@@ -4,47 +4,18 @@ import { Quiz } from "@/models/quiz";
 
 export async function GET(request, { params }) {
   try {
-    const id = params.id;
+    const { id } = await params;
     await connectMongoDB();
-    const quiz = await Quiz.findOne({ _id: id });
-    return NextResponse.json({ quiz }, { status: 200 });
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return NextResponse.json({ message: "Invalid ID" }, { status: 400 });
+    }
+    const quiz = await Quiz.findById(id);
+    if (!quiz) {
+      return NextResponse.json({ message: "Quiz not found" }, { status: 404 });
+    }
+    return NextResponse.json(quiz, { status: 200 });
   } catch (error) {
-    console.log(error);
-    return NextResponse.json({ message: "Error", error }, { status: 500 });
-  }
-}
-
-export async function PUT(request, { params }) {
-  try {
-    const id = params.id;
-    const {
-      newTitle: title,
-      newDescription: description,
-      newisComplete: isComplete,
-      newisActive: isActive,
-    } = await request.json();
-    await connectMongoDB();
-    await Quiz.findByIdAndUpdate(id, {
-      title,
-      description,
-      isComplete,
-      isActive,
-    });
-    return NextResponse.json({ message: "Quiz Updated" }, { status: 200 });
-  } catch (error) {
-    console.log(error);
-    return NextResponse.json({ message: "Error", error }, { status: 500 });
-  }
-}
-
-export async function DELETE(request, { params }) {
-  try {
-    const id = params.id;
-    await connectMongoDB();
-    await Quiz.findByIdAndDelete(id);
-    return NextResponse.json({ message: "Quiz Deleted." }, { status: 200 });
-  } catch (error) {
-    console.log(error);
-    return NextResponse.json({ message: "Error", error }, { status: 500 });
+    console.error("API Error:", error);
+    return NextResponse.json({ message: "Error", error: error.message }, { status: 500 });
   }
 }
