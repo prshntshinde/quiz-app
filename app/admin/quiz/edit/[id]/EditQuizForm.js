@@ -46,7 +46,6 @@ export default function EditQuizForm({ quiz }) {
                     try {
                         const result = await updateQuiz(formData);
                         alert(result.message);
-                        router.refresh();
                         router.push("/admin/quiz");
                     } catch (error) {
                         alert(error.message);
@@ -56,12 +55,13 @@ export default function EditQuizForm({ quiz }) {
                 }}
                 className="flex flex-col gap-4"
             >
-                <input type="hidden" name="id" value={quiz._id} />
+                <input type="hidden" name="id" value={String(quiz._id)} />
                 <div className="flex flex-col gap-1">
-                    <label className="font-semibold text-gray-700">Quiz Title</label>
+                    <label htmlFor="quiz-title" className="font-semibold text-gray-700">Quiz Title</label>
                     <input
                         type="text"
                         name="title"
+                        id="quiz-title"
                         placeholder="Quiz Title"
                         className="p-2 border border-slate-500 rounded"
                         onChange={(e) => setTitle(e.target.value)}
@@ -70,9 +70,10 @@ export default function EditQuizForm({ quiz }) {
                     />
                 </div>
                 <div className="flex flex-col gap-1">
-                    <label className="font-semibold text-gray-700">Quiz Description</label>
+                    <label htmlFor="quiz-description" className="font-semibold text-gray-700">Quiz Description</label>
                     <textarea
                         name="description"
+                        id="quiz-description"
                         placeholder="Quiz Description"
                         className="p-2 border border-slate-500 rounded min-h-[100px]"
                         onChange={(e) => setDescription(e.target.value)}
