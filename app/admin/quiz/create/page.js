@@ -5,6 +5,13 @@ import { useRouter } from "next/navigation";
 import { createQuiz } from "@/lib/actions/quiz";
 import FormSubmitButton from "@/app/components/forms/FormSubmitButton";
 
+/**
+ * Render a form for creating a new quiz and redirect to the admin quiz listing on success.
+ *
+ * The component provides controlled title and description inputs and a submit button. On submit it creates the quiz, clears the inputs, displays a success alert, refreshes route data, and navigates to "/admin/quiz".
+ *
+ * @returns {JSX.Element} The CreateQuiz form component.
+ */
 export default function CreateQuiz() {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
