@@ -1,4 +1,6 @@
-import mongoose, { Schema } from "mongoose";
+import mongoose from "mongoose";
+
+const Schema = mongoose.Schema;
 
 const quizSchema = new Schema(
   {
@@ -6,6 +8,13 @@ const quizSchema = new Schema(
     description: String,
     isComplete: Boolean,
     isActive: Boolean,
+    history: [
+      {
+        title: String,
+        description: String,
+        updatedAt: { type: Date, default: Date.now },
+      },
+    ],
   },
   {
     timestamps: true,
@@ -37,6 +46,6 @@ const questionSchema = new Schema(
   }
 );
 
-export const Quiz = mongoose.models.Quiz || mongoose.model("Quiz", quizSchema);
+export const Quiz = mongoose.models?.Quiz || mongoose.model("Quiz", quizSchema);
 export const Questions =
-  mongoose.models.Questions || mongoose.model("Questions", questionSchema);
+  mongoose.models?.Questions || mongoose.model("Questions", questionSchema);

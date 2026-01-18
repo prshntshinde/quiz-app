@@ -39,7 +39,7 @@ export default async function Quiz() {
                   <td className="px-4 py-3 text-sm">{quiz.description}</td>
                   <td className="px-4 py-3">
                     <div className="flex items-center space-x-4 text-sm">
-                      <Link href={`/edit/${quiz._id}`}>Edit</Link>
+                      <Link href={`/admin/quiz/edit/${quiz._id}`}>Edit</Link>
                       <Link href={`/view/${quiz._id}`}>Preview</Link>
                       <form action={deleteQuiz}>
                         <input type="hidden" name="id" value={`${quiz._id}`} />
