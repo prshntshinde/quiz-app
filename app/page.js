@@ -1,9 +1,13 @@
-import HomeImage from "./components/HomeImage";
+import Hero from "./components/Hero";
+import Features from "./components/Features";
+import CallToAction from "./components/CallToAction";
 
 export default function Home() {
   return (
-    <main>
-      <HomeImage />
+    <main className="min-h-screen">
+      <Hero />
+      <Features />
+      <CallToAction />
     </main>
   );
 }
