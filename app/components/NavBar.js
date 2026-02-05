@@ -17,33 +17,38 @@ const NavBar = () => {
   ];
 
   return (
-    <nav className="flex items-center justify-start px-5 mb-5 space-x-6 font-bold border-b h-14">
-      <div>
-        <Link href="/">
-          <Image
-            src={logo}
-            alt="HMC Logo"
-            className="w-12 h-12"
-          />
-        </Link>
-      </div>
+    <nav className="sticky top-0 z-50 bg-white/80 dark:bg-gray-900/80 backdrop-blur-md border-b border-gray-200 dark:border-gray-800 shadow-sm">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex items-center justify-between h-16">
+          <div className="flex-shrink-0">
+            <Link href="/" className="flex items-center gap-2 group">
+              <Image
+                src={logo}
+                alt="HMC Logo"
+                className="w-10 h-10 transform group-hover:scale-110 transition-transform duration-300"
+              />
+            </Link>
+          </div>
 
-      <ul className="flex space-x-6">
-        {links.map((link) => (
-          <Link
-            key={link.href}
-            className={twMerge(
-              "hover:bg-sky-100 hover:text-blue-600 transition ease-in-out delay-50 hover:-translate-y-1 hover:scale-110 hover:duration-300",
-              {
-                "text-blue-600": link.href === currentPath,
-              }
-            )}
-            href={link.href}
-          >
-            {link.label}
-          </Link>
-        ))}
-      </ul>
+          <ul className="flex space-x-1 sm:space-x-2">
+            {links.map((link) => (
+              <li key={link.href}>
+                <Link
+                  className={twMerge(
+                    "px-4 py-2 rounded-lg font-medium text-gray-700 dark:text-gray-300 hover:bg-purple-50 dark:hover:bg-purple-900/30 hover:text-purple-700 dark:hover:text-purple-300 transition-all duration-300 ease-out transform hover:-translate-y-0.5",
+                    {
+                      "bg-purple-100 dark:bg-purple-900/50 text-purple-700 dark:text-purple-300": link.href === currentPath,
+                    }
+                  )}
+                  href={link.href}
+                >
+                  {link.label}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
     </nav>
   );
 };

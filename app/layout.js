@@ -6,8 +6,8 @@ import PropTypes from "prop-types";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
-  title: "Home | Quiz App",
-  description: "This is a Quiz App",
+  title: "Quiz App - Test Your Knowledge & Challenge Your Mind",
+  description: "Explore diverse quiz topics, get instant feedback, and track your progress. Start your learning journey with our engaging quiz application today.",
 };
 
 export default function RootLayout({ children }) {
