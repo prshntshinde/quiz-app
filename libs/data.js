@@ -3,8 +3,8 @@ import connectMongoDB from "./mongodb";
 
 export const fetchQuizzes = async () => {
   try {
-    connectMongoDB();
-    const quizzes = await Quiz.find();
+    await connectMongoDB();
+    const quizzes = await Quiz.find().lean();
     return quizzes;
   } catch (error) {
     console.log(error);
@@ -15,11 +15,11 @@ export const fetchQuizzes = async () => {
 export const fetchQuestions = async (id) => {
   try {
     console.log(id);
-    connectMongoDB();
+    await connectMongoDB();
     const questions = await Questions.find({
       quiz_id: id,
       isUsed: false,
-    }).sort({ question_id: 1 });
+    }).sort({ question_id: 1 }).lean();
 
     return questions;
   } catch (error) {
