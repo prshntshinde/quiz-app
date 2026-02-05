@@ -5,7 +5,9 @@ export const fetchQuizzes = async () => {
   try {
     await connectMongoDB();
     const quizzes = await Quiz.find().lean();
-    return quizzes;
+
+    // Robust serialization for Next.js Client Components
+    return JSON.parse(JSON.stringify(quizzes));
   } catch (error) {
     console.log(error);
     throw new Error("Failed to fetch Quizzes.");
@@ -20,7 +22,8 @@ export const fetchQuestions = async (id) => {
       isUsed: false,
     }).sort({ question_id: 1 }).lean();
 
-    return questions;
+    // Robust serialization for Next.js Client Components
+    return JSON.parse(JSON.stringify(questions));
   } catch (error) {
     console.log(error);
     throw new Error("Error while fetching answers");
