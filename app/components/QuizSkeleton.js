@@ -41,7 +41,7 @@ export default function QuizSkeleton() {
         </div>
       </section>
 
-      <span className="sr-only">Loading quizzes...</span>
+      <span className="sr-only" aria-live="polite">Loading quizzes...</span>
     </div>
   );
 }

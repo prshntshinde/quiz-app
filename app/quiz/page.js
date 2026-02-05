@@ -1,9 +1,17 @@
 import { fetchQuizzes } from "@/libs/data";
 import QuizCard from "@/app/components/QuizCard";
 import EmptyState from "@/app/components/EmptyState";
+import ErrorState from "@/app/components/ErrorState";
 
 export default async function Quiz() {
-  const quizzes = await fetchQuizzes();
+  let quizzes = [];
+  let error = null;
+
+  try {
+    quizzes = await fetchQuizzes();
+  } catch (err) {
+    error = err.message;
+  }
 
   return (
     <main className="min-h-screen bg-gradient-to-br from-violet-50 via-purple-50 to-blue-50 dark:from-gray-900 dark:via-purple-900/20 dark:to-blue-900/20">
@@ -25,7 +33,9 @@ export default async function Quiz() {
       {/* Quiz List */}
       <section className="pb-20 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
-          {quizzes && quizzes.length > 0 ? (
+          {error ? (
+            <ErrorState message={error} />
+          ) : quizzes && quizzes.length > 0 ? (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
               {quizzes.map((quiz) => (
                 <QuizCard key={quiz._id} quiz={quiz} />
@@ -40,7 +50,7 @@ export default async function Quiz() {
   );
 }
 
-export function generateMetadata({ params }) {
+export function generateMetadata() {
   return {
     title: "Available Quizzes - Quiz App | Test Your Knowledge",
     description: "Browse and select from our collection of quizzes. Challenge yourself and track your progress across various topics.",

@@ -14,7 +14,6 @@ export const fetchQuizzes = async () => {
 
 export const fetchQuestions = async (id) => {
   try {
-    console.log(id);
     await connectMongoDB();
     const questions = await Questions.find({
       quiz_id: id,
