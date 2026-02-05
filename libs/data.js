@@ -1,32 +1,6 @@
 import { Questions, Quiz } from "@/models/quiz";
 import connectMongoDB from "./mongodb";
-
-// Helper to sanitize Mongoose data for Next.js serialization
-// Specifically converts ObjectIds to strings and Dates to ISO strings
-const sanitizeData = (obj) => {
-  if (obj === null || typeof obj !== "object") return obj;
-
-  if (obj instanceof Date) return obj.toISOString();
-
-  // Handle Arrays
-  if (Array.isArray(obj)) return obj.map(sanitizeData);
-
-  // Handle Mongoose ObjectIds or similar BSON types
-  // Even with .lean(), _id is often an object with a toString() method
-  if (obj.toString && typeof obj.toString === "function" && obj.constructor.name !== "Object") {
-    const s = obj.toString();
-    if (s !== "[object Object]") return s;
-  }
-
-  // Handle Regular Objects
-  const sanitized = {};
-  for (const key in obj) {
-    if (Object.prototype.hasOwnProperty.call(obj, key)) {
-      sanitized[key] = sanitizeData(obj[key]);
-    }
-  }
-  return sanitized;
-};
+import { sanitizeData } from "./utils";
 
 export const fetchQuizzes = async () => {
   try {
