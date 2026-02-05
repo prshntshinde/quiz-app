@@ -15,19 +15,42 @@ export default function Modal(props) {
 
   useEffect(() => {
     setMounted(true);
-    return () => setMounted(false);
-  }, []);
+
+    const handleEscape = (e) => {
+      if (e.key === "Escape") props.onClose();
+    };
+
+    if (props.isVisible) {
+      window.addEventListener("keydown", handleEscape);
+    }
+
+    return () => {
+      setMounted(false);
+      window.removeEventListener("keydown", handleEscape);
+    };
+  }, [props.isVisible, props.onClose]);
 
   if (!props.isVisible || !mounted) return null;
 
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter" || e.key === " ") {
+      props.onClose();
+    }
+  };
+
   const modalContent = (
     <div
-      className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/60 backdrop-blur-sm animate-fade-in"
+      className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/60 backdrop-blur-sm animate-fade-in cursor-pointer"
       onClick={props.onClose}
+      onKeyDown={handleKeyDown}
+      role="button"
+      tabIndex={0}
+      aria-label="Close modal backdrop"
     >
       <div
-        className="relative w-full max-w-2xl mx-4 bg-white dark:bg-gray-800 rounded-3xl shadow-2xl transform animate-scale-in overflow-hidden border border-white/20"
+        className="relative w-full max-w-2xl mx-4 bg-white dark:bg-gray-800 rounded-3xl shadow-2xl transform animate-scale-in overflow-hidden border border-white/20 cursor-default"
         onClick={(e) => e.stopPropagation()}
+        onKeyDown={(e) => e.stopPropagation()}
       >
         {/* Decorative Background */}
         <div className="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-violet-600 via-purple-600 to-blue-600"></div>
