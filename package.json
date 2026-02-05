@@ -6,7 +6,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "test": "jest",
+    "test:watch": "jest --watch"
   },
   "dependencies": {
     "class-variance-authority": "^0.7.0",
@@ -23,10 +25,15 @@
     "tailwindcss-animate": "^1.0.7"
   },
   "devDependencies": {
+    "@testing-library/jest-dom": "^6.9.1",
+    "@testing-library/react": "^16.3.2",
+    "@testing-library/user-event": "^14.6.1",
     "autoprefixer": "^10.0.1",
     "eslint": "^9.39.2",
     "eslint-config-next": "^16.1.2",
     "file-loader": "^6.2.0",
+    "jest": "^30.2.0",
+    "jest-environment-jsdom": "^30.2.0",
     "postcss": "^8",
     "tailwindcss": "^3.3.0"
   }
