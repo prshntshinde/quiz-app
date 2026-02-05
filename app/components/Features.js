@@ -1,27 +1,28 @@
 "use client";
 import React from "react";
 
+const features = [
+    {
+        icon: "🎯",
+        title: "Diverse Topics",
+        description:
+            "Explore a wide range of quiz categories from science and history to pop culture and technology. There's something for everyone.",
+    },
+    {
+        icon: "⚡",
+        title: "Instant Results",
+        description:
+            "Get immediate feedback on your answers. Learn from your mistakes and understand the correct answers right away.",
+    },
+    {
+        icon: "📊",
+        title: "Track Progress",
+        description:
+            "Monitor your performance over time. See your improvement and identify areas where you can continue to grow.",
+    },
+];
+
 const Features = () => {
-    const features = [
-        {
-            icon: "🎯",
-            title: "Diverse Topics",
-            description:
-                "Explore a wide range of quiz categories from science and history to pop culture and technology. There's something for everyone.",
-        },
-        {
-            icon: "⚡",
-            title: "Instant Results",
-            description:
-                "Get immediate feedback on your answers. Learn from your mistakes and understand the correct answers right away.",
-        },
-        {
-            icon: "📊",
-            title: "Track Progress",
-            description:
-                "Monitor your performance over time. See your improvement and identify areas where you can continue to grow.",
-        },
-    ];
 
     return (
         <section className="py-20 sm:py-28 bg-white dark:bg-gray-900">
@@ -41,7 +42,7 @@ const Features = () => {
                     {features.map((feature, index) => (
                         <div
                             key={index}
-                            className="group relative bg-gradient-to-br from-white to-gray-50 dark:from-gray-800 dark:to-gray-900 rounded-2xl p-8 shadow-lg hover:shadow-2xl transform hover:-translate-y-2 transition-all duration-300 ease-out border border-gray-200 dark:border-gray-700 hover:border-purple-300 dark:hover:border-purple-600 overflow-hidden"
+                            className="group relative animate-fade-in bg-gradient-to-br from-white to-gray-50 dark:from-gray-800 dark:to-gray-900 rounded-2xl p-8 shadow-lg hover:shadow-2xl transform hover:-translate-y-2 transition-all duration-300 ease-out border border-gray-200 dark:border-gray-700 hover:border-purple-300 dark:hover:border-purple-600 overflow-hidden"
                             style={{
                                 animationDelay: `${index * 100}ms`,
                             }}

@@ -32,7 +32,7 @@ const CallToAction = () => {
                     <div className="pt-4">
                         <Link
                             href="/quiz"
-                            className="group inline-flex items-center justify-center px-10 py-5 text-lg font-bold text-purple-700 bg-white rounded-xl hover:bg-gray-50 transform hover:scale-105 transition-all duration-300 ease-out shadow-2xl hover:shadow-3xl"
+                            className="group inline-flex items-center justify-center px-10 py-5 text-lg font-bold text-purple-700 bg-white rounded-xl hover:bg-gray-50 transform hover:scale-105 transition-all duration-300 ease-out shadow-2xl hover:shadow-2xl"
                         >
                             <span className="flex items-center gap-3">
                                 <span>Get Started</span>
