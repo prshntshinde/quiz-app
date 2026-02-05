@@ -14,21 +14,36 @@ export default function Modal(props) {
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
+    if (props.isVisible) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [props.isVisible]);
+
+  useEffect(() => {
     setMounted(true);
 
-    const handleEscape = (e) => {
-      if (e.key === "Escape") props.onClose();
+    const handleEscape = (event) => {
+      if (event.key === "Escape" || event.keyCode === 27) {
+        if (props.onClose) {
+          props.onClose();
+        } else {
+          setMounted(false);
+        }
+      }
     };
 
-    if (props.isVisible) {
-      window.addEventListener("keydown", handleEscape);
-    }
+    window.addEventListener("keydown", handleEscape);
 
     return () => {
       setMounted(false);
       window.removeEventListener("keydown", handleEscape);
     };
-  }, [props.isVisible, props.onClose]);
+  }, []);
 
   if (!props.isVisible || !mounted) return null;
 
