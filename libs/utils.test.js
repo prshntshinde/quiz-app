@@ -40,10 +40,29 @@ describe("sanitizeData", () => {
         expect(sanitizeData(input)).toEqual(expected);
     });
 
+    test("should handle nested ObjectIds in arrays and objects", () => {
+        const mockObjectId = {
+            toString: () => "507f1f77bcf86cd799439011",
+            constructor: function ObjectID() { }
+        };
+
+        const input = {
+            items: [mockObjectId, { subId: mockObjectId }],
+            meta: { id: mockObjectId }
+        };
+
+        const expected = {
+            items: ["507f1f77bcf86cd799439011", { subId: "507f1f77bcf86cd799439011" }],
+            meta: { id: "507f1f77bcf86cd799439011" }
+        };
+
+        expect(sanitizeData(input)).toEqual(expected);
+    });
+
     test("should ignore the toString method if it returns [object Object]", () => {
         const mockObj = {
             toString: () => "[object Object]",
-            constructor: { name: "SomeClass" },
+            constructor: function SomeClass() { },
             val: 1
         };
         const expected = { val: 1 };
