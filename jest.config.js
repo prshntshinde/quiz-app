@@ -13,7 +13,7 @@ const customJestConfig = {
         // Handle module aliases (this will be automatically configured for you soon)
         "^@/(.*)$": "<rootDir>/$1",
     },
-    collectCoverage: true,
+    collectCoverage: !!process.env.CI,
     collectCoverageFrom: [
         "app/**/*.{js,jsx,ts,tsx}",
         "libs/**/*.{js,jsx,ts,tsx}",

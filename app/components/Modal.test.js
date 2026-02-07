@@ -53,7 +53,7 @@ describe("Modal", () => {
         const content = screen.getByTestId("modal-content");
         fireEvent.click(content);
 
-        expect(mockOnClose).not.toHaveReturned();
+        expect(mockOnClose).not.toHaveBeenCalled();
     });
 
     test("calls onClose when close button is clicked", () => {

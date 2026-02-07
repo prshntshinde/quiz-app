@@ -32,7 +32,7 @@ describe("sanitizeData", () => {
         // Mock an ObjectId-like object
         const mockObjectId = {
             toString: () => "507f1f77bcf86cd799439011",
-            constructor: { name: "ObjectID" }
+            constructor: function ObjectID() { }
         };
 
         const input = { _id: mockObjectId };
