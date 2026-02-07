@@ -74,7 +74,7 @@ jobs:
       - name: Build with Next.js
         run: npm run build
       - name: SonarCloud Scan
-        uses: sonarsource/sonarcloud-scan-action@master
+        uses: sonarsource/sonarqube-scan-action@v5
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
