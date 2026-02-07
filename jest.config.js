@@ -21,6 +21,7 @@ const customJestConfig = {
         "!libs/**/*.test.{js,jsx,ts,tsx}",
         "!**/node_modules/**",
     ],
+    coverageReporters: ["text", "lcov"],
 };
 
 // createJestConfig is exported this way to ensure that next/jest can load the Next.js config which is async

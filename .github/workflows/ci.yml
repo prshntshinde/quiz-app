@@ -67,5 +67,14 @@ jobs:
 
       - name: Install dependencies
         run: ${{ steps.detect-package-manager.outputs.manager }} ${{ steps.detect-package-manager.outputs.command }}
+      - name: Run tests with coverage
+        run: npm test -- --coverage
+        env:
+          CI: true
       - name: Build with Next.js
         run: npm run build
+      - name: SonarCloud Scan
+        uses: sonarsource/sonarcloud-scan-action@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
