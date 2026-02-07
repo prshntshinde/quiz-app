@@ -25,6 +25,6 @@ export const fetchQuestions = async (id) => {
     return sanitizeData(questions);
   } catch (error) {
     console.log(error);
-    throw new Error("Error while fetching answers");
+    throw new Error("Error while fetching questions");
   }
 };

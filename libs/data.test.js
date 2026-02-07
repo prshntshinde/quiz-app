@@ -3,7 +3,7 @@ import connectMongoDB from "./mongodb";
 import { sanitizeData } from "./utils";
 
 // Mock the dependencies
-jest.mock("./mongodb", () => jest.fn());
+jest.mock("./mongodb", () => jest.fn().mockResolvedValue(undefined));
 jest.mock("./utils", () => ({
     sanitizeData: jest.fn((data) => data),
 }));
@@ -82,7 +82,7 @@ describe("libs/data", () => {
                 }),
             });
 
-            await expect(fetchQuestions("123")).rejects.toThrow("Error while fetching answers");
+            await expect(fetchQuestions("123")).rejects.toThrow("Error while fetching questions");
         });
     });
 });

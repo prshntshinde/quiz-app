@@ -5,12 +5,12 @@ import ErrorState from "./ErrorState";
 describe("ErrorState", () => {
     const originalLocation = window.location;
 
-    beforeAll(() => {
+    beforeEach(() => {
         delete window.location;
         window.location = { reload: jest.fn() };
     });
 
-    afterAll(() => {
+    afterEach(() => {
         window.location = originalLocation;
     });
 
