@@ -1,4 +1,4 @@
-import { sanitizeData } from "./utils";
+import { sanitizeData, twMerge } from "./utils";
 
 describe("sanitizeData", () => {
     test("should handle null and primitives", () => {
@@ -67,5 +67,31 @@ describe("sanitizeData", () => {
         };
         const expected = { val: 1 };
         expect(sanitizeData(mockObj)).toEqual(expected);
+    });
+
+    test("should handle objects with null constructors", () => {
+        const mockObj = Object.create(null);
+        mockObj.val = 1;
+        const result = sanitizeData(mockObj);
+        expect(result).toEqual({ val: 1 });
+    });
+
+    test("should skip functions", () => {
+        const input = { a: 1, b: () => { } };
+        const expected = { a: 1 };
+        expect(sanitizeData(input)).toEqual(expected);
+    });
+});
+
+describe("twMerge", () => {
+    it("should merge tailwind classes correctly", () => {
+        expect(twMerge("p-4", "p-2")).toBe("p-2");
+        expect(twMerge("p-4", { "m-2": true, "m-4": false })).toBe("p-4 m-2");
+    });
+
+    it("should handle nested arrays and conditional classes", () => {
+        expect(twMerge(["p-4", "m-2"], "bg-white")).toContain("p-4");
+        expect(twMerge(["p-4", "m-2"], "bg-white")).toContain("m-2");
+        expect(twMerge(["p-4", "m-2"], "bg-white")).toContain("bg-white");
     });
 });
