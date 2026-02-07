@@ -7,7 +7,7 @@ on:
 
   # Runs on any open or reopened pull request
   pull_request:
-    types: [opened, reopened]
+    types: [opened, reopened, synchronize]
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
@@ -27,9 +27,11 @@ jobs:
         env:
           MONGODB_URI: ${{ vars.MONGODB_URI }}
         run: |
-          echo "MONGODB_URI: ${MONGODB_URI}"
+          echo "MONGODB_URI is set: ${MONGODB_URI:+true}"
       - name: Checkout
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       - name: Detect package manager
         id: detect-package-manager
         run: |
@@ -48,7 +50,7 @@ jobs:
             exit 1
           fi
       - name: Setup Node
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: "20"
           cache: ${{ steps.detect-package-manager.outputs.manager }}
@@ -68,11 +70,11 @@ jobs:
       - name: Install dependencies
         run: ${{ steps.detect-package-manager.outputs.manager }} ${{ steps.detect-package-manager.outputs.command }}
       - name: Run tests with coverage
-        run: npm test -- --coverage
+        run: ${{ steps.detect-package-manager.outputs.manager }} test -- --coverage
         env:
           CI: true
       - name: Build with Next.js
-        run: npm run build
+        run: ${{ steps.detect-package-manager.outputs.manager }} run build
       - name: SonarCloud Scan
         uses: sonarsource/sonarqube-scan-action@v5
         env:
