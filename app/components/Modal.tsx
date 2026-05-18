@@ -52,14 +52,15 @@ export default function Modal({ children, isVisible, onClose }: ModalProps) {
     }
   };
 
-  const modalContent = (
+  const modalBackdrop = (
     <div
       className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/60 backdrop-blur-sm animate-fade-in cursor-pointer"
       onClick={onClose}
       onKeyDown={handleKeyDown}
-      role="button"
+      role="dialog"
       tabIndex={0}
-      aria-label="Close modal backdrop"
+      aria-label="Modal backdrop"
+      aria-modal="true"
     >
       <div
         className="relative w-full max-w-2xl mx-4 bg-white dark:bg-gray-800 rounded-3xl shadow-2xl transform animate-scale-in overflow-hidden border border-white/20 cursor-default"
@@ -93,5 +94,5 @@ export default function Modal({ children, isVisible, onClose }: ModalProps) {
     </div>
   );
 
-  return createPortal(modalContent, document.body);
+  return createPortal(modalBackdrop, document.body);
 }

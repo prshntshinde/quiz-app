@@ -20,6 +20,57 @@ interface QuestionProps {
 type AnswerStatus = "Correct" | "Wrong" | "";
 type OptionStatus = "correct" | "wrong" | "fifty_fifty" | null;
 
+function getSecureRandomIndex(max: number): number {
+  const array = new Uint32Array(1);
+  crypto.getRandomValues(array);
+  return array[0] % max;
+}
+
+interface AnswerOptionProps {
+  id: string;
+  label: string;
+  text: string;
+  index: number;
+  selectedAnswer: number | null;
+  optionStatus: Record<number, OptionStatus>;
+  onSelect: (index: number) => void;
+}
+
+function AnswerOption({
+  id,
+  label,
+  text,
+  index,
+  selectedAnswer,
+  optionStatus,
+  onSelect,
+}: AnswerOptionProps) {
+  const baseClass = "outline outline-offset-0 outline-1 border-solid border-stone-50 py-2 px-4 mb-3 font-semibold text-3xl flex rounded place-items-center gap-1 bg-black text-white transition duration-150 ease-in-out hover:scale-110";
+
+  let className = baseClass;
+  if (optionStatus[index] === "correct") {
+    className = `${baseClass} bg-green-600`;
+  } else if (optionStatus[index] === "wrong") {
+    className = `${baseClass} bg-red-600`;
+  } else if (optionStatus[index] === "fifty_fifty") {
+    className = `${baseClass} bg-gray-600 opacity-50`;
+  } else if (selectedAnswer === index) {
+    className = `${baseClass} bg-blue-400`;
+  }
+
+  return (
+    <button
+      type="button"
+      id={id}
+      onClick={() => onSelect(index)}
+      className={className}
+    >
+      <span>&nbsp; {label}.</span>
+      <span>{text}</span>
+    </button>
+  );
+}
+
 export default function Question({
   question_id,
   question,
@@ -105,29 +156,12 @@ export default function Question({
     setOptionStatus(updatedStatus2);
   };
 
-  function getSecureRandomIndex(max: number): number {
-    const array = new Uint32Array(1);
-    crypto.getRandomValues(array);
-    return array[0] % max;
-  }
-
-  const getOptionClassName = (index: number): string => {
-    const baseClass = "outline outline-offset-0 outline-1 border-solid border-stone-50 py-2 px-4 mb-3 font-semibold text-3xl flex rounded place-items-center gap-1 bg-black text-white transition duration-150 ease-in-out hover:scale-110";
-
-    if (optionStatus[index] === "correct") {
-      return `${baseClass} bg-green-600`;
-    }
-    if (optionStatus[index] === "wrong") {
-      return `${baseClass} bg-red-600`;
-    }
-    if (optionStatus[index] === "fifty_fifty") {
-      return `${baseClass} bg-gray-600 opacity-50`;
-    }
-    if (selectedAnswer === index) {
-      return `${baseClass} bg-blue-400`;
-    }
-    return baseClass;
-  };
+  const options = [
+    { id: "option-0", label: "A", text: option1 },
+    { id: "option-1", label: "B", text: option2 },
+    { id: "option-2", label: "C", text: option3 },
+    { id: "option-3", label: "D", text: option4 },
+  ];
 
   return (
     <div>
@@ -165,16 +199,15 @@ export default function Question({
                 { "grid grid-cols-12 gap-4 text-3xl font-semibold text-left": showOptions }
               )}
             >
-              <div
-                id="0"
-                onClick={() => updateSelectedAnswer(0)}
-                className={getOptionClassName(0)}
-                role="button"
-                tabIndex={0}
-              >
-                <div>&nbsp; A.</div>
-                <div>{option1}</div>
-              </div>
+              <AnswerOption
+                id="option-0"
+                label="A"
+                text={option1}
+                index={0}
+                selectedAnswer={selectedAnswer}
+                optionStatus={optionStatus}
+                onSelect={updateSelectedAnswer}
+              />
 
               <div id="counter" className="col-start-6 row-span-2">
                 <div>
@@ -191,37 +224,35 @@ export default function Question({
                   </CountdownCircleTimer>
                 </div>
               </div>
-              <div
-                id="1"
-                onClick={() => updateSelectedAnswer(1)}
-                className={getOptionClassName(1)}
-                role="button"
-                tabIndex={0}
-              >
-                <div>&nbsp; B.</div>
-                <div>{option2}</div>
-              </div>
+              <AnswerOption
+                id="option-1"
+                label="B"
+                text={option2}
+                index={1}
+                selectedAnswer={selectedAnswer}
+                optionStatus={optionStatus}
+                onSelect={updateSelectedAnswer}
+              />
 
-              <div
-                id="2"
-                onClick={() => updateSelectedAnswer(2)}
-                className={getOptionClassName(2)}
-                role="button"
-                tabIndex={0}
-              >
-                <div>&nbsp; C.</div>
-                <div>{option3}</div>
-              </div>
-              <div
-                id="3"
-                onClick={() => updateSelectedAnswer(3)}
-                className={getOptionClassName(3)}
-                role="button"
-                tabIndex={0}
-              >
-                <div>&nbsp; D.</div>
-                <div>{option4}</div>
-              </div>
+              <AnswerOption
+                id="option-2"
+                label="C"
+                text={option3}
+                index={2}
+                selectedAnswer={selectedAnswer}
+                optionStatus={optionStatus}
+                onSelect={updateSelectedAnswer}
+              />
+
+              <AnswerOption
+                id="option-3"
+                label="D"
+                text={option4}
+                index={3}
+                selectedAnswer={selectedAnswer}
+                optionStatus={optionStatus}
+                onSelect={updateSelectedAnswer}
+              />
             </div>
             <br></br>
 

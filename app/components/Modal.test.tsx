@@ -26,4 +26,21 @@ describe("Modal", () => {
     });
     expect(screen.queryByTestId("modal-child")).not.toBeInTheDocument();
   });
+
+  it("calls onClose when close button is clicked", async () => {
+    const onClose = jest.fn();
+    await act(async () => {
+      render(
+        <Modal isVisible={true} onClose={onClose}>
+          <MockChild />
+        </Modal>
+      );
+    });
+
+    await act(async () => {
+      fireEvent.click(screen.getByRole("button", { name: /close modal/i }));
+    });
+
+    expect(onClose).toHaveBeenCalled();
+  });
 });
