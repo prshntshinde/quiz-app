@@ -12,9 +12,13 @@ export function sanitizeData(obj: unknown): unknown {
 
   if (Array.isArray(obj)) return obj.map((item) => sanitizeData(item));
 
-  if (typeof obj.toString === "function" && obj.toString !== Object.prototype.toString) {
-    const str = obj.toString();
-    if (str !== "[object Object]") return str;
+  const objToString = Object.prototype.toString;
+  if (obj.toString !== objToString) {
+    try {
+      const str = String(obj);
+      if (str !== "[object Object]") return str;
+    } catch {
+    }
   }
 
   const sanitized: Record<string, unknown> = {};
