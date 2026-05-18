@@ -1,0 +1,32 @@
+import { Questions, Quiz } from "@/models/quiz";
+import connectMongoDB from "./mongodb";
+import { sanitizeData } from "./utils";
+
+export async function fetchQuizzes() {
+  try {
+    await connectMongoDB();
+    const quizzes = await Quiz.find().lean();
+
+    return sanitizeData(quizzes);
+  } catch (error) {
+    console.error(error);
+    throw new Error("Failed to fetch Quizzes.");
+  }
+}
+
+export async function fetchQuestions(id: string) {
+  try {
+    await connectMongoDB();
+    const questions = await Questions.find({
+      quiz_id: id,
+      isUsed: false,
+    })
+      .sort({ question_id: 1 })
+      .lean();
+
+    return sanitizeData(questions);
+  } catch (error) {
+    console.error(error);
+    throw new Error("Error while fetching questions");
+  }
+}
