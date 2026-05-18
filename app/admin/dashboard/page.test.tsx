@@ -1,5 +1,5 @@
 import { render, screen } from "@testing-library/react";
-import Dashboard from "./page";
+import Dashboard, { generateMetadata } from "./page";
 import "@testing-library/jest-dom";
 
 vi.mock("next/navigation", () => ({
@@ -10,5 +10,10 @@ describe("AdminDashboard", () => {
   it("renders dashboard content", () => {
     render(<Dashboard />);
     expect(screen.getByText("Dashboard")).toBeInTheDocument();
+  });
+
+  it("generates correct metadata", () => {
+    const metadata = generateMetadata();
+    expect(metadata.title).toBe("Dashboard | Quiz App");
   });
 });

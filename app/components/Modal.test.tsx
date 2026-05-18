@@ -44,4 +44,20 @@ describe("Modal", () => {
 
     expect(onClose).toHaveBeenCalled();
   });
+
+  it("calls onClose when Escape key is pressed", async () => {
+    const onClose = vi.fn();
+    await act(async () => {
+      render(
+        <Modal isVisible={true} onClose={onClose}>
+          <MockChild />
+        </Modal>
+      );
+    });
+
+    const dialog = document.querySelector("dialog");
+    fireEvent.keyDown(dialog as Element, { key: "Escape" });
+
+    expect(onClose).toHaveBeenCalled();
+  });
 });
