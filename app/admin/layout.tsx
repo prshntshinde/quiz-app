@@ -2,7 +2,7 @@ import SideMenu from "../components/SideMenu";
 import type { ReactNode } from "react";
 
 interface AdminLayoutProps {
-  children: ReactNode;
+  readonly children: ReactNode;
 }
 
 export default function AdminLayout({ children }: AdminLayoutProps) {

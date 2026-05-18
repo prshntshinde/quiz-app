@@ -6,20 +6,20 @@ import { updateQuiz } from "@/lib/actions/quiz";
 import FormSubmitButton from "@/app/components/forms/FormSubmitButton";
 
 interface HistoryEntry {
-  title: string;
-  description?: string;
-  updatedAt: string;
+  readonly title: string;
+  readonly description?: string;
+  readonly updatedAt: string;
 }
 
 interface QuizData {
-  _id: string;
-  title?: string;
-  description?: string;
-  history?: HistoryEntry[];
+  readonly _id: string;
+  readonly title?: string;
+  readonly description?: string;
+  readonly history?: readonly HistoryEntry[];
 }
 
 interface EditQuizFormProps {
-  quiz: QuizData;
+  readonly quiz: QuizData;
 }
 
 export default function EditQuizForm({ quiz }: EditQuizFormProps) {
@@ -28,10 +28,7 @@ export default function EditQuizForm({ quiz }: EditQuizFormProps) {
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
 
-  const lastHistory =
-    quiz.history && quiz.history.length > 0
-      ? quiz.history[quiz.history.length - 1]
-      : null;
+  const lastHistory = quiz.history?.at(-1) ?? null;
 
   return (
     <div className="max-w-2xl mx-auto p-4">

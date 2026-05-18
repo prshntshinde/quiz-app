@@ -3,7 +3,7 @@ import EditQuizForm from "./EditQuizForm";
 import { notFound } from "next/navigation";
 
 interface EditQuizPageProps {
-  params: Promise<{ id: string }>;
+  readonly params: Promise<{ id: string }>;
 }
 
 export async function generateMetadata({ params }: EditQuizPageProps) {
@@ -22,7 +22,7 @@ export default async function EditQuizPage({ params }: EditQuizPageProps) {
     notFound();
   }
 
-  const plainQuiz = JSON.parse(JSON.stringify(quiz));
+  const plainQuiz = structuredClone(quiz);
 
   return <EditQuizForm quiz={plainQuiz} />;
 }

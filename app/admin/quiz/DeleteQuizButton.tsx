@@ -4,15 +4,15 @@ import { useTransition } from "react";
 import { deleteQuiz } from "@/lib/actions/quiz";
 
 interface DeleteQuizButtonProps {
-  id: string;
-  title: string;
+  readonly id: string;
+  readonly title: string;
 }
 
 export default function DeleteQuizButton({ id, title }: DeleteQuizButtonProps) {
   const [isPending, startTransition] = useTransition();
 
   const handleDelete = async () => {
-    const confirmed = window.confirm(
+    const confirmed = globalThis.confirm(
       `Are you sure you want to delete the quiz "${title}"? This will move it to the trash.`
     );
 
