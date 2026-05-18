@@ -3,19 +3,19 @@ import userEvent from "@testing-library/user-event";
 import DeleteQuizButton from "./DeleteQuizButton";
 import "@testing-library/jest-dom";
 
-jest.mock("next/navigation", () => ({
-  useRouter: jest.fn(),
+vi.mock("next/navigation", () => ({
+  useRouter: vi.fn(),
 }));
 
-const mockDeleteQuiz = jest.fn();
-jest.mock("@/lib/actions/quiz", () => ({
+const mockDeleteQuiz = vi.fn();
+vi.mock("@/lib/actions/quiz", () => ({
   deleteQuiz: (...args: unknown[]) => mockDeleteQuiz(...args),
 }));
 
 describe("DeleteQuizButton", () => {
   beforeEach(() => {
-    jest.clearAllMocks();
-    window.confirm = jest.fn().mockReturnValue(true);
+    vi.clearAllMocks();
+    window.confirm = vi.fn().mockReturnValue(true);
   });
 
   it("renders Delete button", () => {
@@ -42,7 +42,7 @@ describe("DeleteQuizButton", () => {
   });
 
   it("does not call deleteQuiz when not confirmed", async () => {
-    (window.confirm as jest.Mock).mockReturnValue(false);
+    (window.confirm as vi.Mock).mockReturnValue(false);
     render(<DeleteQuizButton id="123" title="Test Quiz" />);
     fireEvent.click(screen.getByRole("button"));
 

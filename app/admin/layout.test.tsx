@@ -2,8 +2,8 @@ import { render, screen } from "@testing-library/react";
 import SideMenu from "@/app/components/SideMenu";
 import "@testing-library/jest-dom";
 
-jest.mock("next/navigation", () => ({
-  usePathname: jest.fn(),
+vi.mock("next/navigation", () => ({
+  usePathname: vi.fn(),
 }));
 
 describe("AdminLayout", () => {

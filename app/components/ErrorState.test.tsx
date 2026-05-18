@@ -2,9 +2,9 @@ import { render, screen } from "@testing-library/react";
 import ErrorState from "./ErrorState";
 import "@testing-library/jest-dom";
 
-jest.mock("next/navigation", () => ({
-  useRouter: jest.fn(() => ({
-    refresh: jest.fn(),
+vi.mock("next/navigation", () => ({
+  useRouter: vi.fn(() => ({
+    refresh: vi.fn(),
   })),
 }));
 

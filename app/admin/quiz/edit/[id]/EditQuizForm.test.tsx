@@ -2,21 +2,21 @@ import { render, screen, fireEvent, waitFor, act } from "@testing-library/react"
 import EditQuizForm from "./EditQuizForm";
 import "@testing-library/jest-dom";
 
-const mockUpdateQuiz = jest.fn();
-jest.mock("@/lib/actions/quiz", () => ({
+const mockUpdateQuiz = vi.fn();
+vi.mock("@/lib/actions/quiz", () => ({
   updateQuiz: (...args: unknown[]) => mockUpdateQuiz(...args),
 }));
 
-jest.mock("next/navigation", () => ({
-  useRouter: jest.fn(() => ({
-    push: jest.fn(),
-    back: jest.fn(),
+vi.mock("next/navigation", () => ({
+  useRouter: vi.fn(() => ({
+    push: vi.fn(),
+    back: vi.fn(),
   })),
 }));
 
 describe("EditQuizForm", () => {
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   const mockQuiz = {

@@ -2,15 +2,17 @@ import { fetchQuizzes, fetchQuestions } from "./data";
 import connectMongoDB from "./mongodb";
 import { sanitizeData } from "./utils";
 
-jest.mock("./mongodb", () => jest.fn().mockResolvedValue(undefined));
-jest.mock("./utils", () => ({
-    sanitizeData: jest.fn((data: unknown) => data),
+vi.mock("./mongodb", () => ({
+  default: vi.fn().mockResolvedValue(undefined),
+}));
+vi.mock("./utils", () => ({
+    sanitizeData: vi.fn((data: unknown) => data),
 }));
 
-const mockQuizFind = jest.fn();
-const mockQuestionsFind = jest.fn();
+const mockQuizFind = vi.fn();
+const mockQuestionsFind = vi.fn();
 
-jest.mock("@/models/quiz", () => ({
+vi.mock("@/models/quiz", () => ({
     Quiz: {
         find: (...args: unknown[]) => mockQuizFind(...args),
     },
@@ -21,14 +23,14 @@ jest.mock("@/models/quiz", () => ({
 
 describe("libs/data", () => {
     beforeEach(() => {
-        jest.clearAllMocks();
+        vi.clearAllMocks();
     });
 
     describe("fetchQuizzes", () => {
         it("should fetch and sanitize quizzes", async () => {
             const mockQuizzes = [{ title: "Quiz 1" }];
             mockQuizFind.mockReturnValue({
-                lean: jest.fn().mockResolvedValue(mockQuizzes),
+                lean: vi.fn().mockResolvedValue(mockQuizzes),
             });
 
             const result = await fetchQuizzes();
@@ -41,7 +43,7 @@ describe("libs/data", () => {
 
         it("should throw an error if fetch fails", async () => {
             mockQuizFind.mockReturnValue({
-                lean: jest.fn().mockRejectedValue(new Error("DB Error")),
+                lean: vi.fn().mockRejectedValue(new Error("DB Error")),
             });
 
             await expect(fetchQuizzes()).rejects.toThrow("Failed to fetch Quizzes.");
@@ -53,8 +55,8 @@ describe("libs/data", () => {
             const mockQuestions = [{ question: "Q1" }];
             const quizId = "quiz123";
 
-            const mockSort = jest.fn().mockReturnValue({
-                lean: jest.fn().mockResolvedValue(mockQuestions),
+            const mockSort = vi.fn().mockReturnValue({
+                lean: vi.fn().mockResolvedValue(mockQuestions),
             });
             mockQuestionsFind.mockReturnValue({
                 sort: mockSort,
@@ -74,8 +76,8 @@ describe("libs/data", () => {
 
         it("should throw an error if fetching questions fails", async () => {
             mockQuestionsFind.mockReturnValue({
-                sort: jest.fn().mockReturnValue({
-                    lean: jest.fn().mockRejectedValue(new Error("DB Error")),
+                sort: vi.fn().mockReturnValue({
+                    lean: vi.fn().mockRejectedValue(new Error("DB Error")),
                 }),
             });
 

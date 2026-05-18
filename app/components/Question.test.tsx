@@ -2,17 +2,17 @@ import "@testing-library/jest-dom";
 import { render, screen, fireEvent } from "@testing-library/react";
 import Question from "./Question";
 
-jest.mock("./Modal", () => ({
+vi.mock("./Modal", () => ({
   __esModule: true,
   default: ({ children, isVisible, onClose }: { children: React.ReactNode; isVisible: boolean; onClose: () => void }) =>
     isVisible ? <div data-testid="modal">{children}<button data-testid="close-btn" onClick={onClose}>Close</button></div> : null,
 }));
 
-jest.mock("react-countdown-circle-timer", () => ({
+vi.mock("react-countdown-circle-timer", () => ({
   CountdownCircleTimer: ({ children }: { children: (props: { remainingTime: number }) => JSX.Element }) => children({ remainingTime: 30 }),
 }));
 
-jest.mock("react-icons/rx", () => ({
+vi.mock("react-icons/rx", () => ({
   RxCheckCircled: () => <span data-testid="check-icon" />,
   RxCrossCircled: () => <span data-testid="cross-icon" />,
 }));

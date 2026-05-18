@@ -1,12 +1,13 @@
 import { render, screen, waitFor, act } from "@testing-library/react";
 import EditQuizPage from "./page";
 import "@testing-library/jest-dom";
+import { getQuizById } from "@/lib/quizzes";
 
-jest.mock("@/lib/quizzes", () => ({
-  getQuizById: jest.fn(),
+vi.mock("@/lib/quizzes", () => ({
+  getQuizById: vi.fn(),
 }));
 
-jest.mock("./EditQuizForm", () => ({
+vi.mock("./EditQuizForm", () => ({
   __esModule: true,
   default: ({ quiz }: { quiz: { _id: string; title?: string } }) => (
     <div data-testid="edit-form">Edit Form: {quiz.title}</div>
@@ -15,7 +16,7 @@ jest.mock("./EditQuizForm", () => ({
 
 describe("EditQuizPage", () => {
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
   });
 
   it("renders EditQuizForm when quiz exists", async () => {
@@ -25,8 +26,7 @@ describe("EditQuizPage", () => {
       description: "Test Description",
     };
 
-    const { getQuizById } = require("@/lib/quizzes");
-    getQuizById.mockResolvedValue(mockQuiz);
+    (getQuizById as vi.Mock).mockResolvedValue(mockQuiz);
 
     const params = Promise.resolve({ id: "123" });
     

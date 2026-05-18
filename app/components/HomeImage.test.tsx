@@ -2,6 +2,12 @@ import { render, screen } from "@testing-library/react";
 import HomeImage from "./HomeImage";
 import "@testing-library/jest-dom";
 
+vi.mock("next/image", () => ({
+  default: function MockImage({ src, alt }: { src: string; alt: string }) {
+    return <img src={src} alt={alt} />;
+  },
+}));
+
 describe("HomeImage", () => {
   it("renders the image", () => {
     render(<HomeImage />);

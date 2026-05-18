@@ -3,13 +3,19 @@ import NavBar from "./NavBar";
 import "@testing-library/jest-dom";
 import { usePathname } from "next/navigation";
 
-jest.mock("next/navigation", () => ({
-  usePathname: jest.fn(),
+vi.mock("next/image", () => ({
+  default: function MockImage({ src, alt }: { src: string; alt: string }) {
+    return <img src={src} alt={alt} />;
+  },
+}));
+
+vi.mock("next/navigation", () => ({
+  usePathname: vi.fn(),
 }));
 
 describe("NavBar", () => {
   beforeEach(() => {
-    (usePathname as jest.Mock).mockReturnValue("/");
+    (usePathname as vi.Mock).mockReturnValue("/");
   });
 
   it("renders all navigation links", () => {
@@ -27,7 +33,7 @@ describe("NavBar", () => {
   });
 
   it("highlights the current page link", () => {
-    (usePathname as jest.Mock).mockReturnValue("/quiz");
+    (usePathname as vi.Mock).mockReturnValue("/quiz");
     render(<NavBar />);
     const quizLink = screen.getByRole("link", { name: /Quiz/i });
     expect(quizLink.closest("a")).toHaveClass(/bg-purple-100/i);

@@ -2,8 +2,8 @@ import { render, screen } from "@testing-library/react";
 import Dashboard from "./page";
 import "@testing-library/jest-dom";
 
-jest.mock("next/navigation", () => ({
-  useRouter: jest.fn(),
+vi.mock("next/navigation", () => ({
+  useRouter: vi.fn(),
 }));
 
 describe("AdminDashboard", () => {

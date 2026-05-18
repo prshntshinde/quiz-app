@@ -28,7 +28,7 @@ describe("Modal", () => {
   });
 
   it("calls onClose when close button is clicked", async () => {
-    const onClose = jest.fn();
+    const onClose = vi.fn();
     await act(async () => {
       render(
         <Modal isVisible={true} onClose={onClose}>
