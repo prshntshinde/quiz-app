@@ -14,7 +14,7 @@ interface AnswerPageProps {
   params: Promise<{ id: string }>;
 }
 
-export default async function AnswerPage({ params }: AnswerPageProps) {
+export default async function AnswerPage({ params }: Readonly<AnswerPageProps>) {
   const { id } = await params;
   const questions = (await fetchQuestions(id)) as QuestionData[];
 

@@ -44,7 +44,7 @@ function AnswerOption({
   selectedAnswer,
   optionStatus,
   onSelect,
-}: AnswerOptionProps) {
+}: Readonly<AnswerOptionProps>) {
   const baseClass = "outline outline-offset-0 outline-1 border-solid border-stone-50 py-2 px-4 mb-3 font-semibold text-3xl flex rounded place-items-center gap-1 bg-black text-white transition duration-150 ease-in-out hover:scale-110";
 
   let className = baseClass;
@@ -80,7 +80,7 @@ export default function Question({
   option4,
   answer,
   explanation,
-}: QuestionProps) {
+}: Readonly<QuestionProps>) {
   const [showModal, setShowModal] = useState(false);
   const [selectedAnswer, setSelectedAnswer] = useState<number | null>(null);
   const [answerStatus, setAnswerStatus] = useState<AnswerStatus>("");

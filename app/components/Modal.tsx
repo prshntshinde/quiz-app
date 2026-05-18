@@ -26,19 +26,10 @@ export default function Modal({ children, isVisible, onClose }: ModalProps) {
   useEffect(() => {
     setMounted(true);
 
-    const handleEscape = (event: KeyboardEvent) => {
-      if (event.key === "Escape" || event.keyCode === 27) {
-        onClose();
-      }
-    };
-
-    window.addEventListener("keydown", handleEscape);
-
     return () => {
       setMounted(false);
-      window.removeEventListener("keydown", handleEscape);
     };
-  }, [onClose]);
+  }, []);
 
   if (!isVisible || !mounted) return null;
 
@@ -46,12 +37,13 @@ export default function Modal({ children, isVisible, onClose }: ModalProps) {
     <dialog
       className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/60 backdrop-blur-sm animate-fade-in"
       onClick={(e) => { if (e.target === e.currentTarget) onClose(); }}
-      onKeyDown={(e) => { if (e.key === "Escape") onClose(); }}
+      onCancel={() => onClose()}
       aria-modal="true"
       aria-labelledby="modal-title"
     >
       <div
         className="relative w-full max-w-2xl mx-4 bg-white dark:bg-gray-800 rounded-3xl shadow-2xl transform animate-scale-in overflow-hidden border border-white/20 cursor-default"
+        onClick={(e) => e.stopPropagation()}
         onKeyDown={(e) => e.stopPropagation()}
       >
         <div className="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-violet-600 via-purple-600 to-blue-600"></div>

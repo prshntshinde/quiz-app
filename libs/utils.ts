@@ -12,20 +12,14 @@ export function sanitizeData(obj: unknown): unknown {
 
   if (Array.isArray(obj)) return obj.map((item) => sanitizeData(item));
 
-  if (
-    "toString" in obj &&
-    typeof obj.toString === "function" &&
-    "constructor" in obj &&
-    typeof (obj as { constructor: { name: string } }).constructor === "function" &&
-    (obj as { constructor: { name: string } }).constructor.name !== "Object"
-  ) {
+  if (obj.toString !== Object.prototype.toString) {
     const str = obj.toString();
     if (str !== "[object Object]") return str;
   }
 
   const sanitized: Record<string, unknown> = {};
   for (const key in obj) {
-    if (Object.prototype.hasOwnProperty.call(obj, key)) {
+    if (Object.hasOwn(obj, key)) {
       const value = (obj as Record<string, unknown>)[key];
       if (
         typeof value !== "function" &&

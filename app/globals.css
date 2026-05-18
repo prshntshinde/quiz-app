@@ -15,7 +15,7 @@ body {
   border-color: #003425;
   border-style: dashed;
   border-width: 2px;
-  color: white;
+  color: #003d00;
 }
 
 .wrong {
@@ -23,7 +23,7 @@ body {
   border-color: #660000;
   border-style: dashed;
   border-width: 2px;
-  color: white;
+  color: #1a1a1a;
 }
 
 .hide>div>button {

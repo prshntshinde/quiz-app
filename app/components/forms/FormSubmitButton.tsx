@@ -10,7 +10,7 @@ export default function FormSubmitButton({
   isLoading,
   value,
   children,
-}: FormSubmitButtonProps) {
+}: Readonly<FormSubmitButtonProps>) {
   return (
     <button
       type="submit"

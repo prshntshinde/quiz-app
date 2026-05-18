@@ -13,7 +13,7 @@ interface QuizCardProps {
   quiz: Quiz;
 }
 
-export default function QuizCard({ quiz }: QuizCardProps) {
+export default function QuizCard({ quiz }: Readonly<QuizCardProps>) {
   return (
     <div className="group relative animate-fade-in bg-gradient-to-br from-white to-gray-50 dark:from-gray-800 dark:to-gray-900 rounded-2xl p-6 sm:p-8 shadow-lg hover:shadow-2xl transform hover:-translate-y-2 transition-all duration-300 ease-out border border-gray-200 dark:border-gray-700 hover:border-purple-300 dark:hover:border-purple-600 overflow-hidden">
       <div className="absolute inset-0 bg-gradient-to-br from-purple-500/5 to-blue-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
