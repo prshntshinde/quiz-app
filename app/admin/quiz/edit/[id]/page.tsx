@@ -6,6 +6,19 @@ interface EditQuizPageProps {
   readonly params: Promise<{ id: string }>;
 }
 
+interface HistoryEntry {
+  readonly title: string;
+  readonly description?: string;
+  readonly updatedAt: string;
+}
+
+interface QuizData {
+  readonly _id: string;
+  readonly title?: string;
+  readonly description?: string;
+  readonly history?: readonly HistoryEntry[];
+}
+
 export async function generateMetadata({ params }: EditQuizPageProps) {
   const { id } = await params;
   const quiz = await getQuizById(id);
@@ -22,7 +35,16 @@ export default async function EditQuizPage({ params }: EditQuizPageProps) {
     notFound();
   }
 
-  const plainQuiz = structuredClone(quiz);
+  const plainQuiz: QuizData = {
+    _id: quiz!._id.toString(),
+    title: quiz!.title,
+    description: quiz!.description,
+    history: quiz!.history?.map((h) => ({
+      title: h.title,
+      description: h.description,
+      updatedAt: h.updatedAt.toString(),
+    })),
+  };
 
   return <EditQuizForm quiz={plainQuiz} />;
 }
