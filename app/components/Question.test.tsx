@@ -86,4 +86,66 @@ describe("Question Component", () => {
     fireEvent.click(screen.getByRole("button", { name: /1/i }));
     expect(screen.getByText("30")).toBeInTheDocument();
   });
+
+  it("selects an answer when clicked", () => {
+    render(<Question {...mockQuestion} />);
+    fireEvent.click(screen.getByRole("button", { name: /1/i }));
+    fireEvent.click(screen.getAllByText(/London/i)[0]);
+    const submitBtn = screen.getByRole("button", { name: /Submit/i });
+    expect(submitBtn).toBeEnabled();
+  });
+
+  it("shows correct status when right answer is submitted", async () => {
+    render(<Question {...mockQuestion} />);
+    fireEvent.click(screen.getByRole("button", { name: /1/i }));
+    fireEvent.click(screen.getAllByText(/Paris/i)[0]);
+    fireEvent.click(screen.getByRole("button", { name: /Submit/i }));
+    expect(await screen.findByText(/Correct/i)).toBeInTheDocument();
+  });
+
+  it("shows wrong status when wrong answer is submitted", async () => {
+    render(<Question {...mockQuestion} />);
+    fireEvent.click(screen.getByRole("button", { name: /1/i }));
+    fireEvent.click(screen.getAllByText(/London/i)[0]);
+    fireEvent.click(screen.getByRole("button", { name: /Submit/i }));
+    expect(await screen.findByText(/Wrong/i)).toBeInTheDocument();
+  });
+
+  it("displays explanation after answer is submitted", async () => {
+    render(<Question {...mockQuestion} />);
+    fireEvent.click(screen.getByRole("button", { name: /1/i }));
+    fireEvent.click(screen.getAllByText(/Paris/i)[0]);
+    fireEvent.click(screen.getByRole("button", { name: /Submit/i }));
+    expect(await screen.findByText(/Paris is the capital of France/i)).toBeInTheDocument();
+  });
+
+  it("shows 50-50 button is clickable", () => {
+    render(<Question {...mockQuestion} />);
+    fireEvent.click(screen.getByRole("button", { name: /1/i }));
+    const btn = screen.getByRole("button", { name: /50-50/i });
+    expect(btn).toBeInTheDocument();
+    fireEvent.click(btn);
+    expect(screen.getByRole("button", { name: /50-50/i })).toBeInTheDocument();
+  });
+
+  it("shows submit button as disabled when no answer selected", () => {
+    render(<Question {...mockQuestion} />);
+    fireEvent.click(screen.getByRole("button", { name: /1/i }));
+    const submitBtn = screen.getByRole("button", { name: /Submit/i });
+    expect(submitBtn).toBeDisabled();
+  });
+
+  it("shows explanation with audio after answering", async () => {
+    render(<Question {...mockQuestion} />);
+    fireEvent.click(screen.getByRole("button", { name: /1/i }));
+    fireEvent.click(screen.getAllByText(/Paris/i)[0]);
+    fireEvent.click(screen.getByRole("button", { name: /Submit/i }));
+    expect(await screen.findByText(/Paris is the capital of France/i)).toBeInTheDocument();
+  });
+
+  it("shows timer countdown", () => {
+    render(<Question {...mockQuestion} />);
+    fireEvent.click(screen.getByRole("button", { name: /1/i }));
+    expect(screen.getByText("30")).toBeInTheDocument();
+  });
 });
