@@ -1,5 +1,7 @@
-import connectMongoDB from "@/libs/mongodb";
+"use server";
+
 import { Quiz, type IQuizDocument } from "@/models/quiz";
+import connectMongoDB from "@/libs/mongodb";
 import { revalidatePath } from "next/cache";
 
 export interface CreateQuizResult {
