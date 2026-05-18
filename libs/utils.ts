@@ -12,7 +12,7 @@ export function sanitizeData(obj: unknown): unknown {
 
   if (Array.isArray(obj)) return obj.map((item) => sanitizeData(item));
 
-  if (obj.toString !== Object.prototype.toString) {
+  if (typeof obj.toString === "function" && obj.toString !== Object.prototype.toString) {
     const str = obj.toString();
     if (str !== "[object Object]") return str;
   }
