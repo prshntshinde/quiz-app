@@ -36,8 +36,12 @@ export default function Modal({ children, isVisible, onClose }: ModalProps) {
   return createPortal(
     <dialog
       className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/60 backdrop-blur-sm animate-fade-in"
+      role="dialog"
       onClick={(e) => { if (e.target === e.currentTarget) onClose(); }}
       onCancel={() => onClose()}
+      onKeyDown={(e) => {
+        if (e.key === "Escape") onClose();
+      }}
       aria-modal="true"
       aria-labelledby="modal-title"
     >
