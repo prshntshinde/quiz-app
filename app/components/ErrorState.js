@@ -1,6 +1,11 @@
+"use client";
+
 import React from "react";
+import { useRouter } from "next/navigation";
 
 export default function ErrorState({ message }) {
+    const router = useRouter();
+
     return (
         <div className="flex flex-col items-center justify-center py-20 px-4 text-center animate-fade-in">
             <div className="text-8xl mb-6 opacity-20 dark:opacity-40 select-none">
@@ -13,7 +18,7 @@ export default function ErrorState({ message }) {
                 {message || "We encountered an error while fetching the quizzes. Please try again later."}
             </p>
             <button
-                onClick={() => window.location.reload()}
+                onClick={() => router.refresh()}
                 className="px-6 py-3 bg-gradient-to-r from-violet-600 to-purple-600 text-white font-semibold rounded-lg shadow-md hover:shadow-xl transform hover:scale-105 transition-all duration-300 ease-out"
             >
                 Refresh Page

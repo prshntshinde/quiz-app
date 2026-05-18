@@ -1,17 +1,21 @@
 import React from "react";
 import { render, screen, fireEvent } from "@testing-library/react";
+import { useRouter } from "next/navigation";
 import ErrorState from "./ErrorState";
 
+jest.mock("next/navigation", () => ({
+    useRouter: jest.fn(() => ({
+        refresh: jest.fn(),
+    })),
+}));
+
 describe("ErrorState", () => {
-    const originalLocation = window.location;
+    let refreshMock;
 
     beforeEach(() => {
-        delete window.location;
-        window.location = { reload: jest.fn() };
-    });
-
-    afterEach(() => {
-        window.location = originalLocation;
+        const mockRouter = { refresh: jest.fn() };
+        useRouter.mockReturnValue(mockRouter);
+        refreshMock = mockRouter.refresh;
     });
 
     it("should render default error message", () => {
@@ -26,10 +30,10 @@ describe("ErrorState", () => {
         expect(screen.getByText(customMessage)).toBeInTheDocument();
     });
 
-    it("should reload page when refresh button is clicked", () => {
+    it("should refresh page when refresh button is clicked", () => {
         render(<ErrorState />);
         const refreshButton = screen.getByText("Refresh Page");
         fireEvent.click(refreshButton);
-        expect(window.location.reload).toHaveBeenCalled();
+        expect(refreshMock).toHaveBeenCalled();
     });
 });
