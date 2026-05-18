@@ -1,11 +1,7 @@
 import "@testing-library/jest-dom";
 
 describe("RootLayout", () => {
-  it("should have test environment configured", () => {
-    expect(true).toBe(true);
-  });
-
-  it("should validate layout structure", () => {
+  it("should validate layout props structure", () => {
     const layoutProps = {
       children: "Test Content",
     };

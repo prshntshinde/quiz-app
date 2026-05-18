@@ -156,13 +156,6 @@ export default function Question({
     setOptionStatus(updatedStatus2);
   };
 
-  const options = [
-    { id: "option-0", label: "A", text: option1 },
-    { id: "option-1", label: "B", text: option2 },
-    { id: "option-2", label: "C", text: option3 },
-    { id: "option-3", label: "D", text: option4 },
-  ];
-
   return (
     <div>
       <button

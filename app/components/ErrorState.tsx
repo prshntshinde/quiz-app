@@ -7,7 +7,7 @@ interface ErrorStateProps {
   message?: string;
 }
 
-export default function ErrorState({ message }: ErrorStateProps) {
+export default function ErrorState({ message }: Readonly<ErrorStateProps>) {
   const router = useRouter();
 
   return (
