@@ -307,6 +307,7 @@ export default function Question({
               {explanation}
               <audio id="clock-audio" src="/clock-45s.mp3">
                 Audio
+                <track kind="captions" label="Timer countdown sound" default />
               </audio>
             </div>
           </div>

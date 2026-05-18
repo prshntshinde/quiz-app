@@ -1,4 +1,4 @@
-import { render, screen, act, fireEvent } from "@testing-library/react";
+import { render, screen, act, fireEvent, waitFor } from "@testing-library/react";
 import Modal from "./Modal";
 import "@testing-library/jest-dom";
 
@@ -37,8 +37,9 @@ describe("Modal", () => {
       );
     });
 
+    const closeButton = screen.getByLabelText("Close modal");
     await act(async () => {
-      fireEvent.click(screen.getByRole("button", { name: /close modal/i }));
+      fireEvent.click(closeButton);
     });
 
     expect(onClose).toHaveBeenCalled();

@@ -28,11 +28,7 @@ export default function Modal({ children, isVisible, onClose }: ModalProps) {
 
     const handleEscape = (event: KeyboardEvent) => {
       if (event.key === "Escape" || event.keyCode === 27) {
-        if (onClose) {
-          onClose();
-        } else {
-          setMounted(false);
-        }
+        onClose();
       }
     };
 
@@ -46,26 +42,18 @@ export default function Modal({ children, isVisible, onClose }: ModalProps) {
 
   if (!isVisible || !mounted) return null;
 
-  const handleKeyDown = (e: React.KeyboardEvent) => {
-    if (e.key === "Enter" || e.key === " ") {
-      onClose();
-    }
-  };
-
-  const modalBackdrop = (
+  const modalContent = (
     <div
-      className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/60 backdrop-blur-sm animate-fade-in cursor-pointer"
+      className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/60 backdrop-blur-sm animate-fade-in"
       onClick={onClose}
-      onKeyDown={handleKeyDown}
-      role="dialog"
-      tabIndex={0}
-      aria-label="Modal backdrop"
-      aria-modal="true"
+      aria-hidden="true"
     >
       <div
         className="relative w-full max-w-2xl mx-4 bg-white dark:bg-gray-800 rounded-3xl shadow-2xl transform animate-scale-in overflow-hidden border border-white/20 cursor-default"
         onClick={(e) => e.stopPropagation()}
-        onKeyDown={(e) => e.stopPropagation()}
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="modal-title"
       >
         <div className="absolute top-0 left-0 w-full h-2 bg-gradient-to-r from-violet-600 via-purple-600 to-blue-600"></div>
         <button
@@ -94,5 +82,5 @@ export default function Modal({ children, isVisible, onClose }: ModalProps) {
     </div>
   );
 
-  return createPortal(modalBackdrop, document.body);
+  return createPortal(modalContent, document.body);
 }
