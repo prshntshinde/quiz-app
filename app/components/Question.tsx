@@ -93,17 +93,23 @@ export default function Question({
     const listIndex = [0, 1, 2, 3];
     listIndex.splice(answer, 1);
 
-    const randomNumber = Math.floor(Math.random() * listIndex.length);
+    const randomIndex = getSecureRandomIndex(listIndex.length);
     const updatedStatus1: Record<number, OptionStatus> = { ...optionStatus };
-    updatedStatus1[listIndex[randomNumber]] = "fifty_fifty";
+    updatedStatus1[listIndex[randomIndex]] = "fifty_fifty";
 
-    listIndex.splice(randomNumber, 1);
-    const randomNumber1 = Math.floor(Math.random() * listIndex.length);
+    listIndex.splice(randomIndex, 1);
+    const randomIndex1 = getSecureRandomIndex(listIndex.length);
     const updatedStatus2: Record<number, OptionStatus> = { ...updatedStatus1 };
-    updatedStatus2[listIndex[randomNumber1]] = "fifty_fifty";
+    updatedStatus2[listIndex[randomIndex1]] = "fifty_fifty";
 
     setOptionStatus(updatedStatus2);
   };
+
+  function getSecureRandomIndex(max: number): number {
+    const array = new Uint32Array(1);
+    crypto.getRandomValues(array);
+    return array[0] % max;
+  }
 
   const getOptionClassName = (index: number): string => {
     const baseClass = "outline outline-offset-0 outline-1 border-solid border-stone-50 py-2 px-4 mb-3 font-semibold text-3xl flex rounded place-items-center gap-1 bg-black text-white transition duration-150 ease-in-out hover:scale-110";
