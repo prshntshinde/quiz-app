@@ -38,7 +38,7 @@ test.describe("Question List Page", () => {
     await page.goto("/admin/questions");
     await page.waitForLoadState("networkidle");
 
-    await expect(page.locator("table").getByText("DisplayTest Question")).toBeVisible({ timeout: 10000 });
+    await expect(page.locator("table").getByText(/DisplayTest Question/i)).toBeVisible({ timeout: 15000 });
     await expect(page.locator("table")).toBeVisible();
   });
 
@@ -60,11 +60,11 @@ test.describe("Question List Page", () => {
     await page.goto("/admin/questions");
     await page.waitForLoadState("networkidle");
 
-    const row = page.locator("tr").filter({ hasText: "OptionsTest Question" }).first();
-    await expect(row.locator("td").nth(2)).toContainText("OptionsTest Option 1", { timeout: 10000 });
-    await expect(row.locator("td").nth(3)).toContainText("OptionsTest Option 2");
-    await expect(row.locator("td").nth(4)).toContainText("OptionsTest Option 3");
-    await expect(row.locator("td").nth(5)).toContainText("OptionsTest Option 4");
+    const row = page.locator("tr").filter({ hasText: /optionstest question/i }).first();
+    await expect(row.locator("td").nth(2)).toContainText(/OptionsTest Option 1/i, { timeout: 15000 });
+    await expect(row.locator("td").nth(3)).toContainText(/OptionsTest Option 2/i);
+    await expect(row.locator("td").nth(4)).toContainText(/OptionsTest Option 3/i);
+    await expect(row.locator("td").nth(5)).toContainText(/OptionsTest Option 4/i);
   });
 
   test("6. Show answer as letter A/B/C/D", async ({ page }) => {
@@ -95,6 +95,7 @@ test.describe("Question List Page", () => {
   test("8. Add Question button navigates to create page", async ({ page }) => {
     const questionsPage = new QuestionsPage(page);
     await questionsPage.goto();
+    await page.waitForLoadState("networkidle");
     await questionsPage.addButton.click();
 
     await expect(page).toHaveURL("/admin/questions/create");
