@@ -23,12 +23,35 @@
 
 ## 🛠️ Tech Stack
 
-- **Framework**: [Next.js](https://nextjs.org/) (App Router)
-- **Styling**: [Tailwind CSS](https://tailwindcss.com/)
+- **Framework**: [Next.js](https://nextjs.org/) (App Router, Server Actions)
+- **Language**: [TypeScript](https://www.typescriptlang.org/)
+- **UI Library**: [React](https://react.dev/) 19
+- **Styling**: [Tailwind CSS](https://tailwindcss.com/) + [tailwindcss-animate](https://github.com/jamiebuilds/tailwindcss-animate)
 - **Database**: [MongoDB](https://www.mongodb.com/) (Mongoose ODM)
 - **Icons**: [Lucide React](https://lucide.dev/) & [React Icons](https://react-icons.github.io/react-icons/)
-- **Animations**: [Tailwind CSS Animate](https://github.com/jamiebuilds/tailwindcss-animate)
-- **Backend**: Next.js Server Actions & API Routes
+- **Testing**: [Vitest](https://vitest.dev/) + [Testing Library](https://testing-library.com/)
+- **Utilities**: [class-variance-authority](https://cva.style/), [clsx](https://github.com/lukeed/clsx), [tailwind-merge](https://github.com/t3-oss/create-tailwind-merger), [prop-types](https://www.npmjs.com/package/prop-types), [react-countdown-circle-timer](https://www.npmjs.com/package/react-countdown-circle-timer)
+
+---
+
+## 🧪 Testing
+
+Tests are powered by [Vitest](https://vitest.dev/) with jsdom environment and [Testing Library](https://testing-library.com/).
+
+### Commands
+
+```bash
+npm test           # Run all tests
+npm run test:watch # Run tests in watch mode
+npm test -- --coverage  # Run with coverage report
+```
+
+### Features
+
+- **In-memory MongoDB**: Tests auto-start a MongoDB Memory Server (180s timeout).
+- **Path Aliases**: `@/` → project root, `@/lib/` → `lib/`, `@/libs/` → `libs/`
+- **Pattern**: Test files live alongside source: `*.test.ts` and `*.test.tsx`
+- **Mocking**: Use `vi.mock()` for modules; `vi.hoisted()` for shared mock objects.
 
 ---
 
@@ -36,8 +59,8 @@
 
 ### Prerequisites
 
-- Node.js v18.18.2 or higher
-- MongoDB instance (Local or Cloud)
+- Node.js v18+ (LTS recommended)
+- MongoDB instance (Local or Atlas)
 
 ### Installation
 
@@ -58,9 +81,13 @@
    MONGODB_URI=your_mongodb_connection_string
    ```
 
-4. **Run the development server:**
+4. **Run the app:**
    ```bash
-   npm run dev
+   npm run dev       # Start development server
+   npm run build     # Production build
+   npm run lint      # Lint code
+   npm run typecheck # TypeScript check
+   npm test          # Run tests
    ```
 
 5. **Visit the app:**
@@ -70,11 +97,16 @@
 
 ## 📂 Project Structure
 
-- `/app`: Next.js App Router (Pages and Layouts)
-- `/app/components`: Reusable UI components (QuizCard, Modal, RulesModal, etc.)
-- `/libs`: Utility libraries and database connection logic
-- `/models`: Mongoose database schemas
-- `/public`: Static assets
+- `/app` — Next.js App Router (pages, layouts, route groups)
+- `/app/components/` — Shared UI components (QuizCard, Modal, RulesModal, etc.)
+- `/app/admin/`, `/app/quiz/` — Route pages
+- `/lib/actions/` — Server Actions (quiz.ts, etc.)
+- `/lib/` — Utility libraries and helpers
+- `/libs/` — Additional libraries
+- `/models/` — Mongoose database schemas
+- `/public/` — Static assets
+- `/vitest.config.ts` — Vitest test configuration
+- `/vitest.setup.ts` — Test setup (MongoDB, global mocks)
 
 ---
 
