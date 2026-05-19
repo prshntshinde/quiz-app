@@ -36,14 +36,10 @@ export default async function EditQuizPage({ params }: EditQuizPageProps) {
   }
 
   const plainQuiz: QuizData = {
-    _id: quiz._id.toString(),
+    _id: quiz._id,
     title: quiz.title,
     description: quiz.description,
-    history: quiz.history?.map((h) => ({
-      title: h.title,
-      description: h.description,
-      updatedAt: h.updatedAt.toString(),
-    })),
+    history: [],
   };
 
   return <EditQuizForm quiz={plainQuiz} />;

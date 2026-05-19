@@ -21,25 +21,19 @@ const quizSchema = new Schema(
   }
 );
 
-const optionSchema = new Schema({
-  0: { type: String, required: true },
-  1: { type: String, required: true },
-  2: { type: String, required: true },
-  3: { type: String, required: true },
-});
-
 const questionSchema = new Schema(
   {
     question: { type: String, required: true },
-    options: {
-      type: [optionSchema],
-      required: true,
-    },
-    answer: { type: Number, required: true },
+    optionA: { type: String, required: true },
+    optionB: { type: String, required: true },
+    optionC: { type: String, required: true },
+    optionD: { type: String, required: true },
+    answer: { type: Number, required: true, min: 0, max: 3 },
     explanation: { type: String, default: "" },
     quiz_id: { type: Schema.Types.ObjectId, required: true },
     question_id: { type: Number, required: true },
     isUsed: { type: Boolean, default: false },
+    deletedAt: { type: Date, default: null },
   },
   {
     timestamps: true,
@@ -61,17 +55,16 @@ export interface IQuizDocument extends Document {
 
 export interface IQuestionDocument extends Document {
   question: string;
-  options: Array<{
-    0: string;
-    1: string;
-    2: string;
-    3: string;
-  }>;
+  optionA: string;
+  optionB: string;
+  optionC: string;
+  optionD: string;
   answer: number;
   explanation: string;
   quiz_id: Types.ObjectId;
   question_id: number;
   isUsed: boolean;
+  deletedAt: Date | null;
 }
 
 export const Quiz: Model<IQuizDocument> =

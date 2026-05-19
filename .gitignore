@@ -47,6 +47,7 @@ web_modules/
 
 # TypeScript cache
 *.tsbuildinfo
+next-env.d.ts
 
 # Optional npm cache directory
 .npm
@@ -121,6 +122,10 @@ dist
 
 # Stores VSCode versions used for testing VSCode extensions
 .vscode-test
+
+# Playwright
+test-results/
+playwright-report/
 
 # yarn v2
 .yarn/cache

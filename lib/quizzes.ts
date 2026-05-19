@@ -1,16 +1,41 @@
 import connectMongoDB from "@/libs/mongodb";
-import { Quiz, type IQuizDocument } from "@/models/quiz";
+import { Quiz } from "@/models/quiz";
 import mongoose from "mongoose";
 
-export async function getAllQuizzes(): Promise<IQuizDocument[]> {
+interface QuizResult {
+  _id: string;
+  title: string;
+  description: string;
+  isComplete: boolean;
+  isActive: boolean;
+}
+
+function toQuizResult(doc: mongoose.Document): QuizResult {
+  const obj = doc.toObject();
+  return {
+    _id: String(obj._id),
+    title: obj.title as string,
+    description: obj.description as string,
+    isComplete: obj.isComplete as boolean,
+    isActive: obj.isActive as boolean,
+  };
+}
+
+export async function getAllQuizzes(): Promise<QuizResult[]> {
   try {
     await connectMongoDB();
     const query = {
       $or: [{ deletedAt: null }, { deletedAt: { $exists: false } }],
     };
-    const quizzes = await Quiz.find(query);
+    const quizzes = await Quiz.find(query).lean();
     console.log("getAllQuizzes found count:", quizzes.length);
-    return quizzes;
+    return quizzes.map((q) => ({
+      _id: String(q._id),
+      title: q.title,
+      description: q.description,
+      isComplete: q.isComplete ?? false,
+      isActive: q.isActive ?? true,
+    }));
   } catch (error) {
     console.error(error);
     throw new Error("Failed to fetch quizzes.");
@@ -19,7 +44,7 @@ export async function getAllQuizzes(): Promise<IQuizDocument[]> {
 
 export async function getQuizById(
   id: string
-): Promise<IQuizDocument | null> {
+): Promise<QuizResult | null> {
   try {
     if (!mongoose.Types.ObjectId.isValid(id)) {
       return null;
@@ -30,9 +55,16 @@ export async function getQuizById(
       _id: id,
       $or: [{ deletedAt: null }, { deletedAt: { $exists: false } }],
     };
-    const quiz = await Quiz.findOne(query);
+    const quiz = await Quiz.findOne(query).lean();
     console.log(`getQuizById(${id}) result:`, quiz ? "Found" : "Not Found");
-    return quiz;
+    if (!quiz) return null;
+    return {
+      _id: String(quiz._id),
+      title: quiz.title,
+      description: quiz.description,
+      isComplete: quiz.isComplete ?? false,
+      isActive: quiz.isActive ?? true,
+    };
   } catch (error) {
     if (error instanceof mongoose.Error.CastError) {
       return null;
