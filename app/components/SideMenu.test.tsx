@@ -6,6 +6,7 @@ vi.mock("next/navigation", () => ({
   useRouter: vi.fn(() => ({
     push: vi.fn(),
   })),
+  usePathname: vi.fn().mockReturnValue("/admin/dashboard"),
 }));
 
 describe("SideMenu", () => {
