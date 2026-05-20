@@ -2,12 +2,19 @@ import connectMongoDB from "@/libs/mongodb";
 import { Quiz } from "@/models/quiz";
 import mongoose from "mongoose";
 
+interface HistoryEntry {
+  title: string;
+  description: string;
+  updatedAt: string;
+}
+
 interface QuizResult {
   _id: string;
   title: string;
   description: string;
   isComplete: boolean;
   isActive: boolean;
+  history?: HistoryEntry[];
 }
 
 function toQuizResult(doc: mongoose.Document): QuizResult {
@@ -35,6 +42,11 @@ export async function getAllQuizzes(): Promise<QuizResult[]> {
       description: q.description,
       isComplete: q.isComplete ?? false,
       isActive: q.isActive ?? true,
+      history: q.history?.map((h) => ({
+        title: h.title as string,
+        description: h.description as string,
+        updatedAt: String(h.updatedAt),
+      })) ?? [],
     }));
   } catch (error) {
     console.error(error);
@@ -64,6 +76,11 @@ export async function getQuizById(
       description: quiz.description,
       isComplete: quiz.isComplete ?? false,
       isActive: quiz.isActive ?? true,
+      history: quiz.history?.map((h) => ({
+        title: h.title as string,
+        description: h.description as string,
+        updatedAt: String(h.updatedAt),
+      })) ?? [],
     };
   } catch (error) {
     if (error instanceof mongoose.Error.CastError) {

@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Modal from "@/app/components/Modal";
+import { RULES } from "@/lib/constants";
 
 export default function RulesModal() {
   const [showModal, setShowModal] = useState(false);
@@ -34,27 +35,11 @@ export default function RulesModal() {
               प्रश्नमंजुषाचे नियम
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-              {[
-                { id: "rule-1", icon: "🏆", text: "प्रश्नमंजुषा तीन फेऱ्यांमध्ये घेतली जाईल." },
-                { id: "rule-2", icon: "🚫📱", text: "मोबाईल फोन आणी बायबल वापरण्यास सक्त्त मनाई आहे." },
-                { id: "rule-3", icon: "⏱️", text: "पहिली आणि दुसरी फेरी ४५ सेकंदाची असेल." },
-                { id: "rule-4", icon: "🔢", text: "प्रत्येक प्रश्नाला १० गुण असतील." },
-                { id: "rule-5", icon: "👥", text: "गट चर्चेला परवानगी आहे." },
-                { id: "rule-6", icon: "🗣️", text: "प्रश्नांची उत्तरे फक्त गट नेत्याकडून दिली जातील." },
-                { id: "rule-7", icon: "🤫", text: "इतर टीम सदस्यांना प्रॉम्ट करण्यास सक्त्त मनाई आहे." },
-                { id: "rule-8", icon: "🛑", text: "उत्तर चुकीचे असल्यास ते पुढील गटात पाठवले जाणार नाही." },
-                { id: "rule-9", icon: "🆘", text: "दोन लाइफलाइन (५०-५० आणि डबल) एकदाच वापरता येतील." },
-                { id: "rule-10", icon: "🪑", text: "सहभागींना त्यांची जागा सोडण्याची परवानगी नाही." },
-                { id: "rule-11", icon: "🏁", text: "पहिले ३ गट अंतिम फेरीसाठी निवडले जातील." },
-                { id: "rule-12", icon: "⚡", text: "तिसरी फेरी ३० सेकंदाची आणि नेगेटिव्ह मार्किंगची असेल." },
-                { id: "rule-13", icon: "⚖️", text: "श्रोते आणि सहभागींनी गांभीर्य आणि पावित्र्य राखले पाहिजे." },
-                { id: "rule-14", icon: "✅", text: "शेवटचा निर्णय आयोजकांचा असेल." },
-              ].map((rule) => (
+              {RULES.map((rule) => (
                 <div
                   key={rule.id}
                   className="flex items-start gap-3 p-4 bg-gray-50 dark:bg-gray-700/50 rounded-xl hover:bg-purple-50 dark:hover:bg-purple-900/20 transition-colors duration-200 border border-transparent hover:border-purple-200 dark:hover:border-purple-700"
                 >
-                  <span className="text-xl shrink-0">{rule.icon}</span>
                   <p className="text-sm sm:text-base text-gray-800 dark:text-gray-200 leading-snug">
                     {rule.text}
                   </p>

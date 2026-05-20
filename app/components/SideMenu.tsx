@@ -1,4 +1,7 @@
+"use client";
+
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 const links = [
   { label: "Dashboard", href: "/admin/dashboard" },
@@ -7,6 +10,13 @@ const links = [
 ];
 
 export default function SideMenu() {
+  const router = useRouter();
+
+  const handleLogout = async () => {
+    await fetch("/api/auth", { method: "DELETE" });
+    router.push("/admin");
+  };
+
   return (
     <section id="sidebar">
       <aside className="relative flex flex-col gap-1 justify-between text-center bg-white border-e min-w-[240px] h-[calc(100vh-2rem)] w-full max-w-[20rem]">
@@ -20,6 +30,14 @@ export default function SideMenu() {
             </li>
           ))}
         </ul>
+        <div className="px-4 mb-3">
+          <button
+            onClick={handleLogout}
+            className="w-full px-4 py-2 font-bold text-red-600 border border-red-300 rounded-lg hover:bg-red-50"
+          >
+            Logout
+          </button>
+        </div>
       </aside>
     </section>
   );

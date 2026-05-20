@@ -1,11 +1,13 @@
 import { Questions, Quiz } from "@/models/quiz";
 import connectMongoDB from "./mongodb";
-import { sanitizeData } from "./utils";
+import { sanitizeData } from "@/lib/utils";
 
 export async function fetchQuizzes() {
   try {
     await connectMongoDB();
-    const quizzes = await Quiz.find().lean();
+    const quizzes = await Quiz.find({
+    $or: [{ deletedAt: null }, { deletedAt: { $exists: false } }],
+  }).lean();
 
     return sanitizeData(quizzes);
   } catch (error) {
@@ -20,6 +22,7 @@ export async function fetchQuestions(id: string) {
     const questions = await Questions.find({
       quiz_id: id,
       isUsed: false,
+      $or: [{ deletedAt: null }, { deletedAt: { $exists: false } }],
     })
       .sort({ question_id: 1 })
       .lean();

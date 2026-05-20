@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { updateQuiz } from "@/lib/actions/quiz";
+import { useToast } from "@/app/components/Toast";
 import FormSubmitButton from "@/app/components/forms/FormSubmitButton";
 
 interface HistoryEntry {
@@ -27,6 +28,7 @@ export default function EditQuizForm({ quiz }: EditQuizFormProps) {
   const [description, setDescription] = useState(quiz.description || "");
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
+  const { addToast } = useToast();
 
   const lastHistory = quiz.history?.at(-1) ?? null;
 
@@ -64,10 +66,10 @@ export default function EditQuizForm({ quiz }: EditQuizFormProps) {
           setIsLoading(true);
           try {
             const result = await updateQuiz(formData);
-            alert(result.message);
+            addToast(result.message, "success");
             router.push("/admin/quiz");
           } catch (error) {
-            alert(error instanceof Error ? error.message : "An error occurred");
+            addToast(error instanceof Error ? error.message : "An error occurred", "error");
           } finally {
             setIsLoading(false);
           }

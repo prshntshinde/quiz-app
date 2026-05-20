@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { updateQuestion } from "@/lib/actions/questions";
+import { useToast } from "@/app/components/Toast";
 import FormSubmitButton from "@/app/components/forms/FormSubmitButton";
 
 interface QuestionDoc {
@@ -38,6 +39,7 @@ export default function EditQuestionForm({ question, quizzes }: EditQuestionForm
   const [quizId, setQuizId] = useState(String(question.quiz_id));
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
+  const { addToast } = useToast();
 
   return (
     <form
@@ -45,10 +47,10 @@ export default function EditQuestionForm({ question, quizzes }: EditQuestionForm
         setIsLoading(true);
         try {
           await updateQuestion(formData);
-          alert("Question updated successfully");
+          addToast("Question updated successfully", "success");
           router.push("/admin/questions");
         } catch (error) {
-          alert(error instanceof Error ? error.message : "Failed to update question");
+          addToast(error instanceof Error ? error.message : "Failed to update question", "error");
         } finally {
           setIsLoading(false);
         }

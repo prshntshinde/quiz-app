@@ -2,6 +2,7 @@
 
 import { useTransition } from "react";
 import { deleteQuestion } from "@/lib/actions/questions";
+import { useToast } from "@/app/components/Toast";
 
 interface DeleteQuestionButtonProps {
   readonly id: string;
@@ -10,6 +11,7 @@ interface DeleteQuestionButtonProps {
 
 export default function DeleteQuestionButton({ id, question }: DeleteQuestionButtonProps) {
   const [isPending, startTransition] = useTransition();
+  const { addToast } = useToast();
 
   const handleDelete = async () => {
     const confirmed = globalThis.confirm(
@@ -22,10 +24,10 @@ export default function DeleteQuestionButton({ id, question }: DeleteQuestionBut
         formData.append("id", id);
         try {
           const result = await deleteQuestion(formData);
-          alert(result.message);
+          addToast(result.message, "success");
           window.location.reload();
         } catch (error) {
-          alert(error instanceof Error ? error.message : "Delete failed");
+          addToast(error instanceof Error ? error.message : "Delete failed", "error");
         }
       });
     }

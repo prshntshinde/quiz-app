@@ -12,25 +12,45 @@ test.describe("Edit Question Page", () => {
   let questionId: string;
 
   test.beforeEach(async ({ page }) => {
-    quizId = await test.step("Create test quiz", async () => {
-      return createTestQuiz(page, "EditTest");
+    const result = await test.step("Create test quiz and question", async () => {
+      const quizId = await createTestQuiz(page, "EditTest");
+      const { questionText } = await createTestQuestion(page, quizId, "EditTarget");
+      return { quizId, questionText };
     });
 
-    await test.step("Create a question to edit", async () => {
-      await createTestQuestion(page, quizId, "EditTarget");
+    quizId = result.quizId;
 
-      await page.goto("/admin/questions");
-      await page.waitForLoadState("networkidle");
-      await page.waitForTimeout(2000);
-      const row = page.locator("tbody tr").filter({ hasText: /edittarget question/i }).first();
-      await row.waitFor({ timeout: 20000 });
-      const editLink = row.locator("a").filter({ hasText: /edit/i });
-      const href = await editLink.getAttribute("href");
-      questionId = href?.split("/").pop() || "";
+    await test.step("Find the question's edit link by searching from last page", async () => {
+      let found = false;
+      for (let pageNum = 22; pageNum >= 1 && !found; pageNum--) {
+        await page.goto(`/admin/questions?page=${pageNum}`);
+        await page.waitForLoadState("networkidle");
+        await page.waitForTimeout(1000);
+
+        const rows = page.locator("tbody tr");
+        const count = await rows.count();
+        for (let i = 0; i < count && !found; i++) {
+          const row = rows.nth(i);
+          const text = await row.textContent();
+          if (text && text.includes(result.questionText.split(" ")[2])) {
+            const editLink = row.locator("a").filter({ hasText: /edit/i });
+            const href = await editLink.getAttribute("href");
+            if (href) {
+              questionId = href.split("/").pop() || "";
+              found = true;
+              console.log(`Found question ID: ${questionId} for: ${result.questionText} on page ${pageNum}`);
+            }
+          }
+        }
+      }
+
+      if (!found) {
+        throw new Error(`Could not find question: ${result.questionText}`);
+      }
     });
   });
 
-  test.skip("1. Load edit page with pre-populated data", async ({ page }) => {
+  test("1. Load edit page with pre-populated data", async ({ page }) => {
     const editPage = new EditQuestionPage(page);
     await editPage.goto(questionId);
     await page.waitForLoadState("networkidle");
@@ -80,23 +100,23 @@ test.describe("Edit Question Page", () => {
     await expect(page.locator("table")).toBeVisible({ timeout: 10000 });
   });
 
-  test.skip("5. Navigate back without saving", async ({ page }) => {
+  test("5. Navigate back without saving", async ({ page }) => {
     const editPage = new EditQuestionPage(page);
     await editPage.goto(questionId);
     await page.waitForLoadState("networkidle");
-    await page.waitForTimeout(3000);
+    await page.waitForTimeout(2000);
 
     const textarea = editPage.questionTextarea;
-    await textarea.waitFor({ timeout: 30000 });
+    await textarea.waitFor({ timeout: 20000 });
     const originalQuestion = await textarea.inputValue();
 
     await textarea.fill("Modified");
-    await page.waitForTimeout(2000);
+    await page.waitForTimeout(1000);
 
     await page.goto(`/admin/questions/${questionId}`);
     await page.waitForLoadState("networkidle");
-    await page.waitForTimeout(3000);
-    const newValue = await textarea.inputValue();
-    expect(newValue.length).toBeGreaterThan(0);
+    await page.waitForTimeout(2000);
+    const actualValue = await textarea.inputValue();
+    expect(actualValue).toEqual(originalQuestion);
   });
 });
