@@ -74,7 +74,7 @@ describe("EditQuizForm", () => {
     await act(async () => {
       renderWithToast(<EditQuizForm quiz={quizWithHistory} />);
     });
-    expect(screen.getByText(/Previous Version \(Safety Backup\)/i)).toBeInTheDocument();
+    expect(screen.getByText(/Safety Backup Available/i)).toBeInTheDocument();
   });
 
   it("does not show history section when no history", async () => {

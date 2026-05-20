@@ -1,6 +1,7 @@
 import { getQuizById } from "@/lib/quizzes";
-import EditQuizForm from "./EditQuizForm";
 import { notFound } from "next/navigation";
+import EditQuizForm from "./EditQuizForm";
+import { PageHeader } from "@/app/admin/components";
 
 interface EditQuizPageProps {
   readonly params: Promise<{ id: string }>;
@@ -42,5 +43,20 @@ export default async function EditQuizPage({ params }: EditQuizPageProps) {
     history: [],
   };
 
-  return <EditQuizForm quiz={plainQuiz} />;
+  return (
+    <div>
+      <PageHeader
+        title="Edit Quiz"
+        subtitle={`Editing "${quiz.title}"`}
+        breadcrumbs={[
+          { label: "Admin", href: "/admin/dashboard" },
+          { label: "Quizzes", href: "/admin/quiz" },
+          { label: quiz.title },
+        ]}
+      />
+      <div className="max-w-2xl">
+        <EditQuizForm quiz={plainQuiz} />
+      </div>
+    </div>
+  );
 }

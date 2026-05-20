@@ -34,10 +34,10 @@ describe("QuestionForm", () => {
 
     expect(screen.getByLabelText(/select quiz/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/question/i)).toBeInTheDocument();
-    expect(screen.getByLabelText(/option 1/i)).toBeInTheDocument();
-    expect(screen.getByLabelText(/option 2/i)).toBeInTheDocument();
-    expect(screen.getByLabelText(/option 3/i)).toBeInTheDocument();
-    expect(screen.getByLabelText(/option 4/i)).toBeInTheDocument();
+    expect(screen.getByLabelText(/option a/i)).toBeInTheDocument();
+    expect(screen.getByLabelText(/option b/i)).toBeInTheDocument();
+    expect(screen.getByLabelText(/option c/i)).toBeInTheDocument();
+    expect(screen.getByLabelText(/option d/i)).toBeInTheDocument();
     expect(screen.getByLabelText(/correct answer/i)).toBeInTheDocument();
     expect(screen.getByRole("button", { name: /create question/i })).toBeInTheDocument();
   });
@@ -59,7 +59,7 @@ describe("QuestionForm", () => {
     await user.type(questionInput, "Test question?");
     expect(questionInput).toHaveValue("Test question?");
 
-    const option1Input = screen.getByLabelText(/option 1/i);
+    const option1Input = screen.getByLabelText(/option a/i);
     await user.type(option1Input, "Option A");
     expect(option1Input).toHaveValue("Option A");
   });
@@ -69,10 +69,10 @@ describe("QuestionForm", () => {
 
     expect(screen.getByLabelText(/select quiz/i)).toBeRequired();
     expect(screen.getByLabelText(/question/i)).toBeRequired();
-    expect(screen.getByLabelText(/option 1/i)).toBeRequired();
-    expect(screen.getByLabelText(/option 2/i)).toBeRequired();
-    expect(screen.getByLabelText(/option 3/i)).toBeRequired();
-    expect(screen.getByLabelText(/option 4/i)).toBeRequired();
+    expect(screen.getByLabelText(/option a/i)).toBeRequired();
+    expect(screen.getByLabelText(/option b/i)).toBeRequired();
+    expect(screen.getByLabelText(/option c/i)).toBeRequired();
+    expect(screen.getByLabelText(/option d/i)).toBeRequired();
     expect(screen.getByLabelText(/correct answer/i)).toBeRequired();
   });
 });
