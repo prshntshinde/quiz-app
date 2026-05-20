@@ -3,7 +3,9 @@ import SideMenu from "@/app/components/SideMenu";
 import "@testing-library/jest-dom";
 
 vi.mock("next/navigation", () => ({
-  usePathname: vi.fn(),
+  useRouter: vi.fn(() => ({
+    push: vi.fn(),
+  })),
 }));
 
 describe("AdminLayout", () => {
