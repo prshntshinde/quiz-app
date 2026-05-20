@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { updateQuiz } from "@/lib/actions/quiz";
 import { useToast } from "@/app/components/Toast";
-import FormSubmitButton from "@/app/components/forms/FormSubmitButton";
+import { FormField, Input, Textarea, Button } from "@/app/admin/components";
 
 interface HistoryEntry {
   readonly title: string;
@@ -32,91 +32,108 @@ export default function EditQuizForm({ quiz }: EditQuizFormProps) {
 
   const lastHistory = quiz.history?.at(-1) ?? null;
 
-  return (
-    <div className="max-w-2xl mx-auto p-4">
-      <h1 className="text-2xl font-bold mb-4">Edit Quiz</h1>
+  const handleSubmit = async (formData: FormData) => {
+    setIsLoading(true);
+    try {
+      const result = await updateQuiz(formData);
+      addToast(result.message, "success");
+      router.push("/admin/quiz");
+    } catch (error) {
+      addToast(error instanceof Error ? error.message : "An error occurred", "error");
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
+  return (
+    <div className="bg-white border border-gray-200 rounded-xl p-6 shadow-sm">
       {lastHistory && (
-        <div className="mb-6 p-4 bg-amber-50 border border-amber-200 rounded-lg text-sm text-amber-800">
-          <p className="font-bold mb-1">Previous Version (Safety Backup):</p>
-          <p>
-            <strong>Title:</strong> {lastHistory.title}
-          </p>
-          <p>
-            <strong>Description:</strong> {lastHistory.description || "N/A"}
-          </p>
-          <p className="text-xs mt-2 italic text-amber-600">
-            Saved on: {new Date(lastHistory.updatedAt).toLocaleString()}
-          </p>
-          <button
-            type="button"
-            onClick={() => {
-              setTitle(lastHistory.title);
-              setDescription(lastHistory.description || "");
-            }}
-            className="mt-2 text-blue-600 hover:underline font-semibold"
-          >
-            Restore these values
-          </button>
+        <div className="mb-6 p-4 bg-amber-50 border border-amber-200 rounded-lg text-sm">
+          <div className="flex items-start gap-3">
+            <svg className="w-5 h-5 text-amber-600 mt-0.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+            </svg>
+            <div className="flex-1">
+              <p className="font-semibold text-amber-800 mb-2">Safety Backup Available</p>
+              <div className="space-y-1 text-amber-700">
+                <p><span className="font-medium">Title:</span> {lastHistory.title}</p>
+                <p><span className="font-medium">Description:</span> {lastHistory.description || "N/A"}</p>
+                <p className="text-xs italic text-amber-600 mt-2">
+                  Saved on: {new Date(lastHistory.updatedAt).toLocaleString()}
+                </p>
+              </div>
+              <button
+                type="button"
+                onClick={() => {
+                  setTitle(lastHistory.title);
+                  setDescription(lastHistory.description || "");
+                }}
+                className="mt-3 inline-flex items-center gap-1.5 text-sm font-medium text-blue-600 hover:text-blue-800 hover:underline"
+              >
+                <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                </svg>
+                Restore these values
+              </button>
+            </div>
+          </div>
         </div>
       )}
 
-      <form
-        action={async (formData) => {
-          setIsLoading(true);
-          try {
-            const result = await updateQuiz(formData);
-            addToast(result.message, "success");
-            router.push("/admin/quiz");
-          } catch (error) {
-            addToast(error instanceof Error ? error.message : "An error occurred", "error");
-          } finally {
-            setIsLoading(false);
-          }
-        }}
-        className="flex flex-col gap-4"
-      >
+      <form action={handleSubmit} className="space-y-5">
         <input type="hidden" name="id" value={String(quiz._id)} />
-        <div className="flex flex-col gap-1">
-          <label htmlFor="quiz-title" className="font-semibold text-gray-700">
-            Quiz Title
-          </label>
-          <input
+
+        <FormField
+          label="Quiz Title"
+          htmlFor="quiz-title"
+          required
+        >
+          <Input
             type="text"
             name="title"
             id="quiz-title"
-            placeholder="Quiz Title"
-            className="p-2 border border-slate-500 rounded"
-            onChange={(e) => setTitle(e.target.value)}
+            placeholder="Enter quiz title"
             value={title}
+            onChange={(e) => setTitle(e.target.value)}
             required
           />
-        </div>
-        <div className="flex flex-col gap-1">
-          <label
-            htmlFor="quiz-description"
-            className="font-semibold text-gray-700"
-          >
-            Quiz Description
-          </label>
-          <textarea
+        </FormField>
+
+        <FormField
+          label="Quiz Description"
+          htmlFor="quiz-description"
+          hint="Optional: Provide a brief description of this quiz"
+        >
+          <Textarea
             name="description"
             id="quiz-description"
-            placeholder="Quiz Description"
-            className="p-2 border border-slate-500 rounded min-h-[100px]"
-            onChange={(e) => setDescription(e.target.value)}
+            placeholder="Enter quiz description"
+            rows={3}
             value={description}
+            onChange={(e) => setDescription(e.target.value)}
           />
-        </div>
-        <div className="flex gap-4 items-center">
-          <FormSubmitButton value="Update Quiz" isLoading={isLoading} />
-          <button
+        </FormField>
+
+        <div className="flex flex-col sm:flex-row gap-3 pt-4 border-t">
+          <Button
+            type="submit"
+            variant="primary"
+            isLoading={isLoading}
+            leftIcon={
+              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+              </svg>
+            }
+          >
+            Update Quiz
+          </Button>
+          <Button
             type="button"
+            variant="secondary"
             onClick={() => router.back()}
-            className="px-4 py-2 border border-slate-500 rounded hover:bg-slate-100"
           >
             Cancel
-          </button>
+          </Button>
         </div>
       </form>
     </div>

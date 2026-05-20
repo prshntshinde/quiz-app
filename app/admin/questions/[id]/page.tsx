@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 import { getQuestionById } from "@/lib/questions";
 import { getAllQuizzes } from "@/lib/quizzes";
 import EditQuestionForm from "./EditQuestionForm";
+import { PageHeader } from "@/app/admin/components";
 
 interface QuizOption {
   _id: string;
@@ -57,8 +58,17 @@ export default async function EditQuestionPage({ params }: PageProps) {
 
   return (
     <div>
-      <h1 className="text-2xl font-bold mb-6">Edit Question</h1>
-      <EditQuestionForm question={plainQuestion} quizzes={quizzes} />
+      <PageHeader
+        title="Edit Question"
+        breadcrumbs={[
+          { label: "Admin", href: "/admin/dashboard" },
+          { label: "Questions", href: "/admin/questions" },
+          { label: "Edit" },
+        ]}
+      />
+      <div className="max-w-2xl">
+        <EditQuestionForm question={plainQuestion} quizzes={quizzes} />
+      </div>
     </div>
   );
 }

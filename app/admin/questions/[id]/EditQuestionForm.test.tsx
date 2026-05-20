@@ -45,10 +45,10 @@ describe("EditQuestionForm", () => {
     renderWithToast(<EditQuestionForm question={mockQuestion} quizzes={mockQuizzes} />);
 
     expect(screen.getByLabelText(/question/i)).toHaveValue("What is 2+2?");
-    expect(screen.getByLabelText(/option 1/i)).toHaveValue("3");
-    expect(screen.getByLabelText(/option 2/i)).toHaveValue("4");
-    expect(screen.getByLabelText(/option 3/i)).toHaveValue("5");
-    expect(screen.getByLabelText(/option 4/i)).toHaveValue("6");
+    expect(screen.getByLabelText(/option a/i)).toHaveValue("3");
+    expect(screen.getByLabelText(/option b/i)).toHaveValue("4");
+    expect(screen.getByLabelText(/option c/i)).toHaveValue("5");
+    expect(screen.getByLabelText(/option d/i)).toHaveValue("6");
   });
 
   it("should show correct answer selection", () => {
