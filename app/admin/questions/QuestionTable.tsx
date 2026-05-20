@@ -38,13 +38,13 @@ function QuestionCard({
   onEdit,
   onDelete,
   isPending,
-}: {
+}: Readonly<{
   question: Question;
   quizName: string;
   onEdit: () => void;
   onDelete: () => void;
   isPending: boolean;
-}) {
+}>) {
   const options = [question.optionA, question.optionB, question.optionC, question.optionD];
 
   return (
@@ -66,7 +66,7 @@ function QuestionCard({
       <div className="space-y-1.5 mb-4">
         {options.map((opt, idx) => (
           <div
-            key={idx}
+            key={`option-${idx}`}
             className={`flex items-center gap-2 text-sm ${
               idx === question.answer ? "text-green-700 font-medium" : "text-gray-600"
             }`}
@@ -146,7 +146,7 @@ export default function QuestionTable({
     return (
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {Array.from({ length: 6 }).map((_, i) => (
-          <div key={i} className="bg-white border border-gray-200 rounded-lg p-4 animate-pulse">
+          <div key={`skeleton-${i}`} className="bg-white border border-gray-200 rounded-lg p-4 animate-pulse">
             <div className="h-4 bg-gray-200 rounded w-1/3 mb-3"></div>
             <div className="h-6 bg-gray-200 rounded w-3/4 mb-4"></div>
             <div className="space-y-2">

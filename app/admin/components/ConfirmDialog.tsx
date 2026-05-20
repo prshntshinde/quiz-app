@@ -80,7 +80,7 @@ const variantConfig = {
   },
 };
 
-function FocusTrap({ children }: { children: ReactNode }) {
+function FocusTrap({ children }: Readonly<{ children: ReactNode }>) {
   const dialogRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -153,7 +153,7 @@ export default function ConfirmDialog({
 
   return (
     <div
-      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50"
+      className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm"
       onClick={handleBackdropClick}
       onKeyDown={handleKeyDown}
       role="presentation"

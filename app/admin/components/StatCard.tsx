@@ -68,7 +68,7 @@ export default function StatCard({
             <div className="flex items-center gap-1 mt-2">
               <span
                 className={`inline-flex items-center text-sm font-medium ${
-                  trend.isPositive !== false ? "text-green-600" : "text-red-600"
+                  trend.isPositive === false ? "text-red-600" : "text-green-600"
                 }`}
               >
                 <svg

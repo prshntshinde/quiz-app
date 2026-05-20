@@ -1,8 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 
 const links = [
   {
@@ -91,7 +90,7 @@ export default function SideMenu() {
           <p className="text-xs text-gray-500">Quiz Management</p>
         </div>
         <nav aria-label="Admin navigation">
-          <ul className="space-y-1" role="list">
+          <ul className="space-y-1">
             {links.map((link) => {
               const active = isActive(link.href);
               return (

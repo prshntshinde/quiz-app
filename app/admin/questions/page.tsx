@@ -22,7 +22,7 @@ export default async function Questions({ searchParams }: PageProps) {
     <div>
       <PageHeader
         title="Questions"
-        subtitle={`${total} total question${total !== 1 ? "s" : ""} across ${quizzes.length} quiz${quizzes.length !== 1 ? "zes" : ""}`}
+        subtitle={`${total} total question${total > 1 ? "s" : ""} across ${quizzes.length} quiz${quizzes.length > 1 ? "zes" : ""}`}
         breadcrumbs={[
           { label: "Admin", href: "/admin/dashboard" },
           { label: "Questions" },

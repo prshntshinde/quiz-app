@@ -32,11 +32,11 @@ const alignStyles: Record<ColumnAlign, string> = {
   right: "text-right",
 };
 
-function SkeletonRow({ columns }: { columns: number }) {
+function SkeletonRow({ columns }: Readonly<{ columns: number }>) {
   return (
     <tr className="animate-pulse">
       {Array.from({ length: columns }).map((_, i) => (
-        <td key={i} className="px-4 py-3">
+        <td key={`skeleton-${i}`} className="px-4 py-3">
           <div className="h-4 bg-gray-200 rounded"></div>
         </td>
       ))}
@@ -48,11 +48,11 @@ function EmptyState({
   message,
   icon,
   colSpan,
-}: {
+}: Readonly<{
   message: string;
   icon?: ReactNode;
   colSpan: number;
-}) {
+}>) {
   return (
     <tr>
       <td colSpan={colSpan} className="px-4 py-12 text-center">
@@ -116,7 +116,7 @@ export default function DataTable<T>({
           <tbody className="bg-white divide-y divide-gray-200">
             {loading ? (
               Array.from({ length: loadingRows }).map((_, index) => (
-                <SkeletonRow key={index} columns={columns.length} />
+                <SkeletonRow key={`loading-${index}`} columns={columns.length} />
               ))
             ) : data.length === 0 ? (
               <EmptyState
@@ -127,25 +127,23 @@ export default function DataTable<T>({
             ) : (
               data.map((item, index) => {
                 const rowKey = keyExtractor(item);
-                const RowTag = hasRowClick ? "button" : "tr";
-                const rowProps = hasRowClick
-                  ? {
-                      type: "button" as const,
-                      onClick: () => onRowClick(item),
-                      className:
-                        "w-full text-left hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500",
-                    }
-                  : {};
+                const baseClass = "hover:bg-gray-50";
+                const clickableClass = "w-full text-left cursor-pointer focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500";
+                const rowClass = hasRowClick ? clickableClass : baseClass;
 
                 return (
                   <tr
                     key={rowKey}
-                    {...(RowTag === "button" ? rowProps : { className: "hover:bg-gray-50" })}
+                    onClick={hasRowClick ? () => onRowClick(item) : undefined}
+                    className={rowClass}
                   >
                     {columns.map((column) => {
-                      const cellContent = column.render
-                        ? column.render(item, index)
-                        : (item as unknown as Record<string, ReactNode>)[column.key];
+                      let cellContent: ReactNode;
+                      if (column.render) {
+                        cellContent = column.render(item, index);
+                      } else {
+                        cellContent = (item as unknown as Record<string, ReactNode>)[column.key];
+                      }
 
                       return (
                         <td

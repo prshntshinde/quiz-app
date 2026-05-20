@@ -1,7 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import { type ReactNode } from "react";
 
 interface PaginationProps {
   currentPage: number;
@@ -74,7 +73,7 @@ interface PageButtonProps {
   label: string;
 }
 
-function PageButton({ page, currentPage, baseUrl, label }: PageButtonProps) {
+function PageButton({ page, currentPage, baseUrl, label }: Readonly<PageButtonProps>) {
   if (page === "...") {
     return (
       <span className="px-3 py-2 text-gray-400 select-none" aria-hidden="true">
@@ -140,7 +139,7 @@ export default function Pagination({
       <div className="flex items-center gap-1">
         {pages.map((page) => (
           <PageButton
-            key={page === "..." ? `dots-${Math.random()}` : page}
+            key={page === "..." ? `dots-${page}-${currentPage}` : page}
             page={page}
             currentPage={currentPage}
             baseUrl={baseUrl}

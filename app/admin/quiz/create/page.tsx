@@ -1,4 +1,4 @@
-import { PageHeader, FormField, Input, Textarea, Button } from "@/app/admin/components";
+import { PageHeader } from "@/app/admin/components";
 import CreateQuizForm from "./CreateQuizForm";
 
 export default function CreateQuiz() {
