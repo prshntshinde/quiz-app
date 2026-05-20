@@ -40,6 +40,8 @@ const questionSchema = new Schema(
   }
 );
 
+questionSchema.index({ quiz_id: 1, question_id: 1 }, { unique: true });
+
 export interface IQuizDocument extends Document {
   title: string;
   description: string;

@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { createQuestion } from "@/lib/actions/questions";
+import { useToast } from "@/app/components/Toast";
 import FormSubmitButton from "@/app/components/forms/FormSubmitButton";
 
 interface QuizOption {
@@ -25,6 +26,7 @@ export default function QuestionForm({ quizzes }: QuestionFormProps) {
   const [quizId, setQuizId] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
+  const { addToast } = useToast();
 
   return (
     <form
@@ -32,10 +34,10 @@ export default function QuestionForm({ quizzes }: QuestionFormProps) {
         setIsLoading(true);
         try {
           await createQuestion(formData);
-          alert("Question created successfully");
+          addToast("Question created successfully", "success");
           router.push("/admin/questions");
         } catch (error) {
-          alert(error instanceof Error ? error.message : "Failed to create question");
+          addToast(error instanceof Error ? error.message : "Failed to create question", "error");
         } finally {
           setIsLoading(false);
         }

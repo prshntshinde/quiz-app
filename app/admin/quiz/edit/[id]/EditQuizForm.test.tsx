@@ -1,6 +1,8 @@
 import { render, screen, fireEvent, waitFor, act } from "@testing-library/react";
-import EditQuizForm from "./EditQuizForm";
+import { vi } from "vitest";
 import "@testing-library/jest-dom";
+import EditQuizForm from "./EditQuizForm";
+import { ToastProvider } from "@/app/components/Toast";
 
 const mockUpdateQuiz = vi.fn();
 vi.mock("@/lib/actions/quiz", () => ({
@@ -13,6 +15,10 @@ vi.mock("next/navigation", () => ({
     back: vi.fn(),
   })),
 }));
+
+function renderWithToast(component: React.ReactElement) {
+  return render(<ToastProvider>{component}</ToastProvider>);
+}
 
 describe("EditQuizForm", () => {
   beforeEach(() => {
@@ -28,28 +34,28 @@ describe("EditQuizForm", () => {
 
   it("renders form with quiz title", async () => {
     await act(async () => {
-      render(<EditQuizForm quiz={mockQuiz} />);
+      renderWithToast(<EditQuizForm quiz={mockQuiz} />);
     });
     expect(screen.getByDisplayValue("Original Title")).toBeInTheDocument();
   });
 
   it("renders form with quiz description", async () => {
     await act(async () => {
-      render(<EditQuizForm quiz={mockQuiz} />);
+      renderWithToast(<EditQuizForm quiz={mockQuiz} />);
     });
     expect(screen.getByDisplayValue("Original Description")).toBeInTheDocument();
   });
 
   it("renders Update Quiz button", async () => {
     await act(async () => {
-      render(<EditQuizForm quiz={mockQuiz} />);
+      renderWithToast(<EditQuizForm quiz={mockQuiz} />);
     });
     expect(screen.getByRole("button", { name: /Update Quiz/i })).toBeInTheDocument();
   });
 
   it("renders Cancel button", async () => {
     await act(async () => {
-      render(<EditQuizForm quiz={mockQuiz} />);
+      renderWithToast(<EditQuizForm quiz={mockQuiz} />);
     });
     expect(screen.getByRole("button", { name: /Cancel/i })).toBeInTheDocument();
   });
@@ -66,21 +72,21 @@ describe("EditQuizForm", () => {
       ],
     };
     await act(async () => {
-      render(<EditQuizForm quiz={quizWithHistory} />);
+      renderWithToast(<EditQuizForm quiz={quizWithHistory} />);
     });
     expect(screen.getByText(/Previous Version \(Safety Backup\)/i)).toBeInTheDocument();
   });
 
   it("does not show history section when no history", async () => {
     await act(async () => {
-      render(<EditQuizForm quiz={mockQuiz} />);
+      renderWithToast(<EditQuizForm quiz={mockQuiz} />);
     });
     expect(screen.queryByText(/Previous Version/i)).not.toBeInTheDocument();
   });
 
   it("updates title when user types", async () => {
     await act(async () => {
-      render(<EditQuizForm quiz={mockQuiz} />);
+      renderWithToast(<EditQuizForm quiz={mockQuiz} />);
     });
     const titleInput = screen.getByDisplayValue("Original Title");
     fireEvent.change(titleInput, { target: { value: "New Title" } });
@@ -89,7 +95,7 @@ describe("EditQuizForm", () => {
 
   it("updates description when user types", async () => {
     await act(async () => {
-      render(<EditQuizForm quiz={mockQuiz} />);
+      renderWithToast(<EditQuizForm quiz={mockQuiz} />);
     });
     const descInput = screen.getByDisplayValue("Original Description");
     fireEvent.change(descInput, { target: { value: "New Description" } });
@@ -108,7 +114,7 @@ describe("EditQuizForm", () => {
       ],
     };
     await act(async () => {
-      render(<EditQuizForm quiz={quizWithHistory} />);
+      renderWithToast(<EditQuizForm quiz={quizWithHistory} />);
     });
     expect(screen.getByRole("button", { name: /Restore/i })).toBeInTheDocument();
   });
@@ -125,7 +131,7 @@ describe("EditQuizForm", () => {
       ],
     };
     await act(async () => {
-      render(<EditQuizForm quiz={quizWithHistory} />);
+      renderWithToast(<EditQuizForm quiz={quizWithHistory} />);
     });
     fireEvent.click(screen.getByRole("button", { name: /Restore/i }));
     expect(screen.getByDisplayValue("Old Title")).toBeInTheDocument();
@@ -134,7 +140,7 @@ describe("EditQuizForm", () => {
 
   it("renders hidden id field", async () => {
     await act(async () => {
-      render(<EditQuizForm quiz={mockQuiz} />);
+      renderWithToast(<EditQuizForm quiz={mockQuiz} />);
     });
     const hiddenInput = document.getElementsByName("id")[0];
     expect(hiddenInput).toHaveValue("123");

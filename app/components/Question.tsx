@@ -5,6 +5,12 @@ import Modal from "./Modal";
 import { RxCheckCircled, RxCrossCircled } from "react-icons/rx";
 import { cn } from "@/lib/utils";
 import { CountdownCircleTimer } from "react-countdown-circle-timer";
+import {
+  QUIZ_TIMER_DURATION,
+  CLOCK_AUDIO_PATH,
+  TIMER_COLORS,
+  TIMER_COLORS_TIME,
+} from "@/lib/constants";
 
 interface QuestionProps {
   question_id: number;
@@ -204,10 +210,11 @@ export default function Question({
 
               <div id="counter" className="col-start-6 row-span-2">
                 <div>
+                  // eslint-disable-next-line @typescript-eslint/no-explicit-any
                   <CountdownCircleTimer
                     isPlaying={isPlaying}
                     strokeWidth={15}
-                    duration={45}
+                    duration={QUIZ_TIMER_DURATION}
                     colors={["#004777", "#F7B801", "#A30000", "#A30000"]}
                     colorsTime={[45, 30, 15, 0]}
                     onComplete={() => ({ shouldRepeat: false, delay: 10 })}
@@ -275,11 +282,6 @@ export default function Question({
                   Submit
                 </button>
               </div>
-              <div>
-                <button className="focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900 transition duration-150 ease-in-out hover:scale-110">
-                  Double
-                </button>
-              </div>
               <div className="">
                 <button
                   className="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900 transition duration-150 ease-in-out hover:scale-110"
@@ -298,7 +300,7 @@ export default function Question({
               })}
             >
               {explanation}
-              <audio id="clock-audio" src="/clock-45s.mp3">
+              <audio id="clock-audio" src={CLOCK_AUDIO_PATH}>
                 Audio
                 <track kind="captions" label="Timer countdown sound" default />
               </audio>

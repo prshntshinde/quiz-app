@@ -1,4 +1,4 @@
-import { sanitizeData, twMerge } from "./utils";
+import { sanitizeData, cn } from "@/lib/utils";
 
 describe("sanitizeData", () => {
     test("should handle null and primitives", () => {
@@ -82,15 +82,15 @@ describe("sanitizeData", () => {
     });
 });
 
-describe("twMerge", () => {
+describe("cn", () => {
     it("should merge tailwind classes correctly", () => {
-        expect(twMerge("p-4", "p-2")).toBe("p-2");
-        expect(twMerge("p-4", { "m-2": true, "m-4": false })).toBe("p-4 m-2");
+        expect(cn("p-4", "p-2")).toBe("p-2");
+        expect(cn("p-4", { "m-2": true, "m-4": false })).toBe("p-4 m-2");
     });
 
     it("should handle nested arrays and conditional classes", () => {
-        expect(twMerge(["p-4", "m-2"], "bg-white")).toContain("p-4");
-        expect(twMerge(["p-4", "m-2"], "bg-white")).toContain("m-2");
-        expect(twMerge(["p-4", "m-2"], "bg-white")).toContain("bg-white");
+        expect(cn(["p-4", "m-2"], "bg-white")).toContain("p-4");
+        expect(cn(["p-4", "m-2"], "bg-white")).toContain("m-2");
+        expect(cn(["p-4", "m-2"], "bg-white")).toContain("bg-white");
     });
 });

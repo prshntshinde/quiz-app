@@ -1,87 +1,98 @@
+import { vi } from "vitest";
 import { fetchQuizzes, fetchQuestions } from "./data";
 import connectMongoDB from "./mongodb";
-import { sanitizeData } from "./utils";
+import * as utils from "@/lib/utils";
 
-vi.mock("./mongodb", () => ({
-  default: vi.fn().mockResolvedValue(undefined),
-}));
-vi.mock("./utils", () => ({
-    sanitizeData: vi.fn((data: unknown) => data),
-}));
+const mockSanitizeData = vi.spyOn(utils, "sanitizeData").mockImplementation((data: unknown) => data);
 
 const mockQuizFind = vi.fn();
 const mockQuestionsFind = vi.fn();
 
 vi.mock("@/models/quiz", () => ({
-    Quiz: {
-        find: (...args: unknown[]) => mockQuizFind(...args),
-    },
-    Questions: {
-        find: (...args: unknown[]) => mockQuestionsFind(...args),
-    },
+  Quiz: {
+    find: (...args: unknown[]) => mockQuizFind(...args),
+  },
+  Questions: {
+    find: (...args: unknown[]) => mockQuestionsFind(...args),
+  },
+}));
+
+vi.mock("./mongodb", () => ({
+  default: vi.fn().mockResolvedValue(undefined),
 }));
 
 describe("libs/data", () => {
-    beforeEach(() => {
-        vi.clearAllMocks();
+  beforeEach(() => {
+    vi.clearAllMocks();
+  });
+
+  afterAll(async () => {
+    vi.restoreAllMocks();
+  });
+
+  describe("fetchQuizzes", () => {
+    it("should fetch and sanitize quizzes", async () => {
+      const mockQuizzes = [{ title: "Quiz 1" }];
+      mockQuizFind.mockReturnValue({
+        lean: vi.fn().mockResolvedValue(mockQuizzes),
+      });
+
+      const result = await fetchQuizzes();
+
+      expect(connectMongoDB).toHaveBeenCalled();
+      expect(mockQuizFind).toHaveBeenCalledWith(
+        expect.objectContaining({
+          $or: expect.any(Array),
+        })
+      );
+      expect(mockSanitizeData).toHaveBeenCalledWith(mockQuizzes);
+      expect(result).toEqual(mockQuizzes);
     });
 
-    describe("fetchQuizzes", () => {
-        it("should fetch and sanitize quizzes", async () => {
-            const mockQuizzes = [{ title: "Quiz 1" }];
-            mockQuizFind.mockReturnValue({
-                lean: vi.fn().mockResolvedValue(mockQuizzes),
-            });
+    it("should throw an error if fetch fails", async () => {
+      mockQuizFind.mockReturnValue({
+        lean: vi.fn().mockRejectedValue(new Error("DB Error")),
+      });
 
-            const result = await fetchQuizzes();
+      await expect(fetchQuizzes()).rejects.toThrow("Failed to fetch Quizzes.");
+    });
+  });
 
-            expect(connectMongoDB).toHaveBeenCalled();
-            expect(mockQuizFind).toHaveBeenCalled();
-            expect(sanitizeData).toHaveBeenCalledWith(mockQuizzes);
-            expect(result).toEqual(mockQuizzes);
-        });
+  describe("fetchQuestions", () => {
+    it("should fetch and sanitize questions for a given quiz ID", async () => {
+      const mockQuestions = [{ question: "Q1" }];
+      const quizId = "quiz123";
 
-        it("should throw an error if fetch fails", async () => {
-            mockQuizFind.mockReturnValue({
-                lean: vi.fn().mockRejectedValue(new Error("DB Error")),
-            });
+      const mockSort = vi.fn().mockReturnValue({
+        lean: vi.fn().mockResolvedValue(mockQuestions),
+      });
+      mockQuestionsFind.mockReturnValue({
+        sort: mockSort,
+      });
 
-            await expect(fetchQuizzes()).rejects.toThrow("Failed to fetch Quizzes.");
-        });
+      const result = await fetchQuestions(quizId);
+
+      expect(connectMongoDB).toHaveBeenCalled();
+      expect(mockQuestionsFind).toHaveBeenCalledWith(
+        expect.objectContaining({
+          quiz_id: quizId,
+          isUsed: false,
+          $or: expect.any(Array),
+        })
+      );
+      expect(mockSort).toHaveBeenCalledWith({ question_id: 1 });
+      expect(mockSanitizeData).toHaveBeenCalledWith(mockQuestions);
+      expect(result).toEqual(mockQuestions);
     });
 
-    describe("fetchQuestions", () => {
-        it("should fetch and sanitize questions for a given quiz ID", async () => {
-            const mockQuestions = [{ question: "Q1" }];
-            const quizId = "quiz123";
+    it("should throw an error if fetching questions fails", async () => {
+      mockQuestionsFind.mockReturnValue({
+        sort: vi.fn().mockReturnValue({
+          lean: vi.fn().mockRejectedValue(new Error("DB Error")),
+        }),
+      });
 
-            const mockSort = vi.fn().mockReturnValue({
-                lean: vi.fn().mockResolvedValue(mockQuestions),
-            });
-            mockQuestionsFind.mockReturnValue({
-                sort: mockSort,
-            });
-
-            const result = await fetchQuestions(quizId);
-
-            expect(connectMongoDB).toHaveBeenCalled();
-            expect(mockQuestionsFind).toHaveBeenCalledWith({
-                quiz_id: quizId,
-                isUsed: false,
-            });
-            expect(mockSort).toHaveBeenCalledWith({ question_id: 1 });
-            expect(sanitizeData).toHaveBeenCalledWith(mockQuestions);
-            expect(result).toEqual(mockQuestions);
-        });
-
-        it("should throw an error if fetching questions fails", async () => {
-            mockQuestionsFind.mockReturnValue({
-                sort: vi.fn().mockReturnValue({
-                    lean: vi.fn().mockRejectedValue(new Error("DB Error")),
-                }),
-            });
-
-            await expect(fetchQuestions("123")).rejects.toThrow("Error while fetching questions");
-        });
+      await expect(fetchQuestions("123")).rejects.toThrow("Error while fetching questions");
     });
+  });
 });

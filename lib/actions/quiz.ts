@@ -86,29 +86,29 @@ export async function updateQuiz(
 
     await connectMongoDB();
 
-    const currentQuiz = (await Quiz.findById(id)) as IQuizDocument | null;
+    const currentQuiz = await Quiz.findById(id);
     if (!currentQuiz) {
       throw new Error("Quiz not found");
     }
 
-    if (!currentQuiz.history) {
-      currentQuiz.history = [];
-    }
-
-    currentQuiz.history.push({
+    const historyEntry = {
       title: currentQuiz.title,
       description: currentQuiz.description,
       updatedAt: new Date(),
+    };
+
+    await Quiz.findByIdAndUpdate(id, {
+      $push: {
+        history: {
+          $each: [historyEntry],
+          $slice: -10,
+        },
+      },
+      $set: {
+        title,
+        description,
+      },
     });
-
-    if (currentQuiz.history.length > 10) {
-      currentQuiz.history = currentQuiz.history.slice(-10);
-    }
-
-    currentQuiz.title = title;
-    currentQuiz.description = description;
-
-    await currentQuiz.save();
 
     revalidatePath("/admin/quiz");
     revalidatePath("/quiz");

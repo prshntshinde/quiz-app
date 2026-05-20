@@ -16,6 +16,45 @@ export interface QuizData {
   description: string;
 }
 
+const COMMON_SELECTORS = {
+  quizSelect: "select[name='quiz_id']",
+  questionTextarea: "textarea[name='question']",
+  option1: "input[name='option1']",
+  option2: "input[name='option2']",
+  option3: "input[name='option3']",
+  option4: "input[name='option4']",
+  answerSelect: "select[name='answer']",
+  explanationTextarea: "textarea[name='explanation']",
+} as const;
+
+class BaseQuestionPage {
+  readonly page: Page;
+  readonly quizSelect: Locator;
+  readonly questionTextarea: Locator;
+  readonly option1Input: Locator;
+  readonly option2Input: Locator;
+  readonly option3Input: Locator;
+  readonly option4Input: Locator;
+  readonly answerSelect: Locator;
+  readonly explanationTextarea: Locator;
+
+  constructor(page: Page) {
+    this.page = page;
+    this.quizSelect = page.locator(COMMON_SELECTORS.quizSelect);
+    this.questionTextarea = page.locator(COMMON_SELECTORS.questionTextarea);
+    this.option1Input = page.locator(COMMON_SELECTORS.option1);
+    this.option2Input = page.locator(COMMON_SELECTORS.option2);
+    this.option3Input = page.locator(COMMON_SELECTORS.option3);
+    this.option4Input = page.locator(COMMON_SELECTORS.option4);
+    this.answerSelect = page.locator(COMMON_SELECTORS.answerSelect);
+    this.explanationTextarea = page.locator(COMMON_SELECTORS.explanationTextarea);
+  }
+
+  protected async submitForm(button: Locator) {
+    await button.click();
+  }
+}
+
 export class QuestionsPage {
   readonly page: Page;
   readonly addButton: Locator;
@@ -62,28 +101,11 @@ export class QuestionsPage {
   }
 }
 
-export class CreateQuestionPage {
-  readonly page: Page;
-  readonly quizSelect: Locator;
-  readonly questionTextarea: Locator;
-  readonly option1Input: Locator;
-  readonly option2Input: Locator;
-  readonly option3Input: Locator;
-  readonly option4Input: Locator;
-  readonly answerSelect: Locator;
-  readonly explanationTextarea: Locator;
+export class CreateQuestionPage extends BaseQuestionPage {
   readonly submitButton: Locator;
 
   constructor(page: Page) {
-    this.page = page;
-    this.quizSelect = page.locator("select[name='quiz_id']");
-    this.questionTextarea = page.locator("textarea[name='question']");
-    this.option1Input = page.locator("input[name='option1']");
-    this.option2Input = page.locator("input[name='option2']");
-    this.option3Input = page.locator("input[name='option3']");
-    this.option4Input = page.locator("input[name='option4']");
-    this.answerSelect = page.locator("select[name='answer']");
-    this.explanationTextarea = page.locator("textarea[name='explanation']");
+    super(page);
     this.submitButton = page.getByRole("button", { name: /create question/i });
   }
 
@@ -107,32 +129,15 @@ export class CreateQuestionPage {
   }
 
   async submit() {
-    await this.submitButton.click();
+    await this.submitForm(this.submitButton);
   }
 }
 
-export class EditQuestionPage {
-  readonly page: Page;
-  readonly quizSelect: Locator;
-  readonly questionTextarea: Locator;
-  readonly option1Input: Locator;
-  readonly option2Input: Locator;
-  readonly option3Input: Locator;
-  readonly option4Input: Locator;
-  readonly answerSelect: Locator;
-  readonly explanationTextarea: Locator;
+export class EditQuestionPage extends BaseQuestionPage {
   readonly submitButton: Locator;
 
   constructor(page: Page) {
-    this.page = page;
-    this.quizSelect = page.locator("select[name='quiz_id']");
-    this.questionTextarea = page.locator("textarea[name='question']");
-    this.option1Input = page.locator("input[name='option1']");
-    this.option2Input = page.locator("input[name='option2']");
-    this.option3Input = page.locator("input[name='option3']");
-    this.option4Input = page.locator("input[name='option4']");
-    this.answerSelect = page.locator("select[name='answer']");
-    this.explanationTextarea = page.locator("textarea[name='explanation']");
+    super(page);
     this.submitButton = page.getByRole("button", { name: /update question/i });
   }
 
@@ -161,7 +166,7 @@ export class EditQuestionPage {
   }
 
   async submit() {
-    await this.submitButton.click();
+    await this.submitForm(this.submitButton);
   }
 }
 
@@ -228,14 +233,15 @@ export async function createTestQuestion(
   page: Page,
   quizId: string,
   prefix = "Test"
-): Promise<void> {
+): Promise<{ questionText: string }> {
   const createPage = new CreateQuestionPage(page);
   const timestamp = Date.now();
+  const questionText = `${prefix} Question ${timestamp}`;
 
   await createPage.goto();
   await createPage.fillForm({
     quizId,
-    question: `${prefix} Question ${timestamp}`,
+    question: questionText,
     option1: `${prefix} Option 1 ${timestamp}`,
     option2: `${prefix} Option 2 ${timestamp}`,
     option3: `${prefix} Option 3 ${timestamp}`,
@@ -244,6 +250,17 @@ export async function createTestQuestion(
     explanation: `${prefix} Explanation ${timestamp}`,
   });
   await createPage.submit();
+
+  try {
+    await page.waitForURL(/\/admin\/questions/, { timeout: 10000 });
+    await page.waitForLoadState("networkidle");
+    await page.waitForTimeout(2000);
+  } catch (e) {
+    console.error("Navigation after question creation failed:", e);
+    throw new Error(`Failed to create question: question submission may have failed`);
+  }
+
+  return { questionText };
 }
 
 export const test = base.extend<{

@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { createQuiz } from "@/lib/actions/quiz";
+import { useToast } from "@/app/components/Toast";
 import FormSubmitButton from "@/app/components/forms/FormSubmitButton";
 
 export default function CreateQuiz() {
@@ -10,6 +11,7 @@ export default function CreateQuiz() {
   const [description, setDescription] = useState("");
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
+  const { addToast } = useToast();
 
   return (
     <form
@@ -18,7 +20,7 @@ export default function CreateQuiz() {
         await createQuiz(formData);
         setTitle("");
         setDescription("");
-        alert("Quiz created successfully");
+        addToast("Quiz created successfully", "success");
         router.push("/admin/quiz");
       }}
       className="flex flex-col gap-4"
