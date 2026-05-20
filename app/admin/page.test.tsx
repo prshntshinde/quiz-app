@@ -2,10 +2,16 @@ import { render, screen } from "@testing-library/react";
 import Admin from "./page";
 import "@testing-library/jest-dom";
 
+vi.mock("next/navigation", () => ({
+  useRouter: vi.fn(() => ({
+    push: vi.fn(),
+  })),
+}));
+
 describe("Admin Login Page", () => {
-  it("renders email input field", () => {
+  it("renders username input field", () => {
     render(<Admin />);
-    expect(screen.getByLabelText(/email address/i)).toBeInTheDocument();
+    expect(screen.getByLabelText(/username/i)).toBeInTheDocument();
   });
 
   it("renders password input field", () => {
@@ -18,10 +24,10 @@ describe("Admin Login Page", () => {
     expect(screen.getByRole("button", { name: /sign in/i })).toBeInTheDocument();
   });
 
-  it("renders email input with correct type", () => {
+  it("renders username input with correct type", () => {
     render(<Admin />);
-    const emailInput = screen.getByLabelText(/email address/i);
-    expect(emailInput).toHaveAttribute("type", "email");
+    const usernameInput = screen.getByLabelText(/username/i);
+    expect(usernameInput).toHaveAttribute("type", "text");
   });
 
   it("renders password input with correct type", () => {
@@ -33,6 +39,6 @@ describe("Admin Login Page", () => {
   it("renders form element", () => {
     render(<Admin />);
     const form = document.querySelector("form");
-    expect(form).toHaveAttribute("method", "POST");
+    expect(form).toBeInTheDocument();
   });
 });

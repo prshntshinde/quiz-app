@@ -2,6 +2,12 @@ import { render, screen } from "@testing-library/react";
 import SideMenu from "./SideMenu";
 import "@testing-library/jest-dom";
 
+vi.mock("next/navigation", () => ({
+  useRouter: vi.fn(() => ({
+    push: vi.fn(),
+  })),
+}));
+
 describe("SideMenu", () => {
   it("renders Dashboard link", () => {
     render(<SideMenu />);
@@ -32,5 +38,10 @@ describe("SideMenu", () => {
       "href",
       "/admin/questions"
     );
+  });
+
+  it("renders logout button", () => {
+    render(<SideMenu />);
+    expect(screen.getByRole("button", { name: /logout/i })).toBeInTheDocument();
   });
 });
