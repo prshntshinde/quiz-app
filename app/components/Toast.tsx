@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, useContext, useState, useCallback, type ReactNode } from "react";
+import { createContext, useContext, useState, useCallback, useMemo, type ReactNode } from "react";
 import { cn } from "@/lib/utils";
 
 type ToastType = "success" | "error" | "info";
@@ -19,7 +19,7 @@ interface ToastContextValue {
 
 const ToastContext = createContext<ToastContextValue | null>(null);
 
-export function ToastProvider({ children }: { children: ReactNode }) {
+export function ToastProvider({ children }: Readonly<{ children: ReactNode }>) {
   const [toasts, setToasts] = useState<Toast[]>([]);
 
   const addToast = useCallback((message: string, type: ToastType = "info") => {
@@ -34,8 +34,13 @@ export function ToastProvider({ children }: { children: ReactNode }) {
     setToasts((prev) => prev.filter((t) => t.id !== id));
   }, []);
 
+  const contextValue = useMemo(
+    () => ({ toasts, addToast, removeToast }),
+    [toasts]
+  );
+
   return (
-    <ToastContext.Provider value={{ toasts, addToast, removeToast }}>
+    <ToastContext.Provider value={contextValue}>
       {children}
       <ToastContainer toasts={toasts} onRemove={removeToast} />
     </ToastContext.Provider>
@@ -53,10 +58,10 @@ export function useToast() {
 function ToastContainer({
   toasts,
   onRemove,
-}: {
+}: Readonly<{
   toasts: Toast[];
   onRemove: (id: string) => void;
-}) {
+}>) {
   return (
     <div className="fixed bottom-4 right-4 z-50 flex flex-col gap-2 max-w-sm">
       {toasts.map((toast) => (
@@ -69,10 +74,10 @@ function ToastContainer({
 function ToastItem({
   toast,
   onRemove,
-}: {
+}: Readonly<{
   toast: Toast;
   onRemove: (id: string) => void;
-}) {
+}>) {
   const baseClass =
     "flex items-center gap-3 p-4 rounded-lg shadow-lg text-white transition-all duration-300 animate-slide-in";
   const typeClasses: Record<ToastType, string> = {

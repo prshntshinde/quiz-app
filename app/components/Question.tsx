@@ -8,8 +8,6 @@ import { CountdownCircleTimer } from "react-countdown-circle-timer";
 import {
   QUIZ_TIMER_DURATION,
   CLOCK_AUDIO_PATH,
-  TIMER_COLORS,
-  TIMER_COLORS_TIME,
 } from "@/lib/constants";
 
 interface QuestionProps {
@@ -210,7 +208,7 @@ export default function Question({
 
               <div id="counter" className="col-start-6 row-span-2">
                 <div>
-                  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                  {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
                   <CountdownCircleTimer
                     isPlaying={isPlaying}
                     strokeWidth={15}
