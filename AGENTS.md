@@ -1,46 +1,81 @@
 # AGENTS.md — Quiz App
 
-These rules apply to every task in this project unless explicitly overridden.
+See README.md for project background and features.
 
-## Key Commands
+## Overview
+
+Next.js 16 app with React 19, TypeScript, and MongoDB (Mongoose).
+Single-package repository. Package manager: npm. Node ≥ 18.
+
+## Setup
 
 ```bash
-npm run dev        # Start dev server (Next.js)
-npm run build      # Production build
-npm run lint       # ESLint
-npm run typecheck  # TypeScript check
-npm test           # Run all tests (Vitest)
-npm test -- --coverage  # Run with coverage
+npm install
+cp .env.example .env.local   # set MONGODB_URI
+npm run dev
 ```
+
+## Commands
+
+```bash
+npm run dev                  # Start dev server
+npm run build                # Production build
+npm run start                # Start production server
+npm run lint                 # ESLint (next/core-web-vitals)
+npm run typecheck            # TypeScript check (no emit)
+npm test                     # Run all Vitest tests (single run)
+npm test -- --coverage       # Run tests with coverage
+npm run test:watch           # Vitest watch mode
+npm run test:e2e             # Playwright E2E tests
+npm run test:e2e:ui          # Playwright E2E with UI
+```
+
+Default verification before committing: `npm test && npm run lint && npm run typecheck && npm run test:e2e`
+
+## Code Style
+
+- Formatter: ESLint (`next/core-web-vitals`). No Prettier.
+- Path aliases: `@/` → project root, `@/lib/` → `lib/`, `@/libs/` → `libs/`
+- ES modules only. No CommonJS.
+- Do not edit files under `.next/`, `node_modules/`, or `coverage/`.
+- Do not modify legacy Jest configs (`jest.config.ts`, `jest.setup.ts`) — project uses Vitest.
+- Match existing component patterns in `app/components/`.
 
 ## Testing
 
-- **Framework**: Vitest (not Jest), with jsdom environment
-- **Setup**: Tests auto-start MongoDB memory server (180s timeout)
-- **Pattern**: `*.test.ts` and `*.test.tsx` in same folders as source
-- **Mocking**: Use `vi.mock()` for modules; use `vi.hoisted()` for shared mock objects to avoid hoisting issues
-- **Common issues**: Use `act()` for React state updates, `findBy*` for async elements
+- **Framework**: Vitest with jsdom. Legacy Jest is unused.
+- **Setup**: `vitest.setup.ts` auto-starts MongoDB memory server (180s timeout). Do not manually configure MongoDB in tests.
+- **Pattern**: `*.test.ts` / `*.test.tsx` co-located with source.
+- **Single test**: `npm test -- <file>` or `npm test -- -t "test name"`
+- **Mocking**: Use `vi.mock()` with `vi.hoisted()` for shared mock factories. Do not use top-level variables in mock factories.
+- **E2E**: Playwright, tests in `e2e/`. Browser: Edge. Auto-starts dev server.
+- **React 19**: "Not implemented: HTMLMediaElement pause()" warnings are safe to ignore.
+- Use `act()` for React state updates. Use `findBy*` for async elements.
 
-## Path Aliases
+## PR / Commit Rules
 
-- `@/` → project root (e.g., `@/components/Button`)
-- `@/lib/` → `lib/` directory
-- `@/libs/` → `libs/` directory
+- No direct pushes to `main`. Open a PR.
+- Branch naming: use descriptive kebab-case names (e.g., `feat/add-quiz-timer`, `fix/question-validation`).
+- CI checks: test with coverage, build, SonarCloud scan.
+- SonarCloud project: `prshntshinde_quiz-app`.
 
-## Architecture
+## Security & Secrets
 
-- **Stack**: Next.js 16 + React 19 + TypeScript + MongoDB (Mongoose)
-- **Testing**: Vitest + Testing Library
-- **Components**: `app/components/` (shared), `app/[page]/` (routes)
-- **Server Actions**: `lib/actions/` (quiz.ts, etc.)
-- **Models**: `models/` (MongoDB schemas)
+- Never commit `.env.local`, `.env`, or any file matching `.gitignore`.
+- `MONGODB_URI` required in `.env.local`. Use `.env.example` as template.
+- Do not log or echo secrets in scripts or tests.
+- Do not run destructive commands (`rm -rf`, `git push --force`) without explicit instruction.
 
-## Common Pitfalls
+## Architecture Notes
 
-1. **vi.mock hoisting**: Don't use top-level variables in mock factories—use `vi.hoisted()`
-2. **ESLint `--run` bug**: Don't pass `--run` to npm test, the script already includes it
-3. **MongoDB in tests**: Tests connect to in-memory MongoDB automatically via vitest.setup.ts
-4. **React 19**: Some tests may hit "Not implemented: HTMLMediaElement pause()" warnings—safe to ignore
+- **App Router**: `app/` — pages, layouts, API routes.
+- **Shared components**: `app/components/`
+- **Server Actions**: `lib/actions/` (quiz.ts, questions.ts)
+- **Utilities**: `lib/` and `libs/` (distinct directories, both aliased as `@/`)
+- **Models**: `models/` (Mongoose schemas)
+- **Types**: `types/` (TypeScript definitions)
+- **E2E tests**: `e2e/` (Playwright)
+- New pages go under `app/`. New API routes under `app/api/`. New shared components under `app/components/`.
 
 ## General Rules
 
