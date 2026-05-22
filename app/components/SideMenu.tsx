@@ -83,11 +83,11 @@ export default function SideMenu() {
   };
 
   return (
-    <aside className="relative flex flex-col justify-between w-full max-w-[240px] min-w-[200px] h-[calc(100vh-2rem)] bg-white border-e">
+    <aside className="relative flex flex-col justify-between w-full max-w-[240px] min-w-[200px] h-[calc(100vh-2rem)] bg-white dark:bg-gray-900 border-e dark:border-gray-800">
       <div className="p-4">
         <div className="mb-6">
-          <h2 className="text-lg font-bold text-gray-900">Admin Panel</h2>
-          <p className="text-xs text-gray-500">Quiz Management</p>
+          <h2 className="text-lg font-bold text-gray-900 dark:text-gray-100">Admin Panel</h2>
+          <p className="text-xs text-gray-500 dark:text-gray-400">Quiz Management</p>
         </div>
         <nav aria-label="Admin navigation">
           <ul className="space-y-1">
@@ -100,16 +100,16 @@ export default function SideMenu() {
                     aria-current={active ? "page" : undefined}
                     className={`flex items-center gap-3 px-4 py-2.5 text-sm font-medium rounded-lg transition-colors ${
                       active
-                        ? "bg-blue-50 text-blue-700 border border-blue-200"
-                        : "text-gray-700 hover:bg-gray-100 hover:text-gray-900 border border-transparent"
+                        ? "bg-blue-50 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-800"
+                        : "text-gray-700 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 hover:text-gray-900 dark:hover:text-gray-200 border border-transparent"
                     }`}
                   >
-                    <span className={active ? "text-blue-600" : "text-gray-500"}>
+                    <span className={active ? "text-blue-600 dark:text-blue-400" : "text-gray-500 dark:text-gray-400"}>
                       {link.icon}
                     </span>
                     {link.label}
                     {active && (
-                      <span className="ml-auto w-1.5 h-1.5 rounded-full bg-blue-600" aria-hidden="true" />
+                      <span className="ml-auto w-1.5 h-1.5 rounded-full bg-blue-600 dark:bg-blue-400" aria-hidden="true" />
                     )}
                   </Link>
                 </li>
@@ -118,10 +118,10 @@ export default function SideMenu() {
           </ul>
         </nav>
       </div>
-      <div className="p-4 border-t">
+      <div className="p-4 border-t dark:border-gray-800">
         <button
           onClick={handleLogout}
-          className="flex items-center gap-3 w-full px-4 py-2.5 text-sm font-medium text-red-600 rounded-lg hover:bg-red-50 transition-colors focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2"
+          className="flex items-center gap-3 w-full px-4 py-2.5 text-sm font-medium text-red-600 dark:text-red-400 rounded-lg hover:bg-red-50 dark:hover:bg-red-900/30 transition-colors focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 dark:focus:ring-offset-gray-900"
         >
           <svg
             className="w-5 h-5"

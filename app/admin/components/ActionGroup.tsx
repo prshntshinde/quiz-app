@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import { type ReactNode } from "react";
 
 type ActionVariant = "edit" | "delete" | "preview" | "default";
@@ -19,10 +20,10 @@ interface ActionGroupProps {
 }
 
 const variantStyles: Record<ActionVariant, string> = {
-  edit: "text-blue-600 hover:text-blue-800 hover:bg-blue-50",
-  delete: "text-red-600 hover:text-red-800 hover:bg-red-50",
-  preview: "text-green-600 hover:text-green-800 hover:bg-green-50",
-  default: "text-gray-600 hover:text-gray-800 hover:bg-gray-100",
+  edit: "text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 hover:bg-blue-50 dark:hover:bg-blue-900/30",
+  delete: "text-red-600 dark:text-red-400 hover:text-red-800 dark:hover:text-red-300 hover:bg-red-50 dark:hover:bg-red-900/30",
+  preview: "text-green-600 dark:text-green-400 hover:text-green-800 dark:hover:text-green-300 hover:bg-green-50 dark:hover:bg-green-900/30",
+  default: "text-gray-600 dark:text-gray-400 hover:text-gray-800 dark:hover:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800",
 };
 
 const EditIcon = () => (
@@ -112,17 +113,15 @@ export default function ActionGroup({
 
         if (action.href) {
           return (
-            <a
+            <Link
               key={`${action.label}-${index}`}
               href={action.href}
-              target="_blank"
-              rel="noopener noreferrer"
               className={`inline-flex items-center px-2 py-1.5 text-sm font-medium rounded-md transition-colors ${variantStyles[variant]} ${
                 isLoading ? "opacity-50 pointer-events-none" : ""
               }`}
             >
               {content}
-            </a>
+            </Link>
           );
         }
 
@@ -145,7 +144,7 @@ export default function ActionGroup({
         <div className="relative group">
           <button
             type="button"
-            className="inline-flex items-center p-1.5 text-sm font-medium text-gray-500 rounded-md hover:bg-gray-100"
+            className="inline-flex items-center p-1.5 text-sm font-medium text-gray-500 dark:text-gray-400 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800"
             aria-label="More actions"
           >
             <svg
@@ -163,7 +162,7 @@ export default function ActionGroup({
               />
             </svg>
           </button>
-          <div className="absolute right-0 z-10 hidden w-32 py-1 mt-1 bg-white border border-gray-200 rounded-lg shadow-lg group-hover:block">
+          <div className="absolute right-0 z-10 hidden w-32 py-1 mt-1 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow-lg group-hover:block">
             {hiddenActions.map((action, index) => {
               const variant = action.variant ?? "default";
               return (

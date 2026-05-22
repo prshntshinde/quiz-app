@@ -4,7 +4,7 @@ import type { NextRequest } from "next/server";
 const protectedPaths = ["/admin/dashboard", "/admin/quiz", "/admin/questions"];
 const publicAdminPaths = ["/admin", "/api/auth"];
 
-export function middleware(request: NextRequest) {
+export function proxy(request: NextRequest) {
   const { pathname } = request.nextUrl;
 
   const isProtectedPath = protectedPaths.some((path) =>

@@ -2,17 +2,11 @@ import { render, screen } from "@testing-library/react";
 import ErrorState from "./ErrorState";
 import "@testing-library/jest-dom";
 
-vi.mock("next/navigation", () => ({
-  useRouter: vi.fn(() => ({
-    refresh: vi.fn(),
-  })),
-}));
-
 describe("ErrorState", () => {
   it("renders the default error message", () => {
     render(<ErrorState />);
     expect(
-      screen.getByText(/We encountered an error while fetching the quizzes/i)
+      screen.getByText(/Something went wrong/i)
     ).toBeInTheDocument();
   });
 
@@ -21,8 +15,8 @@ describe("ErrorState", () => {
     expect(screen.getByText("Custom error message")).toBeInTheDocument();
   });
 
-  it("renders the Refresh Page button", () => {
-    render(<ErrorState />);
-    expect(screen.getByRole("button", { name: /Refresh Page/i })).toBeInTheDocument();
+  it("renders the Try Again button when onRetry is provided", () => {
+    render(<ErrorState onRetry={() => {}} retryLabel="Try Again" />);
+    expect(screen.getByRole("button", { name: /Try Again/i })).toBeInTheDocument();
   });
 });

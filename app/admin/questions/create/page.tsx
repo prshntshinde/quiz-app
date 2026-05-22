@@ -11,18 +11,19 @@ export default async function CreateQuestionPage() {
   const quizzes = await getAllQuizzes();
 
   return (
-    <div>
-      <PageHeader
-        title="Create Question"
-        breadcrumbs={[
-          { label: "Admin", href: "/admin/dashboard" },
-          { label: "Questions", href: "/admin/questions" },
-          { label: "Create" },
-        ]}
-      />
-      <div className="max-w-2xl">
-        <QuestionForm quizzes={quizzes} />
+    <div className="max-w-3xl mx-auto">
+      <div className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl p-6 shadow-sm mb-6">
+        <PageHeader
+          title="Create Question"
+          breadcrumbs={[
+            { label: "Admin", href: "/admin/dashboard" },
+            { label: "Questions", href: "/admin/questions" },
+            { label: "Create" },
+          ]}
+          noDivider
+        />
       </div>
+      <QuestionForm quizzes={quizzes} />
     </div>
   );
 }

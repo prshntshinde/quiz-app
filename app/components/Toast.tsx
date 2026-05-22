@@ -63,7 +63,11 @@ function ToastContainer({
   onRemove: (id: string) => void;
 }>) {
   return (
-    <div className="fixed bottom-4 right-4 z-50 flex flex-col gap-2 max-w-sm">
+    <div
+      className="fixed bottom-4 right-4 z-50 flex flex-col gap-2 max-w-sm"
+      aria-live="polite"
+      aria-atomic="true"
+    >
       {toasts.map((toast) => (
         <ToastItem key={toast.id} toast={toast} onRemove={onRemove} />
       ))}
@@ -86,13 +90,15 @@ function ToastItem({
     info: "bg-blue-600",
   };
 
+  const role = toast.type === "error" ? "alert" : "status";
+
   return (
-    <div className={cn(baseClass, typeClasses[toast.type])}>
+    <div className={cn(baseClass, typeClasses[toast.type])} role={role}>
       <span className="flex-1">{toast.message}</span>
       <button
         onClick={() => onRemove(toast.id)}
-        className="text-white/80 hover:text-white"
-        aria-label="Dismiss"
+        className="text-white/80 hover:text-white focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-transparent rounded"
+        aria-label="Dismiss notification"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -104,6 +110,7 @@ function ToastItem({
           strokeWidth="2"
           strokeLinecap="round"
           strokeLinejoin="round"
+          aria-hidden="true"
         >
           <line x1="18" y1="6" x2="6" y2="18" />
           <line x1="6" y1="6" x2="18" y2="18" />

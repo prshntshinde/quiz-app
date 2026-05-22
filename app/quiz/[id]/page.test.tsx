@@ -6,7 +6,10 @@ vi.mock("@/libs/data", () => ({
       _id: "q1",
       question_id: 1,
       question: "Test Question?",
-      options: [{ 0: "Option 1", 1: "Option 2", 2: "Option 3", 3: "Option 4" }],
+      optionA: "Option 1",
+      optionB: "Option 2",
+      optionC: "Option 3",
+      optionD: "Option 4",
       answer: 0,
       explanation: "Test explanation",
     },
@@ -43,13 +46,16 @@ describe("Quiz Answer Page", () => {
       _id: "q1",
       question_id: 1,
       question: "What is 2+2?",
-      options: [{ 0: "3", 1: "4", 2: "5", 3: "6" }],
+      optionA: "3",
+      optionB: "4",
+      optionC: "5",
+      optionD: "6",
       answer: 1,
       explanation: "2+2=4",
     };
 
     expect(question.question_id).toBe(1);
-    expect(question.options[0][0]).toBe("3");
+    expect(question.optionA).toBe("3");
     expect(question.answer).toBe(1);
   });
 

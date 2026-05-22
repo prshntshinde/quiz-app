@@ -28,6 +28,16 @@ function toQuizResult(doc: mongoose.Document): QuizResult {
   };
 }
 
+const DEFAULT_PAGE = 1;
+const DEFAULT_LIMIT = 10;
+
+interface GetAllQuizzesResult {
+  quizzes: QuizResult[];
+  total: number;
+  page: number;
+  totalPages: number;
+}
+
 export async function getAllQuizzes(): Promise<QuizResult[]> {
   try {
     await connectMongoDB();
@@ -48,6 +58,45 @@ export async function getAllQuizzes(): Promise<QuizResult[]> {
         updatedAt: String(h.updatedAt),
       })) ?? [],
     }));
+  } catch (error) {
+    console.error(error);
+    throw new Error("Failed to fetch quizzes.");
+  }
+}
+
+export async function getAllQuizzesPaginated(
+  page: number = DEFAULT_PAGE,
+  limit: number = DEFAULT_LIMIT
+): Promise<GetAllQuizzesResult> {
+  try {
+    await connectMongoDB();
+    const query = {
+      $or: [{ deletedAt: null }, { deletedAt: { $exists: false } }],
+    };
+
+    const skip = (page - 1) * limit;
+    const [quizzes, total] = await Promise.all([
+      Quiz.find(query).skip(skip).limit(limit).lean(),
+      Quiz.countDocuments(query),
+    ]);
+
+    return {
+      quizzes: quizzes.map((q) => ({
+        _id: String(q._id),
+        title: q.title,
+        description: q.description,
+        isComplete: q.isComplete ?? false,
+        isActive: q.isActive ?? true,
+        history: q.history?.map((h) => ({
+          title: h.title as string,
+          description: h.description as string,
+          updatedAt: String(h.updatedAt),
+        })) ?? [],
+      })),
+      total,
+      page,
+      totalPages: Math.ceil(total / limit),
+    };
   } catch (error) {
     console.error(error);
     throw new Error("Failed to fetch quizzes.");

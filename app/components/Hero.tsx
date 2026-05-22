@@ -72,15 +72,15 @@ const Hero = () => {
           </div>
           <div className="pt-8 flex flex-wrap justify-center gap-8 text-sm text-gray-600 dark:text-gray-400">
             <div className="flex items-center gap-2">
-              <span className="text-2xl">🎯</span>
+              <span className="text-2xl" aria-hidden="true">🎯</span>
               <span>Multiple Categories</span>
             </div>
             <div className="flex items-center gap-2">
-              <span className="text-2xl">⚡</span>
+              <span className="text-2xl" aria-hidden="true">⚡</span>
               <span>Instant Results</span>
             </div>
             <div className="flex items-center gap-2">
-              <span className="text-2xl">📊</span>
+              <span className="text-2xl" aria-hidden="true">📊</span>
               <span>Track Progress</span>
             </div>
           </div>

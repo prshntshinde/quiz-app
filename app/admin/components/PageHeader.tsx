@@ -13,6 +13,7 @@ interface PageHeaderProps {
   subtitle?: string;
   breadcrumbs?: Breadcrumb[];
   actions?: ReactNode;
+  noDivider?: boolean;
 }
 
 export default function PageHeader({
@@ -20,12 +21,13 @@ export default function PageHeader({
   subtitle,
   breadcrumbs,
   actions,
+  noDivider,
 }: Readonly<PageHeaderProps>) {
   return (
     <div className="mb-6">
       {breadcrumbs && breadcrumbs.length > 0 && (
         <nav aria-label="Breadcrumb" className="mb-2">
-          <ol className="flex items-center gap-1 text-sm text-gray-500">
+          <ol className="flex items-center gap-1 text-sm text-gray-500 dark:text-gray-400">
             {breadcrumbs.map((crumb, index) => (
               <li key={crumb.label} className="flex items-center gap-1">
                 {index > 0 && (
@@ -36,12 +38,12 @@ export default function PageHeader({
                 {crumb.href ? (
                   <Link
                     href={crumb.href}
-                    className="hover:text-blue-600 hover:underline focus:outline-none focus:ring-2 focus:ring-blue-500 rounded"
+                    className="hover:text-blue-600 dark:hover:text-blue-400 hover:underline focus:outline-none focus:ring-2 focus:ring-blue-500 rounded"
                   >
                     {crumb.label}
                   </Link>
                 ) : (
-                  <span className="text-gray-700 font-medium">{crumb.label}</span>
+                  <span className="text-gray-700 dark:text-gray-300 font-medium">{crumb.label}</span>
                 )}
               </li>
             ))}
@@ -50,14 +52,14 @@ export default function PageHeader({
       )}
       <div className="flex flex-col gap-1 sm:flex-row sm:items-center sm:justify-between">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">{title}</h1>
+          <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100">{title}</h1>
           {subtitle && (
-            <p className="mt-1 text-sm text-gray-600">{subtitle}</p>
+            <p className="mt-1 text-sm text-gray-600 dark:text-gray-400">{subtitle}</p>
           )}
         </div>
         {actions && <div className="flex items-center gap-2 mt-2 sm:mt-0">{actions}</div>}
       </div>
-      <hr className="mt-4 border-gray-200" />
+      {!noDivider && <hr className="mt-4 border-gray-200 dark:border-gray-700" />}
     </div>
   );
 }

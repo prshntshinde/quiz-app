@@ -16,7 +16,10 @@ describe("Quiz Answer Page Data Flow", () => {
         _id: "q1",
         question_id: 1,
         question: "What is React?",
-        options: [{ 0: "Library", 1: "Framework", 2: "Language", 3: "Database" }],
+        optionA: "Library",
+        optionB: "Framework",
+        optionC: "Language",
+        optionD: "Database",
         answer: 0,
         explanation: "React is a library",
       },
@@ -40,15 +43,18 @@ describe("Quiz Answer Page Data Flow", () => {
       _id: "abc",
       question_id: 5,
       question: "Test question?",
-      options: [{ 0: "A", 1: "B", 2: "C", 3: "D" }],
+      optionA: "A",
+      optionB: "B",
+      optionC: "C",
+      optionD: "D",
       answer: 2,
       explanation: "The answer is C because...",
     };
 
     expect(question._id).toBeDefined();
     expect(question.question_id).toBe(5);
-    expect(question.options[0][0]).toBe("A");
-    expect(question.options[0][3]).toBe("D");
+    expect(question.optionA).toBe("A");
+    expect(question.optionD).toBe("D");
     expect(question.answer).toBe(2);
     expect(question.explanation).toBeTruthy();
   });

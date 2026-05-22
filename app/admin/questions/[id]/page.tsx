@@ -57,18 +57,19 @@ export default async function EditQuestionPage({ params }: PageProps) {
   };
 
   return (
-    <div>
-      <PageHeader
-        title="Edit Question"
-        breadcrumbs={[
-          { label: "Admin", href: "/admin/dashboard" },
-          { label: "Questions", href: "/admin/questions" },
-          { label: "Edit" },
-        ]}
-      />
-      <div className="max-w-2xl">
-        <EditQuestionForm question={plainQuestion} quizzes={quizzes} />
+    <div className="max-w-3xl mx-auto">
+      <div className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl p-6 shadow-sm mb-6">
+        <PageHeader
+          title="Edit Question"
+          breadcrumbs={[
+            { label: "Admin", href: "/admin/dashboard" },
+            { label: "Questions", href: "/admin/questions" },
+            { label: "Edit" },
+          ]}
+          noDivider
+        />
       </div>
+      <EditQuestionForm question={plainQuestion} quizzes={quizzes} />
     </div>
   );
 }
