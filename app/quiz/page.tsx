@@ -1,6 +1,5 @@
 import { fetchQuizzes } from "@/libs/data";
-import QuizCard from "@/app/components/QuizCard";
-import EmptyState from "@/app/components/EmptyState";
+import QuizListing from "@/app/components/QuizListing";
 import ErrorState from "@/app/components/ErrorState";
 
 interface QuizData {
@@ -11,7 +10,7 @@ interface QuizData {
 
 export default async function Quiz() {
   let error: string | null = null;
-  let quizzes: QuizData[] | null = null;
+  let quizzes: QuizData[] = [];
 
   try {
     quizzes = (await fetchQuizzes()) as QuizData[];
@@ -20,7 +19,7 @@ export default async function Quiz() {
   }
 
   return (
-    <main className="min-h-screen bg-gradient-to-br from-violet-50 via-purple-50 to-blue-50 dark:from-gray-900 dark:via-purple-900/20 dark:to-blue-900/20">
+    <main id="main-content" className="min-h-screen bg-gradient-to-br from-violet-50 via-purple-50 to-blue-50 dark:from-gray-900 dark:via-purple-900/20 dark:to-blue-900/20">
       <section className="py-12 sm:py-16 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto text-center">
           <h1 className="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-gray-900 dark:text-white mb-4">
@@ -40,17 +39,7 @@ export default async function Quiz() {
           {error ? (
             <ErrorState message={error} />
           ) : (
-            <>
-              {quizzes && quizzes.length > 0 ? (
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
-                  {quizzes.map((quiz) => (
-                    <QuizCard key={quiz._id} quiz={quiz} />
-                  ))}
-                </div>
-              ) : (
-                <EmptyState />
-              )}
-            </>
+            <QuizListing initialQuizzes={quizzes} />
           )}
         </div>
       </section>

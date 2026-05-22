@@ -1,18 +1,24 @@
 import Link from "next/link";
-import { getAllQuizzes } from "@/lib/quizzes";
-import { PageHeader } from "@/app/admin/components";
+import { getAllQuizzesPaginated } from "@/lib/quizzes";
+import { PageHeader, Pagination } from "@/app/admin/components";
 import QuizTable from "./QuizTable";
 
 export const dynamic = "force-dynamic";
 
-export default async function Quiz() {
-  const quizzes = await getAllQuizzes();
+interface PageProps {
+  searchParams: Promise<{ page?: string }>;
+}
+
+export default async function Quiz({ searchParams }: PageProps) {
+  const params = await searchParams;
+  const page = parseInt(params.page || "1", 10);
+  const { quizzes, total, totalPages } = await getAllQuizzesPaginated(page, 10);
 
   return (
     <div>
       <PageHeader
         title="Quizzes"
-        subtitle="Manage your quiz content"
+        subtitle={`${total} total quiz${total > 1 ? "zes" : ""}`}
         breadcrumbs={[
           { label: "Admin", href: "/admin/dashboard" },
           { label: "Quizzes" },
@@ -42,6 +48,12 @@ export default async function Quiz() {
       />
 
       <QuizTable quizzes={quizzes} />
+
+      <Pagination
+        currentPage={page}
+        totalPages={totalPages}
+        baseUrl="/admin/quiz"
+      />
     </div>
   );
 }

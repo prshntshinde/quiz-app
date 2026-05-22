@@ -44,19 +44,20 @@ export default async function EditQuizPage({ params }: EditQuizPageProps) {
   };
 
   return (
-    <div>
-      <PageHeader
-        title="Edit Quiz"
-        subtitle={`Editing "${quiz.title}"`}
-        breadcrumbs={[
-          { label: "Admin", href: "/admin/dashboard" },
-          { label: "Quizzes", href: "/admin/quiz" },
-          { label: quiz.title },
-        ]}
-      />
-      <div className="max-w-2xl">
-        <EditQuizForm quiz={plainQuiz} />
+    <div className="max-w-3xl mx-auto">
+      <div className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl p-6 shadow-sm mb-6">
+        <PageHeader
+          title="Edit Quiz"
+          subtitle={`Editing "${quiz.title}"`}
+          breadcrumbs={[
+            { label: "Admin", href: "/admin/dashboard" },
+            { label: "Quizzes", href: "/admin/quiz" },
+            { label: quiz.title },
+          ]}
+          noDivider
+        />
       </div>
+      <EditQuizForm quiz={plainQuiz} />
     </div>
   );
 }

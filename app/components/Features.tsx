@@ -52,7 +52,7 @@ const Features = () => {
               <div className="absolute inset-0 bg-gradient-to-br from-purple-500/5 to-blue-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
               <div className="absolute -inset-1 bg-gradient-to-r from-purple-600 to-blue-600 rounded-2xl blur opacity-0 group-hover:opacity-20 transition-opacity duration-300"></div>
               <div className="relative">
-                <div className="text-6xl mb-6 transform group-hover:scale-110 transition-transform duration-300">
+                <div className="text-6xl mb-6 transform group-hover:scale-110 transition-transform duration-300" aria-hidden="true">
                   {feature.icon}
                 </div>
                 <h3 className="text-2xl font-bold text-gray-900 dark:text-white mb-4 group-hover:text-purple-600 dark:group-hover:text-purple-400 transition-colors duration-300">

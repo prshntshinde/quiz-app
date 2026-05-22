@@ -1,5 +1,6 @@
 "use server";
 
+import mongoose from "mongoose";
 import { Questions, type IQuestionDocument } from "@/models/quiz";
 import connectMongoDB from "@/libs/mongodb";
 import { revalidatePath } from "next/cache";
@@ -107,8 +108,9 @@ export async function updateQuestion(
     const option4 = formData.get("option4") as string;
     const answer = parseInt(formData.get("answer") as string, 10);
     const explanation = formData.get("explanation") as string;
+    const quiz_id = formData.get("quiz_id") as string;
 
-    if (!id || !question || !option1 || !option2 || !option3 || !option4 || isNaN(answer)) {
+    if (!id || !question || !option1 || !option2 || !option3 || !option4 || isNaN(answer) || !quiz_id) {
       throw new Error("All fields are required");
     }
 
@@ -130,6 +132,18 @@ export async function updateQuestion(
     currentQuestion.optionD = option4;
     currentQuestion.answer = answer;
     currentQuestion.explanation = explanation;
+
+    const newQuizId = new mongoose.Types.ObjectId(quiz_id);
+    const quizChanged = !currentQuestion.quiz_id?.equals(newQuizId);
+
+    if (quizChanged) {
+      currentQuestion.quiz_id = newQuizId;
+      const lastQuestion = await Questions.findOne({ quiz_id })
+        .sort({ question_id: -1 })
+        .select("question_id")
+        .lean();
+      currentQuestion.question_id = lastQuestion ? lastQuestion.question_id + 1 : 1;
+    }
 
     await currentQuestion.save();
 

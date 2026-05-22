@@ -37,7 +37,7 @@ export default function DeleteQuestionButton({ id, question }: DeleteQuestionBut
     <button
       onClick={handleDelete}
       disabled={isPending}
-      className={`text-sm font-semibold text-red-500 hover:text-red-400 ${
+      className={`text-sm font-semibold text-red-500 dark:text-red-400 hover:text-red-400 dark:hover:text-red-300 ${
         isPending ? "opacity-50 cursor-not-allowed" : ""
       }`}
     >

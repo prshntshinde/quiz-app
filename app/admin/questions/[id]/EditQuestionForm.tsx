@@ -57,7 +57,7 @@ export default function EditQuestionForm({ question, quizzes }: Readonly<EditQue
   };
 
   return (
-    <div className="bg-white border border-gray-200 rounded-xl p-6 shadow-sm">
+    <div className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-xl p-6 shadow-sm">
       <form action={handleSubmit} className="space-y-5">
         <input type="hidden" name="id" value={String(question._id)} />
 
@@ -184,7 +184,7 @@ export default function EditQuestionForm({ question, quizzes }: Readonly<EditQue
           />
         </FormField>
 
-        <div className="flex flex-col sm:flex-row gap-3 pt-4 border-t">
+        <div className="flex flex-col sm:flex-row gap-3 pt-4 border-t dark:border-gray-700">
           <Button
             type="submit"
             variant="primary"

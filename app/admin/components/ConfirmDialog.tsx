@@ -16,8 +16,8 @@ interface ConfirmDialogProps {
 
 const variantConfig = {
   danger: {
-    iconBg: "bg-red-100",
-    iconColor: "text-red-600",
+    iconBg: "bg-red-100 dark:bg-red-900/40",
+    iconColor: "text-red-600 dark:text-red-400",
     icon: (
       <svg
         className="w-6 h-6"
@@ -37,8 +37,8 @@ const variantConfig = {
     buttonClass: "bg-red-600 hover:bg-red-700 focus:ring-red-500",
   },
   warning: {
-    iconBg: "bg-yellow-100",
-    iconColor: "text-yellow-600",
+    iconBg: "bg-yellow-100 dark:bg-yellow-900/40",
+    iconColor: "text-yellow-600 dark:text-yellow-400",
     icon: (
       <svg
         className="w-6 h-6"
@@ -58,8 +58,8 @@ const variantConfig = {
     buttonClass: "bg-yellow-600 hover:bg-yellow-700 focus:ring-yellow-500",
   },
   info: {
-    iconBg: "bg-blue-100",
-    iconColor: "text-blue-600",
+    iconBg: "bg-blue-100 dark:bg-blue-900/40",
+    iconColor: "text-blue-600 dark:text-blue-400",
     icon: (
       <svg
         className="w-6 h-6"
@@ -80,11 +80,11 @@ const variantConfig = {
   },
 };
 
-function FocusTrap({ children }: Readonly<{ children: ReactNode }>) {
+function FocusTrap({ children, isOpen }: Readonly<{ children: ReactNode; isOpen: boolean }>) {
   const dialogRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (!dialogRef.current) return;
+    if (!dialogRef.current || !isOpen) return;
 
     const focusableElements = dialogRef.current.querySelectorAll<HTMLElement>(
       'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
@@ -116,7 +116,7 @@ function FocusTrap({ children }: Readonly<{ children: ReactNode }>) {
       document.removeEventListener("keydown", handleKeyDown);
       previouslyFocused?.focus();
     };
-  }, []);
+  }, [isOpen]);
 
   return <div ref={dialogRef}>{children}</div>;
 }
@@ -158,23 +158,23 @@ export default function ConfirmDialog({
       onKeyDown={handleKeyDown}
       role="presentation"
     >
-      <FocusTrap>
+      <FocusTrap isOpen={isOpen}>
         <div
           role="alertdialog"
           aria-modal="true"
           aria-labelledby="dialog-title"
           aria-describedby="dialog-message"
-          className="w-full max-w-md bg-white rounded-xl shadow-2xl"
+          className="w-full max-w-md bg-white dark:bg-gray-800 rounded-xl shadow-2xl"
         >
           <div className="flex items-start gap-4 p-6">
             <div className={`flex-shrink-0 p-3 rounded-full ${config.iconBg}`}>
               <div className={config.iconColor}>{config.icon}</div>
             </div>
             <div className="flex-1 min-w-0">
-              <h2 id="dialog-title" className="text-lg font-semibold text-gray-900">
+              <h2 id="dialog-title" className="text-lg font-semibold text-gray-900 dark:text-gray-100">
                 {title}
               </h2>
-              <p id="dialog-message" className="mt-2 text-sm text-gray-600">
+              <p id="dialog-message" className="mt-2 text-sm text-gray-600 dark:text-gray-400">
                 {message}
               </p>
             </div>
@@ -185,7 +185,7 @@ export default function ConfirmDialog({
               type="button"
               onClick={onCancel}
               disabled={isLoading}
-              className="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed"
+              className="px-4 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-600 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2 dark:focus:ring-offset-gray-900 disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {cancelLabel}
             </button>
@@ -193,7 +193,7 @@ export default function ConfirmDialog({
               type="button"
               onClick={onConfirm}
               disabled={isLoading}
-              className={`px-4 py-2 text-sm font-semibold text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed ${config.buttonClass} ${config.buttonClass.includes("focus:ring") ? "focus:ring-offset-2" : ""}`}
+              className={`px-4 py-2 text-sm font-semibold text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-offset-2 dark:focus:ring-offset-gray-900 disabled:opacity-50 disabled:cursor-not-allowed ${config.buttonClass} ${config.buttonClass.includes("focus:ring") ? "focus:ring-offset-2 dark:focus:ring-offset-gray-900" : ""}`}
             >
               {isLoading ? (
                 <span className="flex items-center gap-2">
@@ -201,6 +201,7 @@ export default function ConfirmDialog({
                     className="w-4 h-4 animate-spin"
                     fill="none"
                     viewBox="0 0 24 24"
+                    aria-hidden="true"
                   >
                     <circle
                       className="opacity-25"

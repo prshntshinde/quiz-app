@@ -42,7 +42,21 @@ function getPageNumbers(
   return [1, "...", ...middleRange, "...", totalPages];
 }
 
-function ChevronIcon({ direction }: { direction: "left" | "right" }) {
+function ChevronIcon({ direction }: { direction: "left" | "right" | "first" | "last" }) {
+  if (direction === "first") {
+    return (
+      <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 19l-7-7 7-7m8 14l-7-7 7-7" />
+      </svg>
+    );
+  }
+  if (direction === "last") {
+    return (
+      <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 5l7 7-7 7M5 5l7 7-7 7" />
+      </svg>
+    );
+  }
   return direction === "left" ? (
     <svg
       className="w-4 h-4"
@@ -66,6 +80,41 @@ function ChevronIcon({ direction }: { direction: "left" | "right" }) {
   );
 }
 
+function NavButton({
+  page,
+  label,
+  icon,
+  disabled,
+  baseUrl,
+}: Readonly<{
+  page: number;
+  label: string;
+  icon: React.ReactNode;
+  disabled: boolean;
+  baseUrl: string;
+}>) {
+  if (disabled) {
+    return (
+      <span
+        className="p-2 text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-lg opacity-50 cursor-not-allowed"
+        aria-hidden="true"
+      >
+        {icon}
+      </span>
+    );
+  }
+
+  return (
+    <Link
+      href={`${baseUrl}?page=${page}`}
+      aria-label={label}
+      className="p-2 text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-gray-900"
+    >
+      {icon}
+    </Link>
+  );
+}
+
 interface PageButtonProps {
   page: number | "...";
   currentPage: number;
@@ -76,7 +125,7 @@ interface PageButtonProps {
 function PageButton({ page, currentPage, baseUrl, label }: Readonly<PageButtonProps>) {
   if (page === "...") {
     return (
-      <span className="px-3 py-2 text-gray-400 select-none" aria-hidden="true">
+      <span className="px-3 py-2 text-gray-400 dark:text-gray-500 select-none" aria-hidden="true">
         &hellip;
       </span>
     );
@@ -99,7 +148,7 @@ function PageButton({ page, currentPage, baseUrl, label }: Readonly<PageButtonPr
   return (
     <Link
       href={href}
-      className="px-3 py-2 text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+      className="px-3 py-2 text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-gray-900"
       aria-label={label}
     >
       {page}
@@ -124,17 +173,20 @@ export default function Pagination({
       aria-label="Pagination"
       className="flex items-center justify-center gap-1 mt-6"
     >
-      <Link
-        href={`${baseUrl}?page=${currentPage - 1}`}
-        aria-label="Go to previous page"
-        className={`p-2 text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 ${
-          currentPage === 1
-            ? "opacity-50 cursor-not-allowed pointer-events-none"
-            : ""
-        }`}
-      >
-        <ChevronIcon direction="left" />
-      </Link>
+      <NavButton
+        page={1}
+        label="Go to first page"
+        icon={<ChevronIcon direction="first" />}
+        disabled={currentPage === 1}
+        baseUrl={baseUrl}
+      />
+      <NavButton
+        page={currentPage - 1}
+        label="Go to previous page"
+        icon={<ChevronIcon direction="left" />}
+        disabled={currentPage === 1}
+        baseUrl={baseUrl}
+      />
 
       <div className="flex items-center gap-1">
         {pages.map((page) => (
@@ -148,17 +200,20 @@ export default function Pagination({
         ))}
       </div>
 
-      <Link
-        href={`${baseUrl}?page=${currentPage + 1}`}
-        aria-label="Go to next page"
-        className={`p-2 text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 ${
-          currentPage === totalPages
-            ? "opacity-50 cursor-not-allowed pointer-events-none"
-            : ""
-        }`}
-      >
-        <ChevronIcon direction="right" />
-      </Link>
+      <NavButton
+        page={currentPage + 1}
+        label="Go to next page"
+        icon={<ChevronIcon direction="right" />}
+        disabled={currentPage === totalPages}
+        baseUrl={baseUrl}
+      />
+      <NavButton
+        page={totalPages}
+        label="Go to last page"
+        icon={<ChevronIcon direction="last" />}
+        disabled={currentPage === totalPages}
+        baseUrl={baseUrl}
+      />
     </nav>
   );
 }

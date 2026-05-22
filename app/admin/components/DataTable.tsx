@@ -37,7 +37,7 @@ function SkeletonRow({ columns }: Readonly<{ columns: number }>) {
     <tr className="animate-pulse">
       {Array.from({ length: columns }).map((_, i) => (
         <td key={`skeleton-${i}`} className="px-4 py-3">
-          <div className="h-4 bg-gray-200 rounded"></div>
+          <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded"></div>
         </td>
       ))}
     </tr>
@@ -58,10 +58,10 @@ function EmptyState({
       <td colSpan={colSpan} className="px-4 py-12 text-center">
         <div className="flex flex-col items-center gap-3">
           {icon ? (
-            <div className="text-gray-300">{icon}</div>
+            <div className="text-gray-300 dark:text-gray-600">{icon}</div>
           ) : (
             <svg
-              className="w-12 h-12 text-gray-300"
+              className="w-12 h-12 text-gray-300 dark:text-gray-600"
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
@@ -75,7 +75,7 @@ function EmptyState({
               />
             </svg>
           )}
-          <p className="text-gray-500">{message}</p>
+          <p className="text-gray-500 dark:text-gray-400">{message}</p>
         </div>
       </td>
     </tr>
@@ -96,16 +96,16 @@ export default function DataTable<T>({
   const hasRowClick = !!onRowClick;
 
   return (
-    <div className={`w-full overflow-hidden rounded-lg shadow-sm border border-gray-200 ${className}`}>
+    <div className={`w-full overflow-hidden rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 ${className}`}>
       <div className="w-full overflow-x-auto">
-        <table className="w-full whitespace-no-wrap">
-          <thead className="bg-gray-50">
+        <table className="w-full whitespace-nowrap">
+          <thead className="bg-gray-50 dark:bg-gray-800">
             <tr>
               {columns.map((column) => (
                 <th
                   key={column.key}
                   scope="col"
-                  className={`px-4 py-3 text-xs font-semibold tracking-wide text-left text-gray-600 uppercase ${alignStyles[column.align ?? "left"]} ${column.className ?? ""}`}
+                  className={`px-4 py-3 text-xs font-semibold tracking-wide text-left text-gray-600 dark:text-gray-300 uppercase ${alignStyles[column.align ?? "left"]} ${column.className ?? ""}`}
                   style={column.width ? { width: column.width } : undefined}
                 >
                   {column.header}
@@ -113,7 +113,7 @@ export default function DataTable<T>({
               ))}
             </tr>
           </thead>
-          <tbody className="bg-white divide-y divide-gray-200">
+          <tbody className="bg-white dark:bg-gray-900 divide-y divide-gray-200 dark:divide-gray-700">
             {loading ? (
               Array.from({ length: loadingRows }).map((_, index) => (
                 <SkeletonRow key={`loading-${index}`} columns={columns.length} />
@@ -127,7 +127,7 @@ export default function DataTable<T>({
             ) : (
               data.map((item, index) => {
                 const rowKey = keyExtractor(item);
-                const baseClass = "hover:bg-gray-50";
+                const baseClass = "hover:bg-gray-50 dark:hover:bg-gray-800";
                 const clickableClass = "w-full text-left cursor-pointer focus:outline-none focus:ring-2 focus:ring-inset focus:ring-blue-500";
                 const rowClass = hasRowClick ? clickableClass : baseClass;
 
@@ -135,6 +135,15 @@ export default function DataTable<T>({
                   <tr
                     key={rowKey}
                     onClick={hasRowClick ? () => onRowClick(item) : undefined}
+                    onKeyDown={hasRowClick ? (e) => {
+                      if (e.key === "Enter" || e.key === " ") {
+                        e.preventDefault();
+                        onRowClick(item);
+                      }
+                    } : undefined}
+                    tabIndex={hasRowClick ? 0 : undefined}
+                    role={hasRowClick ? "button" : undefined}
+                    aria-label={hasRowClick ? `View details for row ${index + 1}` : undefined}
                     className={rowClass}
                   >
                     {columns.map((column) => {
@@ -148,7 +157,7 @@ export default function DataTable<T>({
                       return (
                         <td
                           key={`${rowKey}-${column.key}`}
-                          className={`px-4 py-3 text-sm text-gray-700 ${alignStyles[column.align ?? "left"]} ${column.className ?? ""}`}
+                          className={`px-4 py-3 text-sm text-gray-700 dark:text-gray-300 ${alignStyles[column.align ?? "left"]} ${column.className ?? ""}`}
                         >
                           {cellContent}
                         </td>

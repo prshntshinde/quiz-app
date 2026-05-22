@@ -1,14 +1,14 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useRef, useEffect } from "react";
 import Modal from "./Modal";
-import { RxCheckCircled, RxCrossCircled } from "react-icons/rx";
-import { cn } from "@/lib/utils";
-import { CountdownCircleTimer } from "react-countdown-circle-timer";
-import {
-  QUIZ_TIMER_DURATION,
-  CLOCK_AUDIO_PATH,
-} from "@/lib/constants";
+import QuizTimer from "./QuizTimer";
+import AnswerOption, { type OptionStatus } from "./AnswerOption";
+import QuestionHeader from "./QuestionHeader";
+import AnswerStatus, { type AnswerStatusType } from "./AnswerStatus";
+import ExplanationPanel from "./ExplanationPanel";
+import ActionButtons from "./ActionButtons";
+import { CLOCK_AUDIO_PATH } from "@/lib/constants";
 
 interface QuestionProps {
   question_id: number;
@@ -21,58 +21,10 @@ interface QuestionProps {
   explanation: string;
 }
 
-type AnswerStatus = "Correct" | "Wrong" | "";
-type OptionStatus = "correct" | "wrong" | "fifty_fifty" | null;
-
 function getSecureRandomIndex(max: number): number {
   const array = new Uint32Array(1);
   crypto.getRandomValues(array);
   return array[0] % max;
-}
-
-interface AnswerOptionProps {
-  id: string;
-  label: string;
-  text: string;
-  index: number;
-  selectedAnswer: number | null;
-  optionStatus: Record<number, OptionStatus>;
-  onSelect: (index: number) => void;
-}
-
-function AnswerOption({
-  id,
-  label,
-  text,
-  index,
-  selectedAnswer,
-  optionStatus,
-  onSelect,
-}: Readonly<AnswerOptionProps>) {
-  const baseClass = "outline outline-offset-0 outline-1 border-solid border-stone-50 py-2 px-4 mb-3 font-semibold text-3xl flex rounded place-items-center gap-1 bg-black text-white transition duration-150 ease-in-out hover:scale-110";
-
-  let className = baseClass;
-  if (optionStatus[index] === "correct") {
-    className = `${baseClass} bg-green-600`;
-  } else if (optionStatus[index] === "wrong") {
-    className = `${baseClass} bg-red-600`;
-  } else if (optionStatus[index] === "fifty_fifty") {
-    className = `${baseClass} bg-gray-600 opacity-50`;
-  } else if (selectedAnswer === index) {
-    className = `${baseClass} bg-blue-400`;
-  }
-
-  return (
-    <button
-      type="button"
-      id={id}
-      onClick={() => onSelect(index)}
-      className={className}
-    >
-      <span>&nbsp; {label}.</span>
-      <span>{text}</span>
-    </button>
-  );
 }
 
 export default function Question({
@@ -87,32 +39,28 @@ export default function Question({
 }: Readonly<QuestionProps>) {
   const [showModal, setShowModal] = useState(false);
   const [selectedAnswer, setSelectedAnswer] = useState<number | null>(null);
-  const [answerStatus, setAnswerStatus] = useState<AnswerStatus>("");
+  const [answerStatus, setAnswerStatus] = useState<AnswerStatusType>("");
   const [showExplanation, setShowExplanation] = useState(false);
   const [showOptions, setShowOptions] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
   const [optionStatus, setOptionStatus] = useState<Record<number, OptionStatus>>({});
+  const audioRef = useRef<HTMLAudioElement | null>(null);
 
-  const renderTime = ({ remainingTime }: { remainingTime: number }) => {
-    if (remainingTime === 0) {
-      return <div className="timer">Late</div>;
-    }
-    return (
-      <div className="timer">
-        <div className="value">{remainingTime}</div>
-      </div>
-    );
-  };
+  useEffect(() => {
+    audioRef.current = document.getElementById("clock-audio") as HTMLAudioElement | null;
+  }, []);
 
   const stopTimer = () => {
     setIsPlaying((prev) => !prev);
   };
 
-  const updateSelectedAnswer = (index: number) => {
-    setSelectedAnswer(index);
+  const handleSelectAnswer = (index: number) => {
+    if (optionStatus[index] !== "fifty_fifty") {
+      setSelectedAnswer(index);
+    }
   };
 
-  const checkAnswer = () => {
+  const handleSubmit = () => {
     if (selectedAnswer === null) return;
 
     const newStatus: Record<number, OptionStatus> = {};
@@ -120,192 +68,155 @@ export default function Question({
     if (answer === selectedAnswer) {
       newStatus[selectedAnswer] = "correct";
       setAnswerStatus("Correct");
-      setShowExplanation(true);
-      const audio = document.getElementById("clock-audio") as HTMLAudioElement | null;
-      audio?.pause();
-      setIsPlaying(false);
     } else {
       newStatus[selectedAnswer] = "wrong";
       newStatus[answer] = "correct";
       setAnswerStatus("Wrong");
-      setShowExplanation(true);
-      const audio = document.getElementById("clock-audio") as HTMLAudioElement | null;
-      audio?.pause();
-      setIsPlaying(false);
     }
 
+    setShowExplanation(true);
+    audioRef.current?.pause();
+    setIsPlaying(false);
     setOptionStatus(newStatus);
+
+    const event = new CustomEvent("questionAnswered", {
+      detail: { question_id },
+    });
+    window.dispatchEvent(event);
   };
 
-  const showOptionsButton = () => {
+  const handleShowOptions = () => {
     setShowOptions(true);
     stopTimer();
-    const audio = document.getElementById("clock-audio") as HTMLAudioElement | null;
-    audio?.play();
+    audioRef.current?.play();
   };
 
-  const fifty_fifty = () => {
-    const listIndex = [0, 1, 2, 3];
-    listIndex.splice(answer, 1);
+  const handleFiftyFifty = () => {
+    const remainingOptions = [0, 1, 2, 3].filter((i) => i !== answer);
 
-    const randomIndex = getSecureRandomIndex(listIndex.length);
-    const updatedStatus1: Record<number, OptionStatus> = { ...optionStatus };
-    updatedStatus1[listIndex[randomIndex]] = "fifty_fifty";
+    const firstRemoveIndex = getSecureRandomIndex(remainingOptions.length);
+    const firstToRemove = remainingOptions[firstRemoveIndex];
+    const updatedStatus1: Record<number, OptionStatus> = { ...optionStatus, [firstToRemove]: "fifty_fifty" };
 
-    listIndex.splice(randomIndex, 1);
-    const randomIndex1 = getSecureRandomIndex(listIndex.length);
-    const updatedStatus2: Record<number, OptionStatus> = { ...updatedStatus1 };
-    updatedStatus2[listIndex[randomIndex1]] = "fifty_fifty";
+    remainingOptions.splice(firstRemoveIndex, 1);
+    const secondRemoveIndex = getSecureRandomIndex(remainingOptions.length);
+    const secondToRemove = remainingOptions[secondRemoveIndex];
+    const updatedStatus2: Record<number, OptionStatus> = { ...updatedStatus1, [secondToRemove]: "fifty_fifty" };
 
     setOptionStatus(updatedStatus2);
   };
 
+  const handleClose = () => {
+    setShowModal(false);
+    setSelectedAnswer(null);
+    setAnswerStatus("");
+    setShowExplanation(false);
+    setShowOptions(false);
+    setIsPlaying(false);
+    setOptionStatus({});
+    audioRef.current?.pause();
+  };
+
+  const handleTimerComplete = () => {
+    audioRef.current?.pause();
+    setIsPlaying(false);
+  };
+
+  const options = [option1, option2, option3, option4];
+  const labels = ["A", "B", "C", "D"];
+
   return (
     <div>
       <button
-        className="w-32 px-4 py-2 text-6xl font-semibold text-black border-solid shadow-xl outline outline-offset-0 outline-1 hover:bg-blue-500 hover:text-white border-stone-50 hover:border-transparent"
+        type="button"
+        className="w-24 sm:w-28 md:w-32 h-24 sm:h-28 md:h-32 text-5xl sm:text-6xl font-bold text-gray-800 dark:text-gray-200 bg-white dark:bg-gray-800 border-2 border-gray-200 dark:border-gray-700 rounded-xl shadow-lg hover:bg-blue-500 hover:text-white hover:border-blue-500 dark:hover:bg-blue-600 dark:hover:border-blue-500 transition-all duration-200 hover:scale-105 active:scale-95 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 dark:focus:ring-offset-gray-900"
         onClick={() => setShowModal(true)}
+        aria-label={`Open question ${question_id}`}
       >
         {question_id}
       </button>
-      <div>
-        <Modal isVisible={showModal} onClose={() => setShowModal(false)}>
-          <div>
-            <div className="grid grid-cols-12 gap-1 py-2 mb-3 text-4xl font-semibold text-center bg-black rounded shadow-2xl outline outline-offset-1 outline-2 outline-pink-600">
-              <div className="m-auto text-yellow-400">{question_id}.</div>
-              <div className="col-span-11 m-auto text-yellow-400">{question}</div>
-            </div>
-            <div className="grid justify-center grid-cols-2 gap-3"></div>
-            <div className="flex justify-center px-4 py-2 mb-3 font-semibold animate-bounce">
-              <p className={answerStatus === "Correct" ? "text-green-600" : "text-red-600"}>
-                {answerStatus}
-              </p>
-              <p className="pl-1">
-                {answerStatus === "Correct" && (
-                  <RxCheckCircled size={25} className="text-green-600" />
-                )}
-                {answerStatus === "Wrong" && (
-                  <RxCrossCircled size={25} className="text-red-600" />
-                )}
-              </p>
-            </div>
-            <div
-              id="answersGrid"
-              className={cn(
-                "hidden grid-cols-12 gap-4 text-3xl font-semibold text-left",
-                { "grid grid-cols-12 gap-4 text-3xl font-semibold text-left": showOptions }
-              )}
-            >
-              <AnswerOption
-                id="option-0"
-                label="A"
-                text={option1}
-                index={0}
-                selectedAnswer={selectedAnswer}
-                optionStatus={optionStatus}
-                onSelect={updateSelectedAnswer}
-              />
 
-              <div id="counter" className="col-start-6 row-span-2">
-                <div>
-                  {/* eslint-disable-next-line @typescript-eslint/no-explicit-any */}
-                  <CountdownCircleTimer
+      <Modal
+        isVisible={showModal}
+        onClose={handleClose}
+        title={`Question ${question_id}`}
+      >
+        <div className="space-y-4">
+          <QuestionHeader questionId={question_id} question={question} />
+
+          <AnswerStatus status={answerStatus} />
+
+          {showOptions && (
+            <div className="space-y-3" role="group" aria-label="Answer options">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                <div className="space-y-3">
+                  {options.slice(0, 2).map((option, index) => (
+                    <AnswerOption
+                      key={index}
+                      id={`option-${index}`}
+                      label={labels[index]}
+                      text={option}
+                      index={index}
+                      isSelected={selectedAnswer === index}
+                      status={optionStatus[index]}
+                      disabled={!!answerStatus}
+                      onSelect={handleSelectAnswer}
+                    />
+                  ))}
+                </div>
+
+                <div className="flex flex-col items-center justify-center gap-4">
+                  <QuizTimer
                     isPlaying={isPlaying}
-                    strokeWidth={15}
-                    duration={QUIZ_TIMER_DURATION}
-                    colors={["#004777", "#F7B801", "#A30000", "#A30000"]}
-                    colorsTime={[45, 30, 15, 0]}
-                    onComplete={() => ({ shouldRepeat: false, delay: 10 })}
-                    size={130}
-                  >
-                    {renderTime}
-                  </CountdownCircleTimer>
+                    onComplete={handleTimerComplete}
+                  />
+                </div>
+
+                <div className="space-y-3 md:col-span-2">
+                  {options.slice(2).map((option, index) => {
+                    const actualIndex = index + 2;
+                    return (
+                      <AnswerOption
+                        key={actualIndex}
+                        id={`option-${actualIndex}`}
+                        label={labels[actualIndex]}
+                        text={option}
+                        index={actualIndex}
+                        isSelected={selectedAnswer === actualIndex}
+                        status={optionStatus[actualIndex]}
+                        disabled={!!answerStatus}
+                        onSelect={handleSelectAnswer}
+                      />
+                    );
+                  })}
                 </div>
               </div>
-              <AnswerOption
-                id="option-1"
-                label="B"
-                text={option2}
-                index={1}
-                selectedAnswer={selectedAnswer}
-                optionStatus={optionStatus}
-                onSelect={updateSelectedAnswer}
-              />
-
-              <AnswerOption
-                id="option-2"
-                label="C"
-                text={option3}
-                index={2}
-                selectedAnswer={selectedAnswer}
-                optionStatus={optionStatus}
-                onSelect={updateSelectedAnswer}
-              />
-
-              <AnswerOption
-                id="option-3"
-                label="D"
-                text={option4}
-                index={3}
-                selectedAnswer={selectedAnswer}
-                optionStatus={optionStatus}
-                onSelect={updateSelectedAnswer}
-              />
             </div>
-            <br></br>
+          )}
 
-            <div className="flex justify-evenly">
-              <div>
-                <button
-                  onClick={showOptionsButton}
-                  className="focus:outline-none text-black bg-yellow-400 hover:bg-yellow-500 focus:ring-4 focus:ring-yellow-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:focus:ring-yellow-900 transition duration-150 ease-in-out hover:scale-110"
-                >
-                  Show Options
-                </button>
-              </div>
-              <div>
-                <button
-                  onClick={fifty_fifty}
-                  className="focus:outline-none text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 mb-2 dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-900 transition duration-150 ease-in-out hover:scale-110"
-                >
-                  50-50
-                </button>
-              </div>
-              <div>
-                <button
-                  onClick={checkAnswer}
-                  disabled={selectedAnswer === null}
-                  className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800 transition duration-150 ease-in-out hover:scale-110 disabled:opacity-50 disabled:cursor-not-allowed"
-                >
-                  Submit
-                </button>
-              </div>
-              <div className="">
-                <button
-                  className="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900 transition duration-150 ease-in-out hover:scale-110"
-                  onClick={() => setShowModal(false)}
-                >
-                  Close
-                </button>
-              </div>
-            </div>
+          {!showOptions && (
+            <p className="text-sm text-gray-500 dark:text-gray-400 text-center py-4">
+              Click &quot;Show Options&quot; to reveal answer choices and start the timer
+            </p>
+          )}
 
-            <br></br>
-            <div
-              className={cn("hidden ", {
-                "visible flex justify-center outline-offset-0 outline-3 outline-yellow-500 bg-yellow-200 outline-dashed border-solid border-stone-50 py-2 px-4 text-2xl font-semibold rounded":
-                  showExplanation,
-              })}
-            >
-              {explanation}
-              <audio id="clock-audio" src={CLOCK_AUDIO_PATH}>
-                Audio
-                <track kind="captions" label="Timer countdown sound" default />
-              </audio>
-            </div>
-          </div>
-        </Modal>
-      </div>
+          <ActionButtons
+            showOptions={showOptions}
+            hasSelectedAnswer={selectedAnswer !== null}
+            hasSubmitted={!!answerStatus}
+            onShowOptions={handleShowOptions}
+            onFiftyFifty={handleFiftyFifty}
+            onSubmit={handleSubmit}
+            onClose={handleClose}
+          />
+
+          <ExplanationPanel explanation={explanation} isVisible={showExplanation} />
+        </div>
+      </Modal>
+
+      <audio id="clock-audio" src={CLOCK_AUDIO_PATH} preload="auto" aria-hidden="true">
+        Timer countdown sound
+      </audio>
     </div>
   );
 }

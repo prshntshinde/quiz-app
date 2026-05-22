@@ -11,13 +11,16 @@ export default function RulesModal() {
     <div>
       <button
         onClick={() => setShowModal(true)}
-        className="inline-flex items-center justify-center px-6 py-3 text-base font-semibold text-purple-700 dark:text-purple-300 bg-white dark:bg-gray-800 border-2 border-purple-600 dark:border-purple-400 rounded-lg hover:bg-purple-50 dark:hover:bg-purple-900/30 transform hover:scale-105 transition-all duration-300 ease-out shadow-md hover:shadow-lg"
+        className="inline-flex items-center justify-center px-6 py-3 text-base font-semibold text-purple-700 dark:text-purple-300 bg-white dark:bg-gray-800 border-2 border-purple-600 dark:border-purple-400 rounded-lg hover:bg-purple-50 dark:hover:bg-purple-900/30 transform hover:scale-105 transition-all duration-300 ease-out shadow-md hover:shadow-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-purple-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-gray-900"
+        aria-haspopup="dialog"
+        aria-expanded={showModal}
       >
         <svg
           className="w-5 h-5 mr-2"
           fill="none"
           stroke="currentColor"
           viewBox="0 0 24 24"
+          aria-hidden="true"
         >
           <path
             strokeLinecap="round"
@@ -32,7 +35,7 @@ export default function RulesModal() {
         <Modal isVisible={showModal} onClose={() => setShowModal(false)}>
           <div className="p-6 sm:p-8">
             <h3 className="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white mb-6 pb-4 border-b border-gray-200 dark:border-gray-700">
-              प्रश्नमंजुषाचे नियम
+              <span lang="mr">प्रश्नमंजुषाचे नियम</span>
             </h3>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {RULES.map((rule) => (
