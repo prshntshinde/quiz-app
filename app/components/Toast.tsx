@@ -36,7 +36,7 @@ export function ToastProvider({ children }: Readonly<{ children: ReactNode }>) {
 
   const contextValue = useMemo(
     () => ({ toasts, addToast, removeToast }),
-    [toasts]
+    [toasts, addToast, removeToast]
   );
 
   return (
