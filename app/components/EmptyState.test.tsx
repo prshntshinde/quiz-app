@@ -26,6 +26,13 @@ describe("EmptyState", () => {
     expect(screen.getByText(/Custom description text/i)).toBeInTheDocument();
   });
 
+  it("renders a CTA link when actionLabel and actionHref are provided", () => {
+    render(<EmptyState actionLabel="CTA" actionHref="/target" />);
+    const link = screen.getByRole("link", { name: /CTA/i });
+    expect(link).toBeInTheDocument();
+    expect(link).toHaveAttribute("href", "/target");
+  });
+
   it("renders the emoji icon", () => {
     render(<EmptyState />);
     expect(screen.getByText("📝")).toBeInTheDocument();

@@ -95,12 +95,16 @@ function NavButton({
 }>) {
   if (disabled) {
     return (
-      <span
+      <button
+        type="button"
+        disabled
+        aria-disabled="true"
+        aria-label={label}
+        tabIndex={-1}
         className="p-2 text-gray-700 dark:text-gray-300 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-lg opacity-50 cursor-not-allowed"
-        aria-hidden="true"
       >
         {icon}
-      </span>
+      </button>
     );
   }
 

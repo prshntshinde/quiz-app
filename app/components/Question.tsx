@@ -1,13 +1,13 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
-import Modal from "./Modal";
-import QuizTimer from "./QuizTimer";
-import AnswerOption, { type OptionStatus } from "./AnswerOption";
-import QuestionHeader from "./QuestionHeader";
-import AnswerStatus, { type AnswerStatusType } from "./AnswerStatus";
-import ExplanationPanel from "./ExplanationPanel";
-import ActionButtons from "./ActionButtons";
+import { useState, useRef } from "react";
+import Modal from "@/app/components/Modal";
+import QuizTimer from "@/app/components/QuizTimer";
+import AnswerOption, { type OptionStatus } from "@/app/components/AnswerOption";
+import QuestionHeader from "@/app/components/QuestionHeader";
+import AnswerStatus, { type AnswerStatusType } from "@/app/components/AnswerStatus";
+import ExplanationPanel from "@/app/components/ExplanationPanel";
+import ActionButtons from "@/app/components/ActionButtons";
 import { CLOCK_AUDIO_PATH } from "@/lib/constants";
 
 interface QuestionProps {
@@ -45,10 +45,6 @@ export default function Question({
   const [isPlaying, setIsPlaying] = useState(false);
   const [optionStatus, setOptionStatus] = useState<Record<number, OptionStatus>>({});
   const audioRef = useRef<HTMLAudioElement | null>(null);
-
-  useEffect(() => {
-    audioRef.current = document.getElementById("clock-audio") as HTMLAudioElement | null;
-  }, []);
 
   const stopTimer = () => {
     setIsPlaying((prev) => !prev);
@@ -214,7 +210,7 @@ export default function Question({
         </div>
       </Modal>
 
-      <audio id="clock-audio" src={CLOCK_AUDIO_PATH} preload="auto" aria-hidden="true">
+      <audio ref={audioRef} data-testid="clock-audio" src={CLOCK_AUDIO_PATH} preload="auto" aria-hidden="true">
         Timer countdown sound
       </audio>
     </div>

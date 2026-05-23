@@ -11,14 +11,14 @@ interface PageProps {
 
 export default async function Quiz({ searchParams }: PageProps) {
   const params = await searchParams;
-  const page = parseInt(params.page || "1", 10);
+  const page = Math.max(1, parseInt(params.page || "1", 10) || 1);
   const { quizzes, total, totalPages } = await getAllQuizzesPaginated(page, 10);
 
   return (
     <div>
       <PageHeader
         title="Quizzes"
-        subtitle={`${total} total quiz${total > 1 ? "zes" : ""}`}
+        subtitle={`${total} total quiz${total !== 1 ? "zes" : ""}`}
         breadcrumbs={[
           { label: "Admin", href: "/admin/dashboard" },
           { label: "Quizzes" },

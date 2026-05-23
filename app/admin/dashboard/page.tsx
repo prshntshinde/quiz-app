@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { getAllQuizzes } from "@/lib/quizzes";
 import { getAllQuestions } from "@/lib/questions";
 import { PageHeader, StatCard } from "@/app/admin/components";
@@ -70,8 +71,22 @@ export default async function Dashboard() {
 
       <div className="mt-8">
         <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-4">Quick Actions</h2>
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-          <a
+        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
+          <Link
+            href="/admin/quiz"
+            className="flex items-center gap-4 p-4 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg hover:border-blue-300 dark:hover:border-blue-600 hover:shadow-md transition-all"
+          >
+            <div className="p-3 bg-indigo-100 dark:bg-indigo-900/30 rounded-lg">
+              <svg className="w-6 h-6 text-indigo-600 dark:text-indigo-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+              </svg>
+            </div>
+            <div>
+              <p className="font-medium text-gray-900 dark:text-gray-100">Manage Quizzes</p>
+              <p className="text-sm text-gray-500 dark:text-gray-400">View and edit existing quizzes</p>
+            </div>
+          </Link>
+          <Link
             href="/admin/quiz/create"
             className="flex items-center gap-4 p-4 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg hover:border-blue-300 dark:hover:border-blue-600 hover:shadow-md transition-all"
           >
@@ -84,8 +99,8 @@ export default async function Dashboard() {
               <p className="font-medium text-gray-900 dark:text-gray-100">Create New Quiz</p>
               <p className="text-sm text-gray-500 dark:text-gray-400">Start building a new quiz</p>
             </div>
-          </a>
-          <a
+          </Link>
+          <Link
             href="/admin/questions/create"
             className="flex items-center gap-4 p-4 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg hover:border-blue-300 dark:hover:border-blue-600 hover:shadow-md transition-all"
           >
@@ -98,7 +113,7 @@ export default async function Dashboard() {
               <p className="font-medium text-gray-900 dark:text-gray-100">Add Question</p>
               <p className="text-sm text-gray-500 dark:text-gray-400">Add a new question to a quiz</p>
             </div>
-          </a>
+          </Link>
         </div>
       </div>
     </div>

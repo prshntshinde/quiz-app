@@ -9,23 +9,23 @@ interface QuizProgressIndicatorProps {
 
 const STORAGE_KEY = "quiz-app-progress";
 
-function loadProgress(quizId: string): number[] {
-  if (typeof window === "undefined") return [];
+function loadProgress(quizId: string): Record<string, boolean> {
+  if (typeof window === "undefined") return {};
   try {
     const stored = localStorage.getItem(STORAGE_KEY);
-    const allProgress = stored ? JSON.parse(stored) : {};
-    return allProgress[quizId] || [];
+    const allProgress: Record<string, Record<string, boolean>> = stored ? JSON.parse(stored) : {};
+    return allProgress[quizId] || {};
   } catch {
-    return [];
+    return {};
   }
 }
 
-function saveProgress(quizId: string, answeredQuestions: number[]) {
+function saveProgress(quizId: string, answeredMap: Record<string, boolean>) {
   if (typeof window === "undefined") return;
   try {
     const stored = localStorage.getItem(STORAGE_KEY);
-    const allProgress = stored ? JSON.parse(stored) : {};
-    allProgress[quizId] = answeredQuestions;
+    const allProgress: Record<string, Record<string, boolean>> = stored ? JSON.parse(stored) : {};
+    allProgress[quizId] = answeredMap;
     localStorage.setItem(STORAGE_KEY, JSON.stringify(allProgress));
   } catch {
     console.warn("Failed to save quiz progress");
@@ -33,20 +33,21 @@ function saveProgress(quizId: string, answeredQuestions: number[]) {
 }
 
 export default function QuizProgressIndicator({ quizId, totalQuestions }: Readonly<QuizProgressIndicatorProps>) {
-  const [answeredQuestions, setAnsweredQuestions] = useState<number[]>([]);
+  const [answeredMap, setAnsweredMap] = useState<Record<string, boolean>>({});
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
     setMounted(true);
-    setAnsweredQuestions(loadProgress(quizId));
+    setAnsweredMap(loadProgress(quizId));
   }, [quizId]);
 
   useEffect(() => {
     const handleQuestionAnswered = (e: Event) => {
       const detail = (e as CustomEvent).detail as { question_id: number };
-      setAnsweredQuestions((prev) => {
-        if (prev.includes(detail.question_id)) return prev;
-        const updated = [...prev, detail.question_id];
+      const qId = String(detail.question_id);
+      setAnsweredMap((prev) => {
+        if (prev[qId]) return prev;
+        const updated = { ...prev, [qId]: true };
         saveProgress(quizId, updated);
         return updated;
       });
@@ -56,12 +57,12 @@ export default function QuizProgressIndicator({ quizId, totalQuestions }: Readon
     return () => window.removeEventListener("questionAnswered", handleQuestionAnswered);
   }, [quizId]);
 
-  const answeredCount = answeredQuestions.length;
+  const answeredCount = Object.values(answeredMap).filter(Boolean).length;
   const percentage = totalQuestions > 0 ? Math.round((answeredCount / totalQuestions) * 100) : 0;
 
   const resetProgress = useCallback(() => {
-    setAnsweredQuestions([]);
-    saveProgress(quizId, []);
+    setAnsweredMap({});
+    saveProgress(quizId, {});
   }, [quizId]);
 
   if (!mounted) {
