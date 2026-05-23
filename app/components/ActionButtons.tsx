@@ -60,7 +60,7 @@ export default function ActionButtons({
   onClose,
 }: Readonly<ActionButtonsProps>) {
   return (
-    <div className="flex flex-wrap items-center justify-center gap-3 mt-4" role="group" aria-label="Quiz actions">
+    <fieldset className="flex flex-wrap items-center justify-center gap-3 mt-4" aria-label="Quiz actions">
       {!showOptions && (
         <ActionButton
           label="Show Options"
@@ -111,6 +111,6 @@ export default function ActionButtons({
           </svg>
         }
       />
-    </div>
+    </fieldset>
   );
 }

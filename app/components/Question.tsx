@@ -78,7 +78,7 @@ export default function Question({
     const event = new CustomEvent("questionAnswered", {
       detail: { question_id },
     });
-    window.dispatchEvent(event);
+    globalThis.dispatchEvent(event);
   };
 
   const handleShowOptions = () => {
@@ -143,12 +143,12 @@ export default function Question({
           <AnswerStatus status={answerStatus} />
 
           {showOptions && (
-            <div className="space-y-3" role="group" aria-label="Answer options">
+            <fieldset className="space-y-3" aria-label="Answer options">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
                 <div className="space-y-3">
                   {options.slice(0, 2).map((option, index) => (
                     <AnswerOption
-                      key={index}
+                      key={labels[index]}
                       id={`option-${index}`}
                       label={labels[index]}
                       text={option}
@@ -187,7 +187,7 @@ export default function Question({
                   })}
                 </div>
               </div>
-            </div>
+            </fieldset>
           )}
 
           {!showOptions && (
@@ -210,7 +210,8 @@ export default function Question({
         </div>
       </Modal>
 
-      <audio ref={audioRef} data-testid="clock-audio" src={CLOCK_AUDIO_PATH} preload="auto" aria-hidden="true">
+      <audio ref={audioRef} data-testid="clock-audio" src={CLOCK_AUDIO_PATH} preload="auto" tabIndex={-1} aria-label="Timer countdown sound">
+        <track kind="captions" src="" label="No captions available" />
         Timer countdown sound
       </audio>
     </div>

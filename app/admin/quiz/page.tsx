@@ -9,16 +9,16 @@ interface PageProps {
   searchParams: Promise<{ page?: string }>;
 }
 
-export default async function Quiz({ searchParams }: PageProps) {
+export default async function Quiz({ searchParams }: Readonly<PageProps>) {
   const params = await searchParams;
-  const page = Math.max(1, parseInt(params.page || "1", 10) || 1);
+  const page = Math.max(1, Number.parseInt(params.page || "1", 10) || 1);
   const { quizzes, total, totalPages } = await getAllQuizzesPaginated(page, 10);
 
   return (
     <div>
       <PageHeader
         title="Quizzes"
-        subtitle={`${total} total quiz${total !== 1 ? "zes" : ""}`}
+        subtitle={`${total} total quiz${total === 1 ? "" : "zes"}`}
         breadcrumbs={[
           { label: "Admin", href: "/admin/dashboard" },
           { label: "Quizzes" },
