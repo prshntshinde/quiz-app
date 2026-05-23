@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { type ReactNode } from "react";
+import { type ReactNode, useState, useRef, useEffect, useCallback } from "react";
 
 type ActionVariant = "edit" | "delete" | "preview" | "default";
 
@@ -97,6 +97,43 @@ export default function ActionGroup({
 }: Readonly<ActionGroupProps>) {
   const visibleActions = actions.slice(0, maxVisible);
   const hiddenActions = actions.slice(maxVisible);
+  const [isOpen, setIsOpen] = useState(false);
+  const menuRef = useRef<HTMLDivElement>(null);
+  const buttonRef = useRef<HTMLButtonElement>(null);
+  const menuId = "action-overflow-menu";
+
+  const close = useCallback(() => setIsOpen(false), []);
+
+  useEffect(() => {
+    if (!isOpen) return;
+    const handleEvent = (e: MouseEvent | KeyboardEvent) => {
+      if (e instanceof KeyboardEvent && e.key === "Escape") {
+        close();
+        buttonRef.current?.focus();
+        return;
+      }
+      if (e instanceof MouseEvent && menuRef.current && !menuRef.current.contains(e.target as Node)) {
+        close();
+      }
+    };
+    document.addEventListener("keydown", handleEvent);
+    document.addEventListener("mousedown", handleEvent);
+    return () => {
+      document.removeEventListener("keydown", handleEvent);
+      document.removeEventListener("mousedown", handleEvent);
+    };
+  }, [isOpen, close]);
+
+  const handleOverflowKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === "Enter" || e.key === " ") {
+      e.preventDefault();
+      setIsOpen((prev) => !prev);
+    }
+  };
+
+  const handleOverflowClick = () => {
+    setIsOpen((prev) => !prev);
+  };
 
   return (
     <div className="flex items-center gap-1">
@@ -115,7 +152,12 @@ export default function ActionGroup({
           return (
             <Link
               key={`${action.label}-${index}`}
-              href={action.href}
+              href={isLoading ? "#" : action.href}
+              aria-disabled={isLoading ? true : undefined}
+              tabIndex={isLoading ? -1 : undefined}
+              onClick={(e) => {
+                if (isLoading) e.preventDefault();
+              }}
               className={`inline-flex items-center px-2 py-1.5 text-sm font-medium rounded-md transition-colors ${variantStyles[variant]} ${
                 isLoading ? "opacity-50 pointer-events-none" : ""
               }`}
@@ -141,11 +183,16 @@ export default function ActionGroup({
       })}
 
       {hiddenActions.length > 0 && (
-        <div className="relative group">
+        <div className="relative" ref={menuRef}>
           <button
+            ref={buttonRef}
             type="button"
+            onClick={handleOverflowClick}
+            onKeyDown={handleOverflowKeyDown}
             className="inline-flex items-center p-1.5 text-sm font-medium text-gray-500 dark:text-gray-400 rounded-md hover:bg-gray-100 dark:hover:bg-gray-800"
             aria-label="More actions"
+            aria-expanded={isOpen}
+            aria-controls={menuId}
           >
             <svg
               className="w-4 h-4"
@@ -162,24 +209,34 @@ export default function ActionGroup({
               />
             </svg>
           </button>
-          <div className="absolute right-0 z-10 hidden w-32 py-1 mt-1 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow-lg group-hover:block">
-            {hiddenActions.map((action, index) => {
-              const variant = action.variant ?? "default";
-              return (
-                <button
-                  key={`hidden-${action.label}-${index}`}
-                  type="button"
-                  onClick={action.onClick}
-                  disabled={isLoading}
-                  className={`w-full flex items-center gap-2 px-3 py-2 text-sm text-left transition-colors ${variantStyles[variant]} ${
-                    isLoading ? "opacity-50 cursor-not-allowed" : ""
-                  }`}
-                >
-                  {action.label}
-                </button>
-              );
-            })}
-          </div>
+          {isOpen && (
+            <div
+              id={menuId}
+              role="menu"
+              className="absolute right-0 z-10 w-32 py-1 mt-1 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg shadow-lg"
+            >
+              {hiddenActions.map((action, index) => {
+                const variant = action.variant ?? "default";
+                return (
+                  <button
+                    key={`hidden-${action.label}-${index}`}
+                    type="button"
+                    role="menuitem"
+                    onClick={() => {
+                      action.onClick?.();
+                      close();
+                    }}
+                    disabled={isLoading}
+                    className={`w-full flex items-center gap-2 px-3 py-2 text-sm text-left transition-colors ${variantStyles[variant]} ${
+                      isLoading ? "opacity-50 cursor-not-allowed" : ""
+                    }`}
+                  >
+                    {action.label}
+                  </button>
+                );
+              })}
+            </div>
+          )}
         </div>
       )}
     </div>

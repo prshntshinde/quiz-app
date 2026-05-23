@@ -12,7 +12,7 @@ interface PageProps {
 
 export default async function Questions({ searchParams }: PageProps) {
   const params = await searchParams;
-  const page = parseInt(params.page || "1", 10);
+  const page = Math.max(1, parseInt(params.page || "1", 10) || 1);
   const { questions, total, totalPages } = await getAllQuestions(page, 10);
   const quizzes = await getAllQuizzes();
 

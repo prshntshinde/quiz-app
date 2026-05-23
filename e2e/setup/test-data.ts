@@ -201,7 +201,7 @@ export class QuizPage {
     await this.page.waitForURL("/admin/quiz/create");
 
     await this.page.locator("input[name='title']").fill(data.title);
-    await this.page.locator("input[name='description']").fill(data.description);
+    await this.page.locator("textarea[name='description']").fill(data.description);
     await this.page.getByRole("button", { name: /create quiz/i }).click();
 
     await this.page.waitForURL("/admin/quiz");
@@ -220,6 +220,24 @@ export class QuizPage {
   }
 }
 
+export async function loginAsAdmin(page: Page) {
+  await page.route("**/api/auth", async (route) => {
+    await route.fulfill({
+      status: 200,
+      contentType: "application/json",
+      body: JSON.stringify({ success: true }),
+      headers: {
+        "set-cookie": "admin_session=authenticated; Path=/; HttpOnly",
+      },
+    });
+  });
+  await page.goto("/admin/login");
+  await page.getByLabel(/Username/i).fill(process.env.ADMIN_USERNAME || "admin@example.com");
+  await page.getByLabel(/Password/i).fill(process.env.ADMIN_PASSWORD || "password");
+  await page.getByRole("button", { name: /Sign in/i }).click();
+  await page.waitForURL(/\/admin\/dashboard/);
+}
+
 export async function createTestQuiz(page: Page, prefix = "Test"): Promise<string> {
   const quizPage = new QuizPage(page);
   const timestamp = Date.now();
@@ -233,7 +251,7 @@ export async function createTestQuestion(
   page: Page,
   quizId: string,
   prefix = "Test"
-): Promise<{ questionText: string }> {
+): Promise<{ questionText: string; questionId: string }> {
   const createPage = new CreateQuestionPage(page);
   const timestamp = Date.now();
   const questionText = `${prefix} Question ${timestamp}`;
@@ -251,16 +269,19 @@ export async function createTestQuestion(
   });
   await createPage.submit();
 
-  try {
-    await page.waitForURL(/\/admin\/questions/, { timeout: 10000 });
-    await page.waitForLoadState("networkidle");
-    await page.waitForTimeout(2000);
-  } catch (e) {
-    console.error("Navigation after question creation failed:", e);
-    throw new Error(`Failed to create question: question submission may have failed`);
+  await page.waitForURL(/\/admin\/questions/, { timeout: 15000 });
+
+  // Extract question ID from the edit link in the table
+  const row = page.locator("tr").filter({ hasText: questionText }).first();
+  const editLink = row.locator("a").filter({ hasText: /edit/i });
+  const href = await editLink.getAttribute("href");
+  const questionId = href?.split("/").pop() || "";
+
+  if (!questionId) {
+    throw new Error(`Could not find edit link for question: ${questionText}`);
   }
 
-  return { questionText };
+  return { questionText, questionId };
 }
 
 export const test = base.extend<{

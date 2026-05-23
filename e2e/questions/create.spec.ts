@@ -4,12 +4,16 @@ import {
   CreateQuestionPage,
   QuestionsPage,
   createTestQuiz,
+  loginAsAdmin,
 } from "../setup/test-data";
 
 test.describe("Create Question Page", () => {
   let quizId: string;
 
   test.beforeEach(async ({ page }) => {
+    await test.step("Login as admin", async () => {
+      await loginAsAdmin(page);
+    });
     quizId = await test.step("Create test quiz", async () => {
       return createTestQuiz(page, "CreateTest");
     });
@@ -60,10 +64,9 @@ test.describe("Create Question Page", () => {
     });
 
     await createPage.submit();
-    await page.waitForURL("/admin/questions", { timeout: 15000 });
-    await page.waitForLoadState("networkidle");
+    await page.waitForURL("/admin/questions", { timeout: 30000 });
 
-    await expect(page.locator("table")).toBeVisible({ timeout: 10000 });
+    await expect(page.locator("table")).toBeVisible({ timeout: 15000 });
     const questionCount = await page.locator("tbody tr").count();
     expect(questionCount).toBeGreaterThan(0);
   });

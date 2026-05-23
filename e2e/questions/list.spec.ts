@@ -5,12 +5,16 @@ import {
   CreateQuestionPage,
   createTestQuiz,
   createTestQuestion,
+  loginAsAdmin,
 } from "../setup/test-data";
 
 test.describe("Question List Page", () => {
   let quizId: string;
 
   test.beforeEach(async ({ page }) => {
+    await test.step("Login as admin", async () => {
+      await loginAsAdmin(page);
+    });
     quizId = await test.step("Create test quiz", async () => {
       return createTestQuiz(page, "ListTest");
     });

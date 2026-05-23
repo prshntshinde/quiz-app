@@ -13,11 +13,13 @@ vi.mock("next/navigation", () => ({
   usePathname: vi.fn(),
 }));
 
-vi.mock("./DarkModeToggle", () => ({
+const mockDarkModeToggle = vi.hoisted(() => ({
   default: function MockDarkModeToggle() {
     return <button aria-label="Switch to dark mode">Dark Mode</button>;
   },
 }));
+
+vi.mock("./DarkModeToggle", () => mockDarkModeToggle);
 
 describe("NavBar", () => {
   beforeEach(() => {

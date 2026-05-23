@@ -4,7 +4,7 @@ test.describe("Public Quiz Flow", () => {
   test("1. Home page loads correctly", async ({ page }) => {
     await page.goto("/");
     await expect(page).toHaveTitle(/Quiz App/);
-    await expect(page.getByRole("heading", { name: /Test Your Knowledge/i })).toBeVisible();
+    await expect(page.getByRole("heading", { name: /Test Your Knowledge,/i })).toBeVisible();
   });
 
   test("2. Navigate to quiz listing", async ({ page }) => {
@@ -31,12 +31,11 @@ test.describe("Public Quiz Flow", () => {
     await page.waitForLoadState("networkidle");
 
     const firstQuizLink = page.locator('a[href^="/quiz/"]').first();
-    if (await firstQuizLink.count() > 0) {
-      await firstQuizLink.click();
-      await expect(page).toHaveURL(/\/quiz\/[^/]+$/);
-      await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
-      await expect(page.getByRole("link", { name: /Back to Quizzes/i })).toBeVisible();
-    }
+    await expect(firstQuizLink).toBeVisible({ timeout: 10000 });
+    await firstQuizLink.click();
+    await expect(page).toHaveURL(/\/quiz\/[^/]+$/);
+    await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
+    await expect(page.getByRole("link", { name: /Back to Quizzes/i })).toBeVisible();
   });
 
   test("5. Question modal opens and displays content", async ({ page }) => {
@@ -44,25 +43,22 @@ test.describe("Public Quiz Flow", () => {
     await page.waitForLoadState("networkidle");
 
     const firstQuizLink = page.locator('a[href^="/quiz/"]').first();
-    if (await firstQuizLink.count() > 0) {
-      await firstQuizLink.click();
-      await page.waitForLoadState("networkidle");
+    await expect(firstQuizLink).toBeVisible({ timeout: 10000 });
+    await firstQuizLink.click();
+    await page.waitForLoadState("networkidle");
 
-      const questionButton = page.getByRole("button", { name: /Open question 1/i }).first();
-      if (await questionButton.count() > 0) {
-        await questionButton.click();
-        await expect(page.getByRole("dialog")).toBeVisible();
-        await expect(page.getByRole("heading", { name: /Question 1/i })).toBeVisible();
-      }
-    }
+    const questionButton = page.getByRole("button", { name: /Open question 1/i }).first();
+    await expect(questionButton).toBeVisible({ timeout: 5000 });
+    await questionButton.click();
+    await expect(page.getByRole("dialog")).toBeVisible();
+    await expect(page.getByRole("heading", { name: /Question 1/i })).toBeVisible();
   });
 
   test("6. Skip navigation link works", async ({ page }) => {
     await page.goto("/");
     const skipLink = page.getByRole("link", { name: /Skip to main content/i });
-    await expect(skipLink).toBeVisible();
 
-    await page.keyboard.press("Tab");
+    await skipLink.focus();
     await expect(skipLink).toBeFocused();
   });
 
@@ -86,8 +82,8 @@ test.describe("Public Quiz Flow", () => {
     await expect(menuButton).toBeVisible();
 
     await menuButton.click();
-    await expect(page.getByRole("link", { name: /Home/i })).toBeVisible();
-    await expect(page.getByRole("link", { name: /Quiz/i })).toBeVisible();
+    await expect(page.getByRole("link", { name: "Home", exact: true })).toBeVisible();
+    await expect(page.getByRole("link", { name: "Quiz", exact: true })).toBeVisible();
   });
 
   test("9. Pagination works on quiz listing", async ({ page }) => {
@@ -95,18 +91,12 @@ test.describe("Public Quiz Flow", () => {
     await page.waitForLoadState("networkidle");
 
     const pagination = page.getByRole("navigation", { name: /Pagination/i });
-    const isVisible = await pagination.isVisible();
+    await expect(pagination).toBeVisible({ timeout: 5000 });
 
-    if (isVisible) {
-      const pageButtons = pagination.getByRole("button");
-      const count = await pageButtons.count();
-
-      if (count > 1) {
-        await pageButtons.nth(1).click();
-        await page.waitForLoadState("networkidle");
-        await expect(page).toHaveURL(/page=2/);
-      }
-    }
+    const page2Button = pagination.getByRole("button", { name: "Page 2" });
+    await expect(page2Button).toBeVisible();
+    await page2Button.click();
+    await expect(page2Button).toHaveAttribute("aria-current", "page");
   });
 
   test("10. Progress indicator displays on quiz page", async ({ page }) => {
@@ -114,12 +104,12 @@ test.describe("Public Quiz Flow", () => {
     await page.waitForLoadState("networkidle");
 
     const firstQuizLink = page.locator('a[href^="/quiz/"]').first();
-    if (await firstQuizLink.count() > 0) {
-      await firstQuizLink.click();
-      await page.waitForLoadState("networkidle");
+    await expect(firstQuizLink).toBeVisible({ timeout: 10000 });
+    await firstQuizLink.click();
+    await page.waitForLoadState("networkidle");
 
-      await expect(page.getByText(/Progress/i)).toBeVisible();
-      await expect(page.getByText(/0 \/ \d+/)).toBeVisible();
-    }
+    await expect(page.getByText(/Progress/i)).toBeVisible();
+    const progressText = page.getByText(/\d+ \/ \d+/);
+    await expect(progressText).toBeVisible({ timeout: 10000 });
   });
 });

@@ -69,6 +69,13 @@ export default function Modal({ children, isVisible, onClose, title = "Modal dia
         } else if (!e.shiftKey && document.activeElement === lastElement) {
           e.preventDefault();
           firstElement.focus();
+        } else if (document.activeElement === modalRef.current) {
+          e.preventDefault();
+          if (e.shiftKey) {
+            lastElement.focus();
+          } else {
+            firstElement.focus();
+          }
         }
       }
     };

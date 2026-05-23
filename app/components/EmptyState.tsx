@@ -7,6 +7,7 @@ interface EmptyStateProps {
   description?: string;
   actionLabel?: string;
   actionHref?: string;
+  actionOnClick?: () => void;
 }
 
 export default function EmptyState({
@@ -14,6 +15,7 @@ export default function EmptyState({
   description = "Check back soon for new content!",
   actionLabel,
   actionHref,
+  actionOnClick,
 }: Readonly<EmptyStateProps>) {
   return (
     <div
@@ -28,7 +30,16 @@ export default function EmptyState({
       <p className="text-lg text-gray-600 dark:text-gray-400 max-w-md mb-6">
         {description}
       </p>
-      {actionLabel && actionHref && (
+      {actionLabel && actionOnClick && (
+        <button
+          type="button"
+          onClick={actionOnClick}
+          className="inline-flex items-center gap-2 px-6 py-3 bg-purple-600 hover:bg-purple-700 text-white font-medium rounded-lg shadow-md hover:shadow-lg transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-purple-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-gray-900"
+        >
+          {actionLabel}
+        </button>
+      )}
+      {actionLabel && actionHref && !actionOnClick && (
         <Link
           href={actionHref}
           className="inline-flex items-center gap-2 px-6 py-3 bg-purple-600 hover:bg-purple-700 text-white font-medium rounded-lg shadow-md hover:shadow-lg transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-purple-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-gray-900"

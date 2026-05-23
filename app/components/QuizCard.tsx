@@ -34,9 +34,9 @@ export default function QuizCard({ quiz }: Readonly<QuizCardProps>) {
           <RulesModal />
           <Link
             href={`/quiz/${quiz._id}`}
-            className="group/start inline-flex items-center justify-center px-6 py-3 text-base font-semibold text-white bg-gradient-to-r from-violet-600 to-purple-600 rounded-lg overflow-hidden shadow-md hover:shadow-xl transform hover:scale-105 transition-all duration-300 ease-out focus:outline-none focus-visible:ring-2 focus-visible:ring-purple-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-gray-900"
+            className="group/start relative inline-flex items-center justify-center px-6 py-3 text-base font-semibold text-white bg-gradient-to-r from-violet-600 to-purple-600 rounded-lg overflow-hidden shadow-md hover:shadow-xl transform hover:scale-105 transition-all duration-300 ease-out focus:outline-none focus-visible:ring-2 focus-visible:ring-purple-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-gray-900"
           >
-            <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-purple-600 to-blue-600 opacity-0 group-hover/start:opacity-100 transition-opacity duration-300" />
+            <span className="absolute inset-0 w-full h-full bg-gradient-to-r from-purple-600 to-blue-600 opacity-0 group-hover/start:opacity-100 transition-opacity duration-300 pointer-events-none" aria-hidden="true" />
             <span className="relative flex items-center gap-2">
               <span>Start Quiz</span>
               <svg

@@ -35,13 +35,15 @@ export default async function AnswerPage({ params }: Readonly<AnswerPageProps>) 
   let error: string | null = null;
 
   try {
-    const [fetchedQuestions, fetchedQuizzes] = await Promise.all([
-      fetchQuestions(id),
-      fetchQuizzes(),
-    ]);
-
+    const fetchedQuestions = await fetchQuestions(id);
     questions = fetchedQuestions as QuestionData[];
-    quiz = (fetchedQuizzes as QuizData[]).find((q) => q._id === id) || null;
+
+    try {
+      const fetchedQuizzes = await fetchQuizzes();
+      quiz = (fetchedQuizzes as QuizData[]).find((q) => q._id === id) || null;
+    } catch {
+      quiz = null;
+    }
   } catch (err) {
     error = err instanceof Error ? err.message : "Failed to load quiz questions";
   }

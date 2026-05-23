@@ -1,4 +1,5 @@
-import { render, screen } from "@testing-library/react";
+import { render, screen, fireEvent } from "@testing-library/react";
+import { vi } from "vitest";
 import ErrorState from "./ErrorState";
 import "@testing-library/jest-dom";
 
@@ -15,8 +16,10 @@ describe("ErrorState", () => {
     expect(screen.getByText("Custom error message")).toBeInTheDocument();
   });
 
-  it("renders the Try Again button when onRetry is provided", () => {
-    render(<ErrorState onRetry={() => {}} retryLabel="Try Again" />);
-    expect(screen.getByRole("button", { name: /Try Again/i })).toBeInTheDocument();
+  it("calls onRetry when the Try Again button is clicked", () => {
+    const onRetry = vi.fn();
+    render(<ErrorState onRetry={onRetry} retryLabel="Try Again" />);
+    fireEvent.click(screen.getByRole("button", { name: /Try Again/i }));
+    expect(onRetry).toHaveBeenCalledTimes(1);
   });
 });

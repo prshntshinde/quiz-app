@@ -76,7 +76,7 @@ export async function getAllQuizzesPaginated(
 
     const skip = (page - 1) * limit;
     const [quizzes, total] = await Promise.all([
-      Quiz.find(query).skip(skip).limit(limit).lean(),
+      Quiz.find(query).sort({ createdAt: -1, _id: 1 }).skip(skip).limit(limit).lean(),
       Quiz.countDocuments(query),
     ]);
 

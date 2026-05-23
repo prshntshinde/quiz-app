@@ -52,7 +52,15 @@ vi.mock("./ExplanationPanel", () => ({
 
 vi.mock("./ActionButtons", () => ({
   __esModule: true,
-  default: ({ onShowOptions, onFiftyFifty, onSubmit, onClose, showOptions, hasSelectedAnswer, hasSubmitted }: any) => (
+  default: ({ onShowOptions, onFiftyFifty, onSubmit, onClose, showOptions, hasSelectedAnswer, hasSubmitted }: {
+    onShowOptions: () => void;
+    onFiftyFifty: () => void;
+    onSubmit: () => void;
+    onClose: () => void;
+    showOptions: boolean;
+    hasSelectedAnswer: boolean;
+    hasSubmitted: boolean;
+  }) => (
     <div data-testid="action-buttons">
       {!showOptions && <button onClick={onShowOptions} data-testid="show-options-btn">Show Options</button>}
       {showOptions && !hasSubmitted && (
@@ -192,16 +200,17 @@ describe("Question Component", () => {
     expect(submitBtn).toBeDisabled();
   });
 
-  it("shows explanation with audio after answering", () => {
+  it("shows explanation and audio element after answering", () => {
     render(<Question {...mockQuestion} />);
     fireEvent.click(screen.getByRole("button", { name: /Open question 1/i }));
     fireEvent.click(screen.getByTestId("show-options-btn"));
     fireEvent.click(screen.getByTestId("option-B"));
     fireEvent.click(screen.getByTestId("submit-btn"));
     expect(screen.getByTestId("explanation")).toHaveTextContent("Paris is the capital of France.");
+    expect(screen.getByTestId("clock-audio")).toBeInTheDocument();
   });
 
-  it("shows timer countdown", () => {
+  it("renders timer when options are shown", () => {
     render(<Question {...mockQuestion} />);
     fireEvent.click(screen.getByRole("button", { name: /Open question 1/i }));
     fireEvent.click(screen.getByTestId("show-options-btn"));

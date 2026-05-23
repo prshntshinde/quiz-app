@@ -177,7 +177,7 @@ export default function QuizListing({ initialQuizzes }: Readonly<QuizListingProp
               : "Check back soon for new quizzes to challenge yourself!"
           }
           actionLabel={searchQuery ? "Clear Search" : undefined}
-          actionHref={searchQuery ? "#" : undefined}
+          actionOnClick={searchQuery ? () => setSearchQuery("") : undefined}
         />
       )}
     </div>
