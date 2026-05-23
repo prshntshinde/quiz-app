@@ -99,6 +99,12 @@ export default function Modal({ children, isVisible, onClose, title = "Modal dia
       aria-modal="true"
       aria-labelledby="modal-title"
       onClick={handleBackdropClick}
+      onKeyDown={(e) => {
+        if (e.key === "Enter" || e.key === " ") {
+          e.preventDefault();
+          onClose();
+        }
+      }}
     >
       <div
         ref={modalRef}

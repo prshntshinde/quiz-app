@@ -142,7 +142,6 @@ export default function DataTable<T>({
                       }
                     } : undefined}
                     tabIndex={hasRowClick ? 0 : undefined}
-                    role={hasRowClick ? "button" : undefined}
                     aria-label={hasRowClick ? `View details for row ${index + 1}` : undefined}
                     className={rowClass}
                   >

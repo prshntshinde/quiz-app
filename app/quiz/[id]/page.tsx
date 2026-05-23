@@ -1,6 +1,5 @@
 import Question from "@/app/components/Question";
-import { fetchQuestions } from "@/libs/data";
-import { fetchQuizzes } from "@/libs/data";
+import { fetchQuestions, fetchQuizzes } from "@/libs/data";
 import EmptyState from "@/app/components/EmptyState";
 import ErrorState from "@/app/components/ErrorState";
 import Link from "next/link";
@@ -109,7 +108,7 @@ export default async function AnswerPage({ params }: Readonly<AnswerPageProps>) 
                 {quiz?.title || "Quiz"}
               </h1>
               <p className="text-gray-600 dark:text-gray-400 mt-1">
-                {questions.length} question{questions.length !== 1 ? "s" : ""} • Select a question to begin
+                {questions.length} question{questions.length === 1 ? "" : "s"} • Select a question to begin
               </p>
             </div>
 

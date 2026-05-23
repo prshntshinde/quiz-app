@@ -62,23 +62,22 @@ test.describe("Question List Page", () => {
     });
 
     await page.goto("/admin/questions");
-    await page.waitForLoadState("networkidle");
 
     const row = page.locator("tr").filter({ hasText: /optionstest question/i }).first();
-    await expect(row.locator("td").nth(2)).toContainText(/OptionsTest Option 1/i, { timeout: 15000 });
-    await expect(row.locator("td").nth(3)).toContainText(/OptionsTest Option 2/i);
-    await expect(row.locator("td").nth(4)).toContainText(/OptionsTest Option 3/i);
-    await expect(row.locator("td").nth(5)).toContainText(/OptionsTest Option 4/i);
+    const questionCell = row.locator("td").nth(0);
+    await expect(questionCell).toContainText(/OptionsTest Option 1/i, { timeout: 15000 });
+    await expect(questionCell).toContainText(/OptionsTest Option 2/i);
+    await expect(questionCell).toContainText(/OptionsTest Option 3/i);
+    await expect(questionCell).toContainText(/OptionsTest Option 4/i);
   });
 
   test("6. Show answer as letter A/B/C/D", async ({ page }) => {
     await createTestQuestion(page, quizId, "AnswerTest");
 
     await page.goto("/admin/questions");
-    await page.waitForLoadState("networkidle");
 
     const row = page.locator("tr").filter({ hasText: "AnswerTest Question" }).first();
-    await expect(row.locator("td").nth(6)).toContainText("A", { timeout: 10000 });
+    await expect(row.locator("td").nth(2)).toContainText("A", { timeout: 10000 });
   });
 
   test("7. Edit link navigates to edit page", async ({ page }) => {

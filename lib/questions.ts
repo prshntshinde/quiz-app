@@ -38,7 +38,7 @@ export async function getAllQuestions(
 
     const skip = (page - 1) * limit;
     const [questions, total] = await Promise.all([
-      Questions.find(query).skip(skip).limit(limit).lean(),
+      Questions.find(query).sort({ createdAt: -1, _id: 1 }).skip(skip).limit(limit).lean(),
       Questions.countDocuments(query),
     ]);
 

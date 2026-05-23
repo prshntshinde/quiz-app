@@ -10,7 +10,7 @@ interface QuizProgressIndicatorProps {
 const STORAGE_KEY = "quiz-app-progress";
 
 function loadProgress(quizId: string): Record<string, boolean> {
-  if (typeof window === "undefined") return {};
+  if (typeof globalThis.window === "undefined") return {};
   try {
     const stored = localStorage.getItem(STORAGE_KEY);
     const allProgress: Record<string, Record<string, boolean>> = stored ? JSON.parse(stored) : {};
@@ -21,7 +21,7 @@ function loadProgress(quizId: string): Record<string, boolean> {
 }
 
 function saveProgress(quizId: string, answeredMap: Record<string, boolean>) {
-  if (typeof window === "undefined") return;
+  if (typeof globalThis.window === "undefined") return;
   try {
     const stored = localStorage.getItem(STORAGE_KEY);
     const allProgress: Record<string, Record<string, boolean>> = stored ? JSON.parse(stored) : {};
@@ -53,8 +53,8 @@ export default function QuizProgressIndicator({ quizId, totalQuestions }: Readon
       });
     };
 
-    window.addEventListener("questionAnswered", handleQuestionAnswered);
-    return () => window.removeEventListener("questionAnswered", handleQuestionAnswered);
+    globalThis.addEventListener("questionAnswered", handleQuestionAnswered);
+    return () => globalThis.removeEventListener("questionAnswered", handleQuestionAnswered);
   }, [quizId]);
 
   const answeredCount = Object.values(answeredMap).filter(Boolean).length;

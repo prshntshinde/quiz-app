@@ -107,7 +107,7 @@ export default function QuizListing({ initialQuizzes }: Readonly<QuizListingProp
         </div>
         {searchQuery && (
           <p className="mt-2 text-sm text-gray-600 dark:text-gray-400">
-            Found {filteredQuizzes.length} quiz{filteredQuizzes.length !== 1 ? "zes" : ""} matching &ldquo;{searchQuery}&rdquo;
+            Found {filteredQuizzes.length} quiz{filteredQuizzes.length === 1 ? "" : "zes"} matching &ldquo;{searchQuery}&rdquo;
           </p>
         )}
       </div>
@@ -133,9 +133,9 @@ export default function QuizListing({ initialQuizzes }: Readonly<QuizListingProp
                 </svg>
               </button>
 
-              {getPageNumbers().map((page, idx) =>
+              {getPageNumbers().map((page, idx, arr) =>
                 page === "..." ? (
-                  <span key={`dots-${idx}`} className="w-10 h-10 flex items-center justify-center text-gray-400 select-none" aria-hidden="true">
+                  <span key={`ellipsis-${arr[idx - 1]}-${arr[idx + 1]}`} className="w-10 h-10 flex items-center justify-center text-gray-400 select-none" aria-hidden="true">
                     &hellip;
                   </span>
                 ) : (
