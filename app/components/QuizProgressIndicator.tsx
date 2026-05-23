@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useSyncExternalStore } from "react";
 
 interface QuizProgressIndicatorProps {
   quizId: string;
@@ -34,10 +34,9 @@ function saveProgress(quizId: string, answeredMap: Record<string, boolean>) {
 
 export default function QuizProgressIndicator({ quizId, totalQuestions }: Readonly<QuizProgressIndicatorProps>) {
   const [answeredMap, setAnsweredMap] = useState<Record<string, boolean>>({});
-  const [mounted, setMounted] = useState(false);
+  const mounted = useSyncExternalStore(() => () => {}, () => true, () => false);
 
   useEffect(() => {
-    setMounted(true);
     setAnsweredMap(loadProgress(quizId));
   }, [quizId]);
 

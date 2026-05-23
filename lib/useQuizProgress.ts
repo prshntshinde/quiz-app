@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useSyncExternalStore } from "react";
 
 interface QuizProgress {
   [quizId: string]: {
@@ -30,13 +30,16 @@ function saveProgress(progress: QuizProgress) {
 }
 
 export function useQuizProgress(quizId: string, totalQuestions: number) {
-  const [progress, setProgress] = useState<QuizProgress>({});
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-    setProgress(loadProgress());
-  }, []);
+  const [progress, setProgress] = useState<QuizProgress>(() => {
+    if (typeof window === "undefined") return {};
+    try {
+      const stored = localStorage.getItem(STORAGE_KEY);
+      return stored ? JSON.parse(stored) : {};
+    } catch {
+      return {};
+    }
+  });
+  const mounted = useSyncExternalStore(() => () => {}, () => true, () => false);
 
   const quizProgress = progress[quizId] || {};
   const answeredCount = Object.values(quizProgress).filter(Boolean).length;

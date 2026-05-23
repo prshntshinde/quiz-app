@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useRef, useState, type ReactNode } from "react";
+import React, { useEffect, useRef, useState, useSyncExternalStore, type ReactNode } from "react";
 import { createPortal } from "react-dom";
 
 interface ModalProps {
@@ -11,27 +11,20 @@ interface ModalProps {
 }
 
 export default function Modal({ children, isVisible, onClose, title = "Modal dialog" }: ModalProps) {
-  const [mounted, setMounted] = useState(false);
-  const [isOpen, setIsOpen] = useState(false);
+  const mounted = useSyncExternalStore(() => () => {}, () => true, () => false);
+  const isOpen = isVisible && mounted;
   const modalRef = useRef<HTMLDivElement>(null);
   const previousFocusRef = useRef<HTMLElement | null>(null);
 
   useEffect(() => {
-    setMounted(true);
-    return () => setMounted(false);
-  }, []);
-
-  useEffect(() => {
     if (isVisible && mounted) {
       previousFocusRef.current = document.activeElement as HTMLElement;
-      setIsOpen(true);
       document.body.style.overflow = "hidden";
 
       requestAnimationFrame(() => {
         modalRef.current?.focus();
       });
     } else if (!isVisible) {
-      setIsOpen(false);
       document.body.style.overflow = "";
 
       if (previousFocusRef.current) {

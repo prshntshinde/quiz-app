@@ -290,6 +290,7 @@ export const test = base.extend<{
   editQuestionPage: EditQuestionPage;
   quizPage: QuizPage;
 }>({
+  /* eslint-disable react-hooks/rules-of-hooks */
   questionsPage: async ({ page }, use) => {
     await use(new QuestionsPage(page));
   },
@@ -302,6 +303,7 @@ export const test = base.extend<{
   quizPage: async ({ page }, use) => {
     await use(new QuizPage(page));
   },
+  /* eslint-enable react-hooks/rules-of-hooks */
 });
 
 export { expect } from "@playwright/test";

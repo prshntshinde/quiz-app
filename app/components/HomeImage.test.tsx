@@ -4,6 +4,7 @@ import "@testing-library/jest-dom";
 
 vi.mock("next/image", () => ({
   default: function MockImage({ src, alt }: { src: string; alt: string }) {
+    /* eslint-disable-next-line @next/next/no-img-element */
     return <img src={src} alt={alt} />;
   },
 }));
