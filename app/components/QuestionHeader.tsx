@@ -1,5 +1,3 @@
-"use client";
-
 interface QuestionHeaderProps {
   questionId: number;
   question: string;

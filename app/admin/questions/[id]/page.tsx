@@ -1,6 +1,6 @@
 import { notFound } from "next/navigation";
 import { getQuestionById } from "@/lib/questions";
-import { getAllQuizzes } from "@/lib/quizzes";
+import { getQuizTitles } from "@/lib/quizzes";
 import EditQuestionForm from "./EditQuestionForm";
 import { PageHeader } from "@/app/admin/components";
 
@@ -37,7 +37,7 @@ export default async function EditQuestionPage({ params }: PageProps) {
   const { id } = await params;
   const [question, quizzes] = await Promise.all([
     getQuestionById(id),
-    getAllQuizzes(),
+    getQuizTitles(),
   ]);
 
   if (!question) {

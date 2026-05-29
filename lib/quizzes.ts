@@ -38,6 +38,34 @@ interface GetAllQuizzesResult {
   totalPages: number;
 }
 
+export async function getQuizCount(): Promise<number> {
+  try {
+    await connectMongoDB();
+    return await Quiz.countDocuments({
+      $or: [{ deletedAt: null }, { deletedAt: { $exists: false } }],
+    });
+  } catch (error) {
+    console.error(error);
+    throw new Error("Failed to count quizzes.");
+  }
+}
+
+export async function getQuizTitles(): Promise<Array<{ _id: string; title: string }>> {
+  try {
+    await connectMongoDB();
+    const docs = await Quiz.find({
+      $or: [{ deletedAt: null }, { deletedAt: { $exists: false } }],
+    })
+      .select("_id title")
+      .sort({ title: 1 })
+      .lean();
+    return docs.map((d) => ({ _id: String(d._id), title: d.title }));
+  } catch (error) {
+    console.error(error);
+    throw new Error("Failed to fetch quiz titles.");
+  }
+}
+
 export async function getAllQuizzes(): Promise<QuizResult[]> {
   try {
     await connectMongoDB();

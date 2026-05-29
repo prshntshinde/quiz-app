@@ -29,9 +29,7 @@
     },
     "forceConsistentCasingInFileNames": true,
     "types": [
-      "jest",
-      "node",
-      "@testing-library/jest-dom"
+      "node"
     ]
   },
   "include": [
@@ -48,6 +46,8 @@
     "node_modules",
     "**/*.test.ts",
     "**/*.test.tsx",
-    "vitest.setup.ts"
+    "vitest.setup.ts",
+    "jest.config.ts",
+    "jest.setup.ts"
   ]
 }

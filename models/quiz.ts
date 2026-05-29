@@ -40,7 +40,10 @@ const questionSchema = new Schema(
   }
 );
 
+quizSchema.index({ deletedAt: 1, createdAt: -1 });
 questionSchema.index({ quiz_id: 1, question_id: 1 }, { unique: true });
+questionSchema.index({ deletedAt: 1, isUsed: 1, quiz_id: 1, question_id: 1 });
+questionSchema.index({ createdAt: -1, _id: 1 });
 
 export interface IQuizDocument extends Document {
   title: string;

@@ -7,7 +7,7 @@ export async function fetchQuizzes() {
     await connectMongoDB();
     const quizzes = await Quiz.find({
     $or: [{ deletedAt: null }, { deletedAt: { $exists: false } }],
-  }).lean();
+  }).select("_id title description isComplete isActive").lean();
 
     return sanitizeData(quizzes);
   } catch (error) {

@@ -1,4 +1,4 @@
-import { getAllQuizzes } from "@/lib/quizzes";
+import { getQuizTitles } from "@/lib/quizzes";
 import QuestionForm from "./QuestionForm";
 import { PageHeader } from "@/app/admin/components";
 
@@ -8,7 +8,7 @@ interface QuizOption {
 }
 
 export default async function CreateQuestionPage() {
-  const quizzes = await getAllQuizzes();
+  const quizzes = await getQuizTitles();
 
   return (
     <div className="max-w-3xl mx-auto">

@@ -86,7 +86,7 @@ export async function updateQuiz(
 
     await connectMongoDB();
 
-    const currentQuiz = await Quiz.findById(id);
+    const currentQuiz = await Quiz.findById(id).select("title description").lean();
     if (!currentQuiz) {
       throw new Error("Quiz not found");
     }

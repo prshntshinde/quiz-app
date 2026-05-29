@@ -1,5 +1,3 @@
-"use client";
-
 import { RxCheckCircled, RxCrossCircled } from "react-icons/rx";
 import { cn } from "@/lib/utils";
 

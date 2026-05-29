@@ -1,9 +1,10 @@
-import Question from "@/app/components/Question";
-import { fetchQuestions, fetchQuizzes } from "@/libs/data";
+import { fetchQuestions } from "@/libs/data";
+import { getQuizById } from "@/lib/quizzes";
 import EmptyState from "@/app/components/EmptyState";
 import ErrorState from "@/app/components/ErrorState";
 import Link from "next/link";
 import QuizProgressIndicator from "@/app/components/QuizProgressIndicator";
+import Question from "@/app/components/QuestionWrapper";
 
 interface QuestionData {
   _id: string;
@@ -34,15 +35,12 @@ export default async function AnswerPage({ params }: Readonly<AnswerPageProps>) 
   let error: string | null = null;
 
   try {
-    const fetchedQuestions = await fetchQuestions(id);
+    const [fetchedQuestions, fetchedQuiz] = await Promise.all([
+      fetchQuestions(id),
+      getQuizById(id),
+    ]);
     questions = fetchedQuestions as QuestionData[];
-
-    try {
-      const fetchedQuizzes = await fetchQuizzes();
-      quiz = (fetchedQuizzes as QuizData[]).find((q) => q._id === id) || null;
-    } catch {
-      quiz = null;
-    }
+    quiz = fetchedQuiz;
   } catch (err) {
     error = err instanceof Error ? err.message : "Failed to load quiz questions";
   }

@@ -1,6 +1,6 @@
 import Link from "next/link";
 import { getAllQuestions } from "@/lib/questions";
-import { getAllQuizzes } from "@/lib/quizzes";
+import { getQuizTitles } from "@/lib/quizzes";
 import { PageHeader, Pagination } from "@/app/admin/components";
 import QuestionTable from "./QuestionTable";
 
@@ -14,7 +14,7 @@ export default async function Questions({ searchParams }: PageProps) {
   const params = await searchParams;
   const page = Math.max(1, parseInt(params.page || "1", 10) || 1);
   const { questions, total, totalPages } = await getAllQuestions(page, 10);
-  const quizzes = await getAllQuizzes();
+  const quizzes = await getQuizTitles();
 
   const quizMap = Object.fromEntries(quizzes.map((q) => [q._id, q.title]));
 

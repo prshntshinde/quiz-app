@@ -120,32 +120,34 @@ export async function updateQuestion(
 
     await connectMongoDB();
 
-    const currentQuestion = (await Questions.findById(id)) as IQuestionDocument | null;
-    if (!currentQuestion) {
+    const oldQuestion = await Questions.findById(id).select("quiz_id").lean();
+    if (!oldQuestion) {
       throw new Error("Question not found");
     }
 
-    currentQuestion.question = question;
-    currentQuestion.optionA = option1;
-    currentQuestion.optionB = option2;
-    currentQuestion.optionC = option3;
-    currentQuestion.optionD = option4;
-    currentQuestion.answer = answer;
-    currentQuestion.explanation = explanation;
+    const update: Record<string, unknown> = {
+      question,
+      optionA: option1,
+      optionB: option2,
+      optionC: option3,
+      optionD: option4,
+      answer,
+      explanation,
+    };
 
     const newQuizId = new mongoose.Types.ObjectId(quiz_id);
-    const quizChanged = !currentQuestion.quiz_id?.equals(newQuizId);
+    const quizChanged = !oldQuestion.quiz_id?.equals(newQuizId);
 
     if (quizChanged) {
-      currentQuestion.quiz_id = newQuizId;
+      update.quiz_id = newQuizId;
       const lastQuestion = await Questions.findOne({ quiz_id })
         .sort({ question_id: -1 })
         .select("question_id")
         .lean();
-      currentQuestion.question_id = lastQuestion ? lastQuestion.question_id + 1 : 1;
+      update.question_id = lastQuestion ? lastQuestion.question_id + 1 : 1;
     }
 
-    await currentQuestion.save();
+    await Questions.findByIdAndUpdate(id, { $set: update });
 
     revalidatePath("/admin/questions");
     revalidatePath("/quiz");

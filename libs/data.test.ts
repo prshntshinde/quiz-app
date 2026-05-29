@@ -34,7 +34,9 @@ describe("libs/data", () => {
     it("should fetch and sanitize quizzes", async () => {
       const mockQuizzes = [{ title: "Quiz 1" }];
       mockQuizFind.mockReturnValue({
-        lean: vi.fn().mockResolvedValue(mockQuizzes),
+        select: vi.fn().mockReturnValue({
+          lean: vi.fn().mockResolvedValue(mockQuizzes),
+        }),
       });
 
       const result = await fetchQuizzes();
@@ -51,7 +53,9 @@ describe("libs/data", () => {
 
     it("should throw an error if fetch fails", async () => {
       mockQuizFind.mockReturnValue({
-        lean: vi.fn().mockRejectedValue(new Error("DB Error")),
+        select: vi.fn().mockReturnValue({
+          lean: vi.fn().mockRejectedValue(new Error("DB Error")),
+        }),
       });
 
       await expect(fetchQuizzes()).rejects.toThrow("Failed to fetch Quizzes.");

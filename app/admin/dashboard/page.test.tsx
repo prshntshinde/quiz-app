@@ -8,6 +8,7 @@ vi.mock("next/navigation", () => ({
 }));
 
 vi.mock("@/lib/quizzes", () => ({
+  getQuizCount: vi.fn().mockResolvedValue(3),
   getAllQuizzes: vi.fn().mockResolvedValue([
     { _id: "1", title: "Test Quiz", description: "A test quiz" },
   ]),

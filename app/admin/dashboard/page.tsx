@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { getAllQuizzes } from "@/lib/quizzes";
+import { getQuizCount } from "@/lib/quizzes";
 import { getAllQuestions } from "@/lib/questions";
 import { PageHeader, StatCard } from "@/app/admin/components";
 
@@ -30,12 +30,10 @@ function UsersIcon() {
 }
 
 export default async function Dashboard() {
-  const [quizzes, { total: questionCount }] = await Promise.all([
-    getAllQuizzes(),
+  const [quizCount, { total: questionCount }] = await Promise.all([
+    getQuizCount(),
     getAllQuestions(1, 1),
   ]);
-
-  const quizCount = quizzes.length;
 
   return (
     <div>

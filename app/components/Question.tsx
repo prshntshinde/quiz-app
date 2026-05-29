@@ -210,8 +210,7 @@ export default function Question({
         </div>
       </Modal>
 
-      <audio ref={audioRef} data-testid="clock-audio" src={CLOCK_AUDIO_PATH} preload="auto" tabIndex={-1} aria-label="Timer countdown sound">
-        <track kind="captions" src="" label="No captions available" />
+      <audio ref={audioRef} data-testid="clock-audio" src={CLOCK_AUDIO_PATH} preload="metadata" tabIndex={-1} aria-label="Timer countdown sound">
         Timer countdown sound
       </audio>
     </div>
